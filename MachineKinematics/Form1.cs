@@ -83,5 +83,10 @@ namespace MachineKinematics
             return true;
         }
 
+        private void легендаОбозначенийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 4;
+        }
+
     }
 }

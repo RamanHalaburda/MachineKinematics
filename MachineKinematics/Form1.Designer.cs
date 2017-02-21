@@ -31,9 +31,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.легендаОбозначенийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpInput = new System.Windows.Forms.TabPage();
-            this.tpAnimation = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.dgvInput = new System.Windows.Forms.DataGridView();
             this.dgvTitles = new System.Windows.Forms.DataGridView();
@@ -65,9 +65,9 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tpAnimation = new System.Windows.Forms.TabPage();
             this.tpOutput = new System.Windows.Forms.TabPage();
             this.tpCharts = new System.Windows.Forms.TabPage();
-            this.легендаОбозначенийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dgvLegend = new System.Windows.Forms.DataGridView();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -117,6 +117,13 @@
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
+            // легендаОбозначенийToolStripMenuItem
+            // 
+            this.легендаОбозначенийToolStripMenuItem.Name = "легендаОбозначенийToolStripMenuItem";
+            this.легендаОбозначенийToolStripMenuItem.Size = new System.Drawing.Size(159, 21);
+            this.легендаОбозначенийToolStripMenuItem.Text = "Легенда обозначений";
+            this.легендаОбозначенийToolStripMenuItem.Click += new System.EventHandler(this.легендаОбозначенийToolStripMenuItem_Click);
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tpInput);
@@ -146,16 +153,6 @@
             this.tpInput.TabIndex = 0;
             this.tpInput.Text = "Входные параметры";
             this.tpInput.UseVisualStyleBackColor = true;
-            // 
-            // tpAnimation
-            // 
-            this.tpAnimation.Location = new System.Drawing.Point(4, 22);
-            this.tpAnimation.Name = "tpAnimation";
-            this.tpAnimation.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAnimation.Size = new System.Drawing.Size(899, 448);
-            this.tpAnimation.TabIndex = 1;
-            this.tpAnimation.Text = "Анимация";
-            this.tpAnimation.UseVisualStyleBackColor = true;
             // 
             // groupBox7
             // 
@@ -455,6 +452,16 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "l0 = l(OB)";
             // 
+            // tpAnimation
+            // 
+            this.tpAnimation.Location = new System.Drawing.Point(4, 22);
+            this.tpAnimation.Name = "tpAnimation";
+            this.tpAnimation.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAnimation.Size = new System.Drawing.Size(899, 448);
+            this.tpAnimation.TabIndex = 1;
+            this.tpAnimation.Text = "Анимация";
+            this.tpAnimation.UseVisualStyleBackColor = true;
+            // 
             // tpOutput
             // 
             this.tpOutput.Location = new System.Drawing.Point(4, 22);
@@ -472,12 +479,6 @@
             this.tpCharts.TabIndex = 3;
             this.tpCharts.Text = "Графики";
             this.tpCharts.UseVisualStyleBackColor = true;
-            // 
-            // легендаОбозначенийToolStripMenuItem
-            // 
-            this.легендаОбозначенийToolStripMenuItem.Name = "легендаОбозначенийToolStripMenuItem";
-            this.легендаОбозначенийToolStripMenuItem.Size = new System.Drawing.Size(159, 21);
-            this.легендаОбозначенийToolStripMenuItem.Text = "Легенда обозначений";
             // 
             // tabPage1
             // 
