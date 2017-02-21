@@ -65,7 +65,10 @@ namespace MachineKinematics
             dgvLegend.AutoSize = true;
 
             // run animation
-            this.tpAnimation.Paint += new PaintEventHandler(TabPage_Paint);
+            //this.tpAnimation.Paint += new PaintEventHandler(TabPage_Paint);
+
+            //tabPage3
+            tbResTitle1.Enabled = tbResTitle2.Enabled = tbResTitle3.Enabled = false;
         }
 
         protected void TabPage_Paint(object sender, PaintEventArgs e)
