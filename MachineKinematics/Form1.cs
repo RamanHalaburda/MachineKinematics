@@ -15,6 +15,10 @@ namespace MachineKinematics
     {
         public MainForm() { InitializeComponent(); }
 
+        double fi_zero = 0; // pseudo-constant
+        double fi_clone; // for iterations
+
+        // input data
         double L0 = 0; // Lob
         double L1 = 0; // Loa
         double L3 = 0; // Lbc
@@ -49,6 +53,7 @@ namespace MachineKinematics
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // tabPage1
             dgvTitles.RowCount = dgvInput.RowCount = 13;
             dgvTitles.ColumnCount = dgvInput.ColumnCount = 1;
             dgvTitles.ColumnHeadersVisible =
@@ -62,17 +67,23 @@ namespace MachineKinematics
                 dgvTitles.Rows[i].Cells[0].Value = "Fpc" + (i + 1) + " =";
             dgvTitles.Enabled = false;
 
+            lbl1.Text = lbl2.Text = lbl3.Text = lbl4.Text = lbl5.Text = lbl6.Text = lbl7.Text =
+                lbl8.Text = lbl9.Text = lbl10.Text = lbl11.Text = "\u2715";
+
             dgvLegend.AutoSize = true;
 
             // run animation
             //this.tpAnimation.Paint += new PaintEventHandler(TabPage_Paint);
 
-            //tabPage3
+            // tabPage2
+
+            // tabPage3
             tbResTitle1.Enabled = tbResTitle2.Enabled = tbResTitle3.Enabled = false;
         }
 
         protected void TabPage_Paint(object sender, PaintEventArgs e)
         {
+            /*
             base.OnPaint(e);
             Pen arrow = new Pen(Brushes.Black, 2);
             arrow.EndCap = System.Drawing.Drawing2D.LineCap.Round;
@@ -83,6 +94,7 @@ namespace MachineKinematics
                 Thread.Sleep(500);
             }
             arrow.Dispose();
+            */
         }
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
@@ -92,6 +104,8 @@ namespace MachineKinematics
 
         private void начатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
+
             Boolean flag = true;
             foreach (Control c in this.Controls)
             {
@@ -114,7 +128,7 @@ namespace MachineKinematics
                 MessageBox.Show("Вы ввели недостаточно данных.");
             }
         }
-
+        /*
         private static Boolean checkInput()
         {
             //Boolean flag = true
@@ -131,32 +145,124 @@ namespace MachineKinematics
             }
             return true;
         }
-
+        */
+        
         private void легендаОбозначенийToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedIndex = 4;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+/*=================================================================================================== 
+ *=== Validate input data  
+ *===================================================================================================*/
+
+        private void btnFi_Click(object sender, EventArgs e)
         {
-            try
+            double OB = 0;
+            double OA = 0;
+            if (Double.TryParse(textBox2.Text, out OA) && Double.TryParse(textBox1.Text, out OB))
             {
-                double OB = 0;
-                double OA = 0;
-                if (Double.TryParse(textBox2.Text, out OA) && Double.TryParse(textBox1.Text, out OB))
+                double fi = Math.Acos(OA / OB) * (180 / Math.PI);
+                if (Double.IsNaN(fi) || Double.IsInfinity(fi))
                 {
-                    double fi = Math.Acos(OA / OB) * (180 / Math.PI);
-                    if (Double.IsNaN(fi) || Double.IsInfinity(fi))
-                    {
-                        throw new OutOfMemoryException("Угол φ не найден!");
-                    }
-                    else
-                    {
-                        textBox5.Text = Convert.ToString(fi);
-                    }
+                    throw new OutOfMemoryException("Угол φ не найден!");
+                }
+                else
+                {
+                    textBox5.Text = Convert.ToString(fi);
+                    lbl5.Text = "\u2714";
                 }
             }
-            catch (Exception x) { }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox1.Text, out temp) && textBox1.Text.Length == 0)
+                lbl1.Text = "\u2714";
+            else
+                lbl1.Text = "\u2715";
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox2.Text, out temp) && textBox2.Text.Length == 0)
+                lbl2.Text = "\u2714";
+            else
+                lbl2.Text = "\u2715";
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox3.Text, out temp) && textBox3.Text.Length == 0)
+                lbl3.Text = "\u2714";
+            else
+                lbl3.Text = "\u2715";
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox4.Text, out temp) && textBox4.Text.Length == 0)
+                lbl4.Text = "\u2714";
+            else
+                lbl4.Text = "\u2715";
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox6.Text, out temp) && textBox6.Text.Length == 0)
+                lbl6.Text = "\u2714";
+            else
+                lbl6.Text = "\u2715";
+        }
+
+        private void textBox7_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox7.Text, out temp) && textBox7.Text.Length == 0)
+                lbl7.Text = "\u2714";
+            else
+                lbl7.Text = "\u2715";
+        }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox8.Text, out temp) && textBox8.Text.Length == 0)
+                lbl8.Text = "\u2714";
+            else
+                lbl8.Text = "\u2715";
+        }
+
+        private void textBox9_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox9.Text, out temp) && textBox9.Text.Length == 0)
+                lbl9.Text = "\u2714";
+            else
+                lbl9.Text = "\u2715";
+        }
+
+        private void textBox10_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox10.Text, out temp) && textBox10.Text.Length == 0)
+                lbl10.Text = "\u2714";
+            else
+                lbl10.Text = "\u2715";
+        }
+
+        private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox11.Text, out temp) && textBox11.Text.Length == 0)
+                lbl11.Text = "\u2714";
+            else
+                lbl11.Text = "\u2715";
         }
 
     }

@@ -38,15 +38,21 @@
             this.dgvInput = new System.Windows.Forms.DataGridView();
             this.dgvTitles = new System.Windows.Forms.DataGridView();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.lbl11 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.lbl10 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lbl9 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lbl8 = new System.Windows.Forms.Label();
+            this.lbl7 = new System.Windows.Forms.Label();
+            this.lbl6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -54,9 +60,15 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnFi = new System.Windows.Forms.Button();
+            this.lbl5 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lbl4 = new System.Windows.Forms.Label();
+            this.lbl3 = new System.Windows.Forms.Label();
+            this.lbl2 = new System.Windows.Forms.Label();
+            this.lbl1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -220,6 +232,7 @@
             // groupBox6
             // 
             this.groupBox6.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox6.Controls.Add(this.lbl11);
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Controls.Add(this.textBox11);
             this.groupBox6.Location = new System.Drawing.Point(6, 388);
@@ -228,6 +241,15 @@
             this.groupBox6.TabIndex = 6;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Приведённый к кривошипу момент инерции всех вращающихся звеньев";
+            // 
+            // lbl11
+            // 
+            this.lbl11.AutoSize = true;
+            this.lbl11.Location = new System.Drawing.Point(254, 34);
+            this.lbl11.Name = "lbl11";
+            this.lbl11.Size = new System.Drawing.Size(13, 13);
+            this.lbl11.TabIndex = 18;
+            this.lbl11.Text = "_";
             // 
             // label11
             // 
@@ -243,12 +265,14 @@
             // 
             this.textBox11.Location = new System.Drawing.Point(123, 28);
             this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(144, 20);
+            this.textBox11.Size = new System.Drawing.Size(129, 20);
             this.textBox11.TabIndex = 8;
+            this.textBox11.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
             // 
             // groupBox5
             // 
             this.groupBox5.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox5.Controls.Add(this.lbl10);
             this.groupBox5.Controls.Add(this.label10);
             this.groupBox5.Controls.Add(this.textBox10);
             this.groupBox5.Location = new System.Drawing.Point(6, 337);
@@ -257,6 +281,15 @@
             this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Коэффициент неравномерности вала кривошипа";
+            // 
+            // lbl10
+            // 
+            this.lbl10.AutoSize = true;
+            this.lbl10.Location = new System.Drawing.Point(254, 25);
+            this.lbl10.Name = "lbl10";
+            this.lbl10.Size = new System.Drawing.Size(13, 13);
+            this.lbl10.TabIndex = 17;
+            this.lbl10.Text = "_";
             // 
             // label10
             // 
@@ -272,12 +305,14 @@
             // 
             this.textBox10.Location = new System.Drawing.Point(123, 19);
             this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(144, 20);
+            this.textBox10.Size = new System.Drawing.Size(129, 20);
             this.textBox10.TabIndex = 8;
+            this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
             // 
             // groupBox4
             // 
             this.groupBox4.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox4.Controls.Add(this.lbl9);
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.textBox9);
             this.groupBox4.Location = new System.Drawing.Point(6, 285);
@@ -286,6 +321,15 @@
             this.groupBox4.TabIndex = 7;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Средняя угловая скорость кривошипа";
+            // 
+            // lbl9
+            // 
+            this.lbl9.AutoSize = true;
+            this.lbl9.Location = new System.Drawing.Point(254, 25);
+            this.lbl9.Name = "lbl9";
+            this.lbl9.Size = new System.Drawing.Size(13, 13);
+            this.lbl9.TabIndex = 16;
+            this.lbl9.Text = "_";
             // 
             // label9
             // 
@@ -301,12 +345,16 @@
             // 
             this.textBox9.Location = new System.Drawing.Point(123, 19);
             this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(144, 20);
+            this.textBox9.Size = new System.Drawing.Size(129, 20);
             this.textBox9.TabIndex = 8;
+            this.textBox9.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
             // 
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox3.Controls.Add(this.lbl8);
+            this.groupBox3.Controls.Add(this.lbl7);
+            this.groupBox3.Controls.Add(this.lbl6);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.textBox8);
             this.groupBox3.Controls.Add(this.label7);
@@ -319,6 +367,33 @@
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Массы и моменты инерции звеньев";
+            // 
+            // lbl8
+            // 
+            this.lbl8.AutoSize = true;
+            this.lbl8.Location = new System.Drawing.Point(254, 77);
+            this.lbl8.Name = "lbl8";
+            this.lbl8.Size = new System.Drawing.Size(13, 13);
+            this.lbl8.TabIndex = 15;
+            this.lbl8.Text = "_";
+            // 
+            // lbl7
+            // 
+            this.lbl7.AutoSize = true;
+            this.lbl7.Location = new System.Drawing.Point(254, 51);
+            this.lbl7.Name = "lbl7";
+            this.lbl7.Size = new System.Drawing.Size(13, 13);
+            this.lbl7.TabIndex = 14;
+            this.lbl7.Text = "_";
+            // 
+            // lbl6
+            // 
+            this.lbl6.AutoSize = true;
+            this.lbl6.Location = new System.Drawing.Point(254, 25);
+            this.lbl6.Name = "lbl6";
+            this.lbl6.Size = new System.Drawing.Size(13, 13);
+            this.lbl6.TabIndex = 10;
+            this.lbl6.Text = "_";
             // 
             // label8
             // 
@@ -334,8 +409,9 @@
             // 
             this.textBox8.Location = new System.Drawing.Point(123, 71);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(144, 20);
+            this.textBox8.Size = new System.Drawing.Size(129, 20);
             this.textBox8.TabIndex = 12;
+            this.textBox8.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
             // 
             // label7
             // 
@@ -351,8 +427,9 @@
             // 
             this.textBox7.Location = new System.Drawing.Point(123, 45);
             this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(144, 20);
+            this.textBox7.Size = new System.Drawing.Size(129, 20);
             this.textBox7.TabIndex = 10;
+            this.textBox7.TextChanged += new System.EventHandler(this.textBox7_TextChanged);
             // 
             // label6
             // 
@@ -368,12 +445,15 @@
             // 
             this.textBox6.Location = new System.Drawing.Point(123, 19);
             this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(144, 20);
+            this.textBox6.Size = new System.Drawing.Size(129, 20);
             this.textBox6.TabIndex = 8;
+            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox2.Controls.Add(this.btnFi);
+            this.groupBox2.Controls.Add(this.lbl5);
             this.groupBox2.Controls.Add(this.textBox5);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Location = new System.Drawing.Point(6, 127);
@@ -383,11 +463,30 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Начальная обобщенная координата";
             // 
+            // btnFi
+            // 
+            this.btnFi.Location = new System.Drawing.Point(38, 17);
+            this.btnFi.Name = "btnFi";
+            this.btnFi.Size = new System.Drawing.Size(79, 23);
+            this.btnFi.TabIndex = 13;
+            this.btnFi.Text = "Вычислить";
+            this.btnFi.UseVisualStyleBackColor = true;
+            this.btnFi.Click += new System.EventHandler(this.btnFi_Click);
+            // 
+            // lbl5
+            // 
+            this.lbl5.AutoSize = true;
+            this.lbl5.Location = new System.Drawing.Point(254, 25);
+            this.lbl5.Name = "lbl5";
+            this.lbl5.Size = new System.Drawing.Size(13, 13);
+            this.lbl5.TabIndex = 12;
+            this.lbl5.Text = "_";
+            // 
             // textBox5
             // 
             this.textBox5.Location = new System.Drawing.Point(123, 19);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(144, 20);
+            this.textBox5.Size = new System.Drawing.Size(129, 20);
             this.textBox5.TabIndex = 4;
             // 
             // label5
@@ -403,6 +502,10 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox1.Controls.Add(this.lbl4);
+            this.groupBox1.Controls.Add(this.lbl3);
+            this.groupBox1.Controls.Add(this.lbl2);
+            this.groupBox1.Controls.Add(this.lbl1);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.textBox4);
@@ -417,6 +520,42 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Размеры звеньев";
+            // 
+            // lbl4
+            // 
+            this.lbl4.AutoSize = true;
+            this.lbl4.Location = new System.Drawing.Point(254, 95);
+            this.lbl4.Name = "lbl4";
+            this.lbl4.Size = new System.Drawing.Size(13, 13);
+            this.lbl4.TabIndex = 11;
+            this.lbl4.Text = "_";
+            // 
+            // lbl3
+            // 
+            this.lbl3.AutoSize = true;
+            this.lbl3.Location = new System.Drawing.Point(254, 72);
+            this.lbl3.Name = "lbl3";
+            this.lbl3.Size = new System.Drawing.Size(13, 13);
+            this.lbl3.TabIndex = 10;
+            this.lbl3.Text = "_";
+            // 
+            // lbl2
+            // 
+            this.lbl2.AutoSize = true;
+            this.lbl2.Location = new System.Drawing.Point(254, 46);
+            this.lbl2.Name = "lbl2";
+            this.lbl2.Size = new System.Drawing.Size(13, 13);
+            this.lbl2.TabIndex = 9;
+            this.lbl2.Text = "_";
+            // 
+            // lbl1
+            // 
+            this.lbl1.AutoSize = true;
+            this.lbl1.Location = new System.Drawing.Point(254, 22);
+            this.lbl1.Name = "lbl1";
+            this.lbl1.Size = new System.Drawing.Size(13, 13);
+            this.lbl1.TabIndex = 8;
+            this.lbl1.Text = "_";
             // 
             // label3
             // 
@@ -442,31 +581,31 @@
             // 
             this.textBox4.Location = new System.Drawing.Point(123, 90);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(144, 20);
+            this.textBox4.Size = new System.Drawing.Size(129, 20);
             this.textBox4.TabIndex = 5;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(123, 66);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(144, 20);
+            this.textBox3.Size = new System.Drawing.Size(129, 20);
             this.textBox3.TabIndex = 4;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(123, 40);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(144, 20);
+            this.textBox2.Size = new System.Drawing.Size(129, 20);
             this.textBox2.TabIndex = 3;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(123, 16);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(144, 20);
+            this.textBox1.Size = new System.Drawing.Size(129, 20);
             this.textBox1.TabIndex = 2;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -960,6 +1099,18 @@
         private System.Windows.Forms.TextBox tbResValue3;
         private System.Windows.Forms.TextBox tbResValue2;
         private System.Windows.Forms.TextBox tbResValue1;
+        private System.Windows.Forms.Label lbl11;
+        private System.Windows.Forms.Label lbl10;
+        private System.Windows.Forms.Label lbl9;
+        private System.Windows.Forms.Label lbl8;
+        private System.Windows.Forms.Label lbl7;
+        private System.Windows.Forms.Label lbl6;
+        private System.Windows.Forms.Label lbl5;
+        private System.Windows.Forms.Label lbl4;
+        private System.Windows.Forms.Label lbl3;
+        private System.Windows.Forms.Label lbl2;
+        private System.Windows.Forms.Label lbl1;
+        private System.Windows.Forms.Button btnFi;
     }
 }
 
