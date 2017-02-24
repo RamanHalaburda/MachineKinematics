@@ -34,14 +34,14 @@ namespace MachineKinematics
         // first step
         double[] Xa = new double[13];
         double[] Ya = new double[13];
-        double l = 0;
-        double cos_fi3 = 0;
-        double sin_fi3 = 0;
-        double fi3 = 0;
-        double Xc = 0;
-        double Yc = 0;
-        double Xs3 = 0;
-        double Ys3 = 0;
+        double[] L = new double[13];
+        double[] cos_fi3 = new double[13];
+        double[] sin_fi3 = new double[13];
+        double[] fi3 = new double[13];
+        double[] Xc = new double[13];
+        double[] Yc = new double[13];
+        double[] Xs3 = new double[13];
+        double[] Ys3 = new double[13];
 
         // second step
         double Uax = 0; // Xa_dash
@@ -168,12 +168,32 @@ namespace MachineKinematics
                             {
                                 if (fi_1 > 360)
                                 {
-                                    fi_1 = 330 - fi_clone;
+                                    fi_1 = fi_1 - 360;
                                 }
 
-                                dgvResults.Rows[i].Cells[0].Value = fi_1;
-                                dgvResults.Rows[i].Cells[1].Value = Xa[i] = L1 * Math.Cos(fi_1);
-                                dgvResults.Rows[i].Cells[2].Value = Ya[i] = L1 * Math.Sin(fi_1);
+                                dgvResults.Rows[i].HeaderCell.Value = String.Format("0:0,####", fi_1);
+
+                                Xa[i] = L1 * Math.Cos(fi_1);
+                                dgvResults.Rows[i].Cells[1].Value = String.Format("0:0,####", Xa[i]);
+
+                                Ya[i] = L1 * Math.Sin(fi_1);
+                                dgvResults.Rows[i].Cells[2].Value = String.Format("0:0,####", Ya[i]);
+
+                                L[i] = Math.Sqrt(Math.Pow(L0,2) + Math.Pow(L1,2) + 2 * L0 * L1 * Math.Sin(fi_1));
+
+                                cos_fi3[i] = (L1 * Math.Cos(fi_1)) / L[i];
+
+                                sin_fi3[i] = (L0 + L1 * Math.Sin(fi_1)) / L[i];
+
+                                fi3[i] = Math.Acos((L1 * Math.Cos(fi_1)) / L[i]);
+
+                                Xc[i] = L3 * Math.Cos(fi3[i]);
+
+                                Yc[i] = L3 * Math.Sin(fi3[i]);
+
+                                Xs3[i] = L5 * Math.Cos(fi3[i]);
+
+                                Ys3[i] = L5 * Math.Sin(fi3[i]);
                             }
 
                             break;
@@ -182,11 +202,11 @@ namespace MachineKinematics
                     default: MessageBox.Show(""); break;
                 }
 
-                
 
 
 
 
+                tabControl1.SelectedIndex = 2;
             }
             else
             {
@@ -208,7 +228,18 @@ namespace MachineKinematics
                 return false;
             }
         }
-        
+
+        private void fillColumnHeaderResult()
+        {
+            dgvResults.Columns[0].HeaderText = "φo";
+            dgvResults.Columns[1].HeaderCell.Value = "Sd";
+            dgvResults.Columns[1].HeaderCell.Value = "i31";
+            dgvResults.Columns[1].HeaderCell.Value = "i31p";
+            dgvResults.Columns[1].HeaderCell.Value = "x3p";
+            dgvResults.Columns[1].HeaderCell.Value = "y3p";
+            dgvResults.Columns[1].HeaderCell.Value = "x3pp";
+            dgvResults.Columns[1].HeaderCell.Value = "y3pp";
+        }
         
         private void легендаОбозначенийToolStripMenuItem_Click(object sender, EventArgs e)
         {
