@@ -32,8 +32,8 @@ namespace MachineKinematics
         double[] Fpc = new double[13]; // the forces of useful resistance
 
         // first step
-        double Xa = 0;
-        double Ya = 0;
+        double[] Xa = new double[13];
+        double[] Ya = new double[13];
         double l = 0;
         double cos_fi3 = 0;
         double sin_fi3 = 0;
@@ -125,58 +125,90 @@ namespace MachineKinematics
 
         private void начатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            btnFi_Click(this, e);
+
+            if (checkInput())
+            {
+                MessageBox.Show("Поехали!");
+
+                Double.TryParse(textBox1.Text , out L0); // Lob
+                Double.TryParse(textBox2.Text , out L1); // Loa
+                Double.TryParse(textBox3.Text , out L3); // Lbc
+                Double.TryParse(textBox4.Text , out L5); // Lbs3
+
+                Double.TryParse(textBox5.Text , out fi_zero); // pseudo-constant
+                fi_clone = fi_zero;                           // for iterations
+                
+                Double.TryParse(textBox6.Text , out m3);
+                Double.TryParse(textBox7.Text , out m4);
+                Double.TryParse(textBox8.Text , out Is4);
+                
+                Double.TryParse(textBox9.Text , out omega_1cp);
+                
+                Double.TryParse(textBox10.Text , out delta);
+                
+                Double.TryParse(textBox11.Text , out I_0_p);
+
+                dgvResults.ColumnCount = 3;
+                dgvResults.RowCount = 15;
+                int i = 0;
+                double fi_1 = 0F;
+
+                switch (cbDirection.SelectedIndex)
+                { 
+                    case 0:
+                        {
+                            MessageBox.Show("По часовой стрелке пока не реализовано. Вебертие \"Против...\"");
+
+                            break;
+                        }
+                    case 1:
+                        {
+                            for (fi_1 = fi_clone; i < 13; fi_1 += 30F, ++i)
+                            {
+                                if (fi_1 > 360)
+                                {
+                                    fi_1 = 330 - fi_clone;
+                                }
+
+                                dgvResults.Rows[i].Cells[0].Value = fi_1;
+                                dgvResults.Rows[i].Cells[1].Value = Xa[i] = L1 * Math.Cos(fi_1);
+                                dgvResults.Rows[i].Cells[2].Value = Ya[i] = L1 * Math.Sin(fi_1);
+                            }
+
+                            break;
+                        }
+
+                    default: MessageBox.Show(""); break;
+                }
+
+                
+
+
+
+
+            }
+            else
+            {
+                MessageBox.Show("Что-то пошло не так!");
+            }
+        }
+        
+        private Boolean checkInput()
+        {
             if (lbl1.Text == "\u2714" && lbl2.Text == "\u2714" && lbl3.Text == "\u2714"
                 && lbl4.Text == "\u2714" && lbl5.Text == "\u2714" && lbl6.Text == "\u2714"
                 && lbl7.Text == "\u2714" && lbl8.Text == "\u2714" && lbl9.Text == "\u2714"
                 && lbl10.Text == "\u2714" && lbl11.Text == "\u2714")
             {
-                MessageBox.Show("Успех");
-            }
-            else 
-            {
-                MessageBox.Show("Заполните все входные данные!");
-            }
-
-            Boolean flag = true;
-            foreach (Control c in this.Controls)
-            {
-                if (c is TextBox)
-                {
-                    TextBox textBox = c as TextBox;
-                    if (textBox.Text == string.Empty)
-                    {
-                        break;
-                    }
-                }
-            }
-            
-            if(this.Controls.OfType<TextBox>().Any(t => string.IsNullOrEmpty(t.Text)))  
-            {
-                MessageBox.Show("Вы ");
+                return true;
             }
             else
             {
-                MessageBox.Show("Вы ввели недостаточно данных.");
+                return false;
             }
         }
-        /*
-        private static Boolean checkInput()
-        {
-            //Boolean flag = true
-            foreach (Control c in Form.ActiveForm.Controls)
-            {
-                if (c is TextBox)
-                {
-                    TextBox textBox = c as TextBox;
-                    if (textBox.Text == string.Empty)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-        */
+        
         
         private void легендаОбозначенийToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -201,21 +233,22 @@ namespace MachineKinematics
                         MessageBox.Show("Допускаются лишь следующие символы: {0-9}, {.}, {-}.");
                     }
         }
-
+        
         private void btnFi_Click(object sender, EventArgs e)
         {
             double OB = 0;
             double OA = 0;
             if (Double.TryParse(textBox2.Text, out OA) && Double.TryParse(textBox1.Text, out OB))
             {
-                double fi = Math.Acos(OA / OB) * (180 / Math.PI);
+                double fi = 270 + Math.Acos(OA / OB) * (180 / Math.PI);
                 if (Double.IsNaN(fi) || Double.IsInfinity(fi))
                 {
-                    throw new OutOfMemoryException("Угол φ не найден!");
+                    throw new ArgumentException("Угол φ не найден.\nПрограмма обнуляет значения.\nПопробуйте снова.");
                 }
                 else
                 {
-                    textBox5.Text = Convert.ToString(fi);
+                    //textBox5.Text = Convert.ToString(fi);
+                    textBox5.Text = String.Format("{0:0.##########}", fi); // ten character before point
                     lbl5.Text = "\u2714";
                 }
             }
@@ -255,6 +288,15 @@ namespace MachineKinematics
                 lbl4.Text = "\u2714";
             else
                 lbl4.Text = "\u2715";
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            if (Double.TryParse(textBox5.Text, out temp) && textBox5.Text.Length != 0)
+                lbl5.Text = "\u2714";
+            else
+                lbl5.Text = "\u2715";
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
@@ -318,7 +360,5 @@ namespace MachineKinematics
                 e.Handled = true;
             }
         }
-
-        
     }
 }

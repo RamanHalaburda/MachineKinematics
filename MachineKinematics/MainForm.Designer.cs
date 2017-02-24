@@ -110,7 +110,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvResults = new System.Windows.Forms.DataGridView();
             this.tpCharts = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dgvLegend = new System.Windows.Forms.DataGridView();
@@ -135,7 +135,7 @@
             this.groupBox11.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).BeginInit();
             this.SuspendLayout();
@@ -273,7 +273,6 @@
             this.dgvInput.Size = new System.Drawing.Size(78, 413);
             this.dgvInput.TabIndex = 4;
             this.dgvInput.CurrentCellChanged += new System.EventHandler(this.dgvInput_CurrentCellChanged);
-            //this.dgvInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgvInput_KeyPress);
             // 
             // dgvTitles
             // 
@@ -325,6 +324,7 @@
             this.textBox11.Size = new System.Drawing.Size(129, 21);
             this.textBox11.TabIndex = 8;
             this.textBox11.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
+            this.textBox11.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // groupBox5
             // 
@@ -366,6 +366,7 @@
             this.textBox10.Size = new System.Drawing.Size(129, 21);
             this.textBox10.TabIndex = 8;
             this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
+            this.textBox10.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // groupBox4
             // 
@@ -407,6 +408,7 @@
             this.textBox9.Size = new System.Drawing.Size(129, 21);
             this.textBox9.TabIndex = 8;
             this.textBox9.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
+            this.textBox9.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // groupBox3
             // 
@@ -472,6 +474,7 @@
             this.textBox8.Size = new System.Drawing.Size(129, 21);
             this.textBox8.TabIndex = 12;
             this.textBox8.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
+            this.textBox8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // label7
             // 
@@ -491,6 +494,7 @@
             this.textBox7.Size = new System.Drawing.Size(129, 21);
             this.textBox7.TabIndex = 10;
             this.textBox7.TextChanged += new System.EventHandler(this.textBox7_TextChanged);
+            this.textBox7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // label6
             // 
@@ -510,6 +514,7 @@
             this.textBox6.Size = new System.Drawing.Size(129, 21);
             this.textBox6.TabIndex = 8;
             this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
+            this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // groupBox2
             // 
@@ -551,6 +556,8 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(129, 21);
             this.textBox5.TabIndex = 4;
+            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            this.textBox5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // label5
             // 
@@ -648,6 +655,7 @@
             this.textBox4.Size = new System.Drawing.Size(129, 21);
             this.textBox4.TabIndex = 5;
             this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // textBox3
             // 
@@ -657,6 +665,7 @@
             this.textBox3.Size = new System.Drawing.Size(129, 21);
             this.textBox3.TabIndex = 4;
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // textBox2
             // 
@@ -666,6 +675,7 @@
             this.textBox2.Size = new System.Drawing.Size(129, 21);
             this.textBox2.TabIndex = 3;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // textBox1
             // 
@@ -754,7 +764,7 @@
             this.tpOutput.Controls.Add(this.groupBox11);
             this.tpOutput.Controls.Add(this.groupBox10);
             this.tpOutput.Controls.Add(this.groupBox9);
-            this.tpOutput.Controls.Add(this.dataGridView1);
+            this.tpOutput.Controls.Add(this.dgvResults);
             this.tpOutput.Location = new System.Drawing.Point(4, 22);
             this.tpOutput.Name = "tpOutput";
             this.tpOutput.Size = new System.Drawing.Size(899, 448);
@@ -984,13 +994,13 @@
             this.button1.Text = "sB, i51, i51P";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dgvResults
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(689, 362);
-            this.dataGridView1.TabIndex = 0;
+            this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResults.Location = new System.Drawing.Point(3, 3);
+            this.dgvResults.Name = "dgvResults";
+            this.dgvResults.Size = new System.Drawing.Size(689, 362);
+            this.dgvResults.TabIndex = 0;
             // 
             // tpCharts
             // 
@@ -1086,7 +1096,7 @@
             this.groupBox11.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).EndInit();
             this.ResumeLayout(false);
@@ -1141,7 +1151,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNotation;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdentificator;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvResults;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ComboBox comboBox1;
