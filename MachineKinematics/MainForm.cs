@@ -112,7 +112,7 @@ namespace MachineKinematics
             forDebug();
 
             // run animation
-            //this.tpAnimation.Paint += new PaintEventHandler(TabPage_Paint);
+            this.gbAnimation.Paint += new PaintEventHandler(TabPage_Paint);
 
             // tabPage2
 
@@ -125,18 +125,21 @@ namespace MachineKinematics
 
         protected void TabPage_Paint(object sender, PaintEventArgs e)
         {
-            /*
+            
             base.OnPaint(e);
-            Pen arrow = new Pen(Brushes.Black, 2);
+            Pen arrow = new Pen(Brushes.Black, 1);
             arrow.EndCap = System.Drawing.Drawing2D.LineCap.Round;
 
+            e.Graphics.DrawLine(arrow, 10, 20, 600, 20);
+
+            /*
             for (int i = 0; i < 10; i += 5)
             {
                 e.Graphics.DrawLine(arrow, 200 + i, 200 + i, 100 + i, 100 + i);
                 Thread.Sleep(500);
             }
-            arrow.Dispose();
-            */
+            arrow.Dispose();*/
+            
         }
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
