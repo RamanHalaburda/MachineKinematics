@@ -174,90 +174,83 @@ namespace MachineKinematics
 
                 int i = 0;
                 double fi_1 = 0F;
+                for (fi_1 = fi_clone; i < 13; ++i)
+                {
+                    if (fi_1 < 0)
+                    {
+                        fi_1 = fi_1 + 360;
+                    }
 
-                switch (cbDirection.SelectedIndex)
-                { 
-                    case 0:
-                        {
-                            MessageBox.Show("По часовой стрелке пока не реализовано. Вебертие \"Против...\"");
-
-                            break;
-                        }
-                    case 1:
-                        {
-                            for (fi_1 = fi_clone; i < 13; fi_1 += 30F, ++i)
-                            {
-                                if (fi_1 > 360)
-                                {
-                                    fi_1 = fi_1 - 360;
-                                }
+                    if (fi_1 > 360)
+                    {
+                        fi_1 = fi_1 - 360;
+                    }
 
 // =============== first part of calculating =================
-                                try
-                                {
-                                    dgvResults.Rows[i].HeaderCell.Value = String.Format("{0:0.####}", fi_1);
-                                    fi_array[i] = fi_1;
+                    try
+                    {
+                        dgvResults.Rows[i].HeaderCell.Value = String.Format("{0:0.####}", fi_1);
+                        fi_array[i] = fi_1;
 
-                                    Xa[i] = L1 * Math.Cos(fi_1);
-                                    Ya[i] = L1 * Math.Sin(fi_1);
+                        Xa[i] = L1 * Math.Cos(fi_1);
+                        Ya[i] = L1 * Math.Sin(fi_1);
 
-                                    L[i] = Math.Sqrt(Math.Pow(L0, 2) + Math.Pow(L1, 2) + 2 * L0 * L1 * Math.Sin(fi_1));
+                        L[i] = Math.Sqrt(Math.Pow(L0, 2) + Math.Pow(L1, 2) + 2 * L0 * L1 * Math.Sin(fi_1));
 
-                                    cos_fi3[i] = (L1 * Math.Cos(fi_1)) / L[i];
-                                    sin_fi3[i] = (L0 + L1 * Math.Sin(fi_1)) / L[i];
+                        cos_fi3[i] = (L1 * Math.Cos(fi_1)) / L[i];
+                        sin_fi3[i] = (L0 + L1 * Math.Sin(fi_1)) / L[i];
 
-                                    fi3[i] = Math.Acos((L1 * Math.Cos(fi_1)) / L[i]);
+                        fi3[i] = Math.Acos((L1 * Math.Cos(fi_1)) / L[i]);
 
-                                    Xc[i] = L3 * cos_fi3[i];
-                                    Yc[i] = L3 * sin_fi3[i];
-                                    Xs3[i] = L5 * cos_fi3[i];
-                                    Ys3[i] = L5 * sin_fi3[i];
-                                }
-                                catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
+                        Xc[i] = L3 * cos_fi3[i];
+                        Yc[i] = L3 * sin_fi3[i];
+                        Xs3[i] = L5 * cos_fi3[i];
+                        Ys3[i] = L5 * sin_fi3[i];
+                    }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
 // =============== second part of calculating =================
-                                try 
-                                {
-                                    Xa_dash[i] = -L1 * Math.Sin(fi_1);
-                                    Ya_dash[i] = L1 * Math.Cos(fi_1);
-                                    
-                                    Ua3a2[i] = -L1 * Math.Sin(fi_1 - fi3[i]);
-                                    i31[i] = (L1 / L[i]) * Math.Cos(fi_1 - fi3[i]);
-                                    dgvResults.Rows[i].Cells[2].Value = String.Format("{0:0.####}",i31[i]);
+                    try
+                    {
+                        Xa_dash[i] = -L1 * Math.Sin(fi_1);
+                        Ya_dash[i] = L1 * Math.Cos(fi_1);
 
-                                    Xc_dash[i] = (-i31[i]) * L3 * sin_fi3[i];
-                                    Yc_dash[i] = i31[i] * L3 * cos_fi3[i];
-                                    Uc[i] = i31[i] * L5;
+                        Ua3a2[i] = -L1 * Math.Sin(fi_1 - fi3[i]);
+                        i31[i] = (L1 / L[i]) * Math.Cos(fi_1 - fi3[i]);
+                        dgvResults.Rows[i].Cells[2].Value = String.Format("{0:0.####}", i31[i]);
 
-                                    Xs3_dash[i] = (-i31[i]) * L5 * sin_fi3[i];
-                                    dgvResults.Rows[i].Cells[4].Value = String.Format("{0:0.####}", Xs3_dash[i]);
-                                    Ys3_dash[i] = i31[i] * L5 * cos_fi3[i];
-                                    dgvResults.Rows[i].Cells[5].Value = String.Format("{0:0.####}", Ys3_dash[i]);
-                                    Us3[i] = i31[i] * L5;
+                        Xc_dash[i] = (-i31[i]) * L3 * sin_fi3[i];
+                        Yc_dash[i] = i31[i] * L3 * cos_fi3[i];
+                        Uc[i] = i31[i] * L5;
 
-                                    Us5[i] = Xc_dash[i];
+                        Xs3_dash[i] = (-i31[i]) * L5 * sin_fi3[i];
+                        dgvResults.Rows[i].Cells[4].Value = String.Format("{0:0.####}", Xs3_dash[i]);
+                        Ys3_dash[i] = i31[i] * L5 * cos_fi3[i];
+                        dgvResults.Rows[i].Cells[5].Value = String.Format("{0:0.####}", Ys3_dash[i]);
+                        Us3[i] = i31[i] * L5;
 
-                                    i31_dash[i] = (Math.Pow(i31[i],2) * sin_fi3[i] - (L1 * Math.Sin(fi_1) / L[i])) / cos_fi3[i];
-                                    dgvResults.Rows[i].Cells[3].Value = String.Format("{0:0.####}", i31_dash[i]);
-                                }
-                                catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
+                        Us5[i] = Xc_dash[i];
+
+                        i31_dash[i] = (Math.Pow(i31[i], 2) * sin_fi3[i] - (L1 * Math.Sin(fi_1) / L[i])) / cos_fi3[i];
+                        dgvResults.Rows[i].Cells[3].Value = String.Format("{0:0.####}", i31_dash[i]);
+                    }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
 // =============== added part of calculating =================
-                                try
-                                {
-                                    Xs3_doubledash[i] = (-L5) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
-                                    dgvResults.Rows[i].Cells[6].Value = String.Format("{0:0.####}", Xs3_doubledash[i]);
-                                    Ys3_doubledash[i] = L5 * (i31_dash[i] * cos_fi3[i] - Math.Pow(i31[i], 2) * sin_fi3[i]);
-                                    dgvResults.Rows[i].Cells[7].Value = String.Format("{0:0.####}", Ys3_doubledash[i]);
-                                    is51_dash[i] = (-L3) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
-                                }
-                                catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
-                            }
+                    try
+                    {
+                        Xs3_doubledash[i] = (-L5) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
+                        dgvResults.Rows[i].Cells[6].Value = String.Format("{0:0.####}", Xs3_doubledash[i]);
+                        Ys3_doubledash[i] = L5 * (i31_dash[i] * cos_fi3[i] - Math.Pow(i31[i], 2) * sin_fi3[i]);
+                        dgvResults.Rows[i].Cells[7].Value = String.Format("{0:0.####}", Ys3_doubledash[i]);
+                        is51_dash[i] = (-L3) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
+                    }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
-                            break;
-                        }
-
-                    default: MessageBox.Show("Do default"); break;
+                    if (cbDirection.SelectedIndex == 0)
+                        fi_1 -= 30;
+                    else
+                        fi_1 += 30;
                 }
 
                 tabControl1.SelectedIndex = 2;
@@ -400,7 +393,7 @@ namespace MachineKinematics
                     {
                         dgvInput.Rows[i].Cells[0].Value = Convert.ToString(0);
                         Fpc[i] = 0;
-                        MessageBox.Show("Допускаются лишь следующие символы: {0-9}, {.}, {-}.");
+                        MessageBox.Show("Допускаются лишь следующие символы: {0-9}, {,}.");
                     }
         }
         
@@ -417,7 +410,6 @@ namespace MachineKinematics
                 }
                 else
                 {
-                    //textBox5.Text = Convert.ToString(fi);
                     textBox5.Text = String.Format("{0:0.##########}", fi); // ten character before point
                     lbl5.Text = "\u2714";
                 }
@@ -656,6 +648,5 @@ namespace MachineKinematics
             dgvLegend.Rows[29].Cells[1].Value = "ε₁";
             dgvLegend.Rows[29].Cells[2].Value = "e1";
         }
-
     }
 }

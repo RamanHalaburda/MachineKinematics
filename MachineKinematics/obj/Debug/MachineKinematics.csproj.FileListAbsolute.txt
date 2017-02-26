@@ -6,3 +6,4 @@ E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKine
 E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\obj\Debug\MachineKinematics.csproj.GenerateResource.Cache
 E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\obj\Debug\MachineKinematics.exe
 E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\obj\Debug\MachineKinematics.pdb
+E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\obj\Debug\MachineKinematics.csprojResolveAssemblyReference.cache
