@@ -21,7 +21,8 @@ namespace MachineKinematics
         double L3 = 0; // Lbc
         double L5 = 0; // Lbs3
         double fi_zero = 0; // pseudo-constant
-        double fi_clone; // for iterations
+        double fi_clone = 0; // for iterations
+        double[] fi_array = new double[13];
         double m3 = 0;
         double m4 = 0;
         double Is4 = 0;
@@ -44,19 +45,37 @@ namespace MachineKinematics
         double[] Ys3 = new double[13];
 
         // second step
-        double Uax = 0; // Xa_dash
-        double Uay = 0; // Ya_dash
-        double Ua3a2 = 0;
-        double i31 = 0;
-        double Ucx = 0;  // Xc_dash
-        double Ucy = 0;  // Yc_dash
-        double Uc = 0;
-        double Us3x = 0; // Xs3_dash
-        double Us3y = 0; // Ys3_dash
-        double Us3 = 0;
-        double Us5 = 0;
-        double i31_dash = 0;
+        double[] Xa_dash = new double[13]; // Uax 
+        double[] Ya_dash = new double[13]; // Uay 
+        double[] Ua3a2 = new double[13];
+        double[] i31 = new double[13];
+        double[] Xc_dash = new double[13];  // Ucx
+        double[] Yc_dash = new double[13];  // Ucy 
+        double[] Uc = new double[13];
+        double[] Xs3_dash = new double[13]; // Us3x 
+        double[] Ys3_dash = new double[13]; // Us3y
+        double[] Us3 = new double[13];
+        double[] Us5 = new double[13];
+        double[] i31_dash = new double[13];
 
+        // added
+        double[] Xs3_doubledash = new double[13];
+        double[] Ys3_doubledash = new double[13];
+        double[] is51_dash = new double[13];
+
+        private void forDebug()
+        {
+            textBox1.Text = "0,25";
+            textBox2.Text = "0,1";
+            textBox3.Text = "0,2";
+            textBox4.Text = "0,4";
+            textBox6.Text = "0,5";
+            textBox7.Text = "0,5";
+            textBox8.Text = "10";
+            textBox9.Text = "100";
+            textBox10.Text = "0,05";
+            textBox11.Text = "0,1";
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -90,6 +109,8 @@ namespace MachineKinematics
                     Fpc[i] = 100F;
                 }
 
+            forDebug();
+
             // run animation
             //this.tpAnimation.Paint += new PaintEventHandler(TabPage_Paint);
 
@@ -99,7 +120,7 @@ namespace MachineKinematics
             tbResTitle1.Enabled = tbResTitle2.Enabled = tbResTitle3.Enabled = false;
 
             // tabPage5
-            dgvLegend.AutoSize = true;
+            fillDgvLegend();            
         }
 
         protected void TabPage_Paint(object sender, PaintEventArgs e)
@@ -129,6 +150,8 @@ namespace MachineKinematics
 
             if (checkInput())
             {
+                fillColumnHeaderResult();
+
                 MessageBox.Show("Поехали!");
 
                 Double.TryParse(textBox1.Text , out L0); // Lob
@@ -149,8 +172,6 @@ namespace MachineKinematics
                 
                 Double.TryParse(textBox11.Text , out I_0_p);
 
-                dgvResults.ColumnCount = 3;
-                dgvResults.RowCount = 15;
                 int i = 0;
                 double fi_1 = 0F;
 
@@ -171,40 +192,73 @@ namespace MachineKinematics
                                     fi_1 = fi_1 - 360;
                                 }
 
-                                dgvResults.Rows[i].HeaderCell.Value = String.Format("0:0,####", fi_1);
+// =============== first part of calculating =================
+                                try
+                                {
+                                    dgvResults.Rows[i].HeaderCell.Value = String.Format("{0:0.####}", fi_1);
+                                    fi_array[i] = fi_1;
 
-                                Xa[i] = L1 * Math.Cos(fi_1);
-                                dgvResults.Rows[i].Cells[1].Value = String.Format("0:0,####", Xa[i]);
+                                    Xa[i] = L1 * Math.Cos(fi_1);
+                                    Ya[i] = L1 * Math.Sin(fi_1);
 
-                                Ya[i] = L1 * Math.Sin(fi_1);
-                                dgvResults.Rows[i].Cells[2].Value = String.Format("0:0,####", Ya[i]);
+                                    L[i] = Math.Sqrt(Math.Pow(L0, 2) + Math.Pow(L1, 2) + 2 * L0 * L1 * Math.Sin(fi_1));
 
-                                L[i] = Math.Sqrt(Math.Pow(L0,2) + Math.Pow(L1,2) + 2 * L0 * L1 * Math.Sin(fi_1));
+                                    cos_fi3[i] = (L1 * Math.Cos(fi_1)) / L[i];
+                                    sin_fi3[i] = (L0 + L1 * Math.Sin(fi_1)) / L[i];
 
-                                cos_fi3[i] = (L1 * Math.Cos(fi_1)) / L[i];
+                                    fi3[i] = Math.Acos((L1 * Math.Cos(fi_1)) / L[i]);
 
-                                sin_fi3[i] = (L0 + L1 * Math.Sin(fi_1)) / L[i];
+                                    Xc[i] = L3 * cos_fi3[i];
+                                    Yc[i] = L3 * sin_fi3[i];
+                                    Xs3[i] = L5 * cos_fi3[i];
+                                    Ys3[i] = L5 * sin_fi3[i];
+                                }
+                                catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
-                                fi3[i] = Math.Acos((L1 * Math.Cos(fi_1)) / L[i]);
+// =============== second part of calculating =================
+                                try 
+                                {
+                                    Xa_dash[i] = -L1 * Math.Sin(fi_1);
+                                    Ya_dash[i] = L1 * Math.Cos(fi_1);
+                                    
+                                    Ua3a2[i] = -L1 * Math.Sin(fi_1 - fi3[i]);
+                                    i31[i] = (L1 / L[i]) * Math.Cos(fi_1 - fi3[i]);
+                                    dgvResults.Rows[i].Cells[2].Value = String.Format("{0:0.####}",i31[i]);
 
-                                Xc[i] = L3 * Math.Cos(fi3[i]);
+                                    Xc_dash[i] = (-i31[i]) * L3 * sin_fi3[i];
+                                    Yc_dash[i] = i31[i] * L3 * cos_fi3[i];
+                                    Uc[i] = i31[i] * L5;
 
-                                Yc[i] = L3 * Math.Sin(fi3[i]);
+                                    Xs3_dash[i] = (-i31[i]) * L5 * sin_fi3[i];
+                                    dgvResults.Rows[i].Cells[4].Value = String.Format("{0:0.####}", Xs3_dash[i]);
+                                    Ys3_dash[i] = i31[i] * L5 * cos_fi3[i];
+                                    dgvResults.Rows[i].Cells[5].Value = String.Format("{0:0.####}", Ys3_dash[i]);
+                                    Us3[i] = i31[i] * L5;
 
-                                Xs3[i] = L5 * Math.Cos(fi3[i]);
+                                    Us5[i] = Xc_dash[i];
 
-                                Ys3[i] = L5 * Math.Sin(fi3[i]);
+                                    i31_dash[i] = (Math.Pow(i31[i],2) * sin_fi3[i] - (L1 * Math.Sin(fi_1) / L[i])) / cos_fi3[i];
+                                    dgvResults.Rows[i].Cells[3].Value = String.Format("{0:0.####}", i31_dash[i]);
+                                }
+                                catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
+
+// =============== added part of calculating =================
+                                try
+                                {
+                                    Xs3_doubledash[i] = (-L5) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
+                                    dgvResults.Rows[i].Cells[6].Value = String.Format("{0:0.####}", Xs3_doubledash[i]);
+                                    Ys3_doubledash[i] = L5 * (i31_dash[i] * cos_fi3[i] - Math.Pow(i31[i], 2) * sin_fi3[i]);
+                                    dgvResults.Rows[i].Cells[7].Value = String.Format("{0:0.####}", Ys3_doubledash[i]);
+                                    is51_dash[i] = (-L3) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
+                                }
+                                catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
                             }
 
                             break;
                         }
 
-                    default: MessageBox.Show(""); break;
+                    default: MessageBox.Show("Do default"); break;
                 }
-
-
-
-
 
                 tabControl1.SelectedIndex = 2;
             }
@@ -231,19 +285,104 @@ namespace MachineKinematics
 
         private void fillColumnHeaderResult()
         {
+            dgvResults.ColumnCount = 8;
+            dgvResults.RowCount = 13;
+            dgvResults.RowHeadersWidth = 90;
+            for (int i = 0; i < dgvResults.ColumnCount; ++i)
+                dgvResults.Columns[i].Width = 60;
+
             dgvResults.Columns[0].HeaderText = "φo";
             dgvResults.Columns[1].HeaderCell.Value = "Sd";
-            dgvResults.Columns[1].HeaderCell.Value = "i31";
-            dgvResults.Columns[1].HeaderCell.Value = "i31p";
-            dgvResults.Columns[1].HeaderCell.Value = "x3p";
-            dgvResults.Columns[1].HeaderCell.Value = "y3p";
-            dgvResults.Columns[1].HeaderCell.Value = "x3pp";
-            dgvResults.Columns[1].HeaderCell.Value = "y3pp";
+            dgvResults.Columns[2].HeaderCell.Value = "i31";
+            dgvResults.Columns[3].HeaderCell.Value = "i31p";
+            dgvResults.Columns[4].HeaderCell.Value = "x3p";
+            dgvResults.Columns[5].HeaderCell.Value = "y3p";
+            dgvResults.Columns[6].HeaderCell.Value = "x3pp";
+            dgvResults.Columns[7].HeaderCell.Value = "y3pp";
         }
         
         private void легендаОбозначенийToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedIndex = 4;
+        }
+
+/*=================================================================================================== 
+ *=== Build charts  
+ *===================================================================================================*/
+
+        private void btnChart_sd_i51_i51P_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnChart_i21_i21P_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnChart_xs2p_ys2p_xs2pp_ys2pp_Click(object sender, EventArgs e)
+        {
+            chart1.Series.Clear();
+
+            chart1.Series.Add("Xs2p").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("Ys2p").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("Xs2pp").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("Ys2pp").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+
+            //chart1.DataSource = dgvResults.DataSource;
+            for (int i = 0; i < dgvResults.RowCount; ++i)
+            {
+                chart1.Series["Xs2p"].Points.AddXY(fi_array[i], Xs3_dash[i]);
+                chart1.Series["Ys2p"].Points.AddXY(fi_array[i], Ys3_dash[i]);
+                chart1.Series["Xs2pp"].Points.AddXY(fi_array[i], Xs3_doubledash[i]);
+                chart1.Series["Ys2pp"].Points.AddXY(fi_array[i], Ys3_doubledash[i]);
+                //chart1.Series["Xs2p"].Points.AddXY(Xs3_dash[i], Ys3_dash[i]);
+                /*
+                chart1.Series["Xs2p"].Points.AddXY(dgvResults.Rows[i].Cells[4].Value, dgvResults.Rows[i].Cells[5].Value);
+                chart1.Series["Xs2pp"].Points.AddXY(dgvResults.Rows[i].Cells[6].Value, dgvResults.Rows[i].Cells[7].Value);
+                */
+                //chart1.Series["Xs2p"].Points.Add(Xs3_dash);
+                //chart1.Series["Ys2p"].Points.Add(Ys3_dash);
+                //chart1.Series["Xs2pp"].Points.AddXY(dgvResults.Rows[i].Cells[6].Value, dgvResults.Rows[i].Cells[7].Value);
+            }
+            
+            //chart1.Series["Xs2p"].Points.Add(Xs3_dash);
+            //chart1.Series["Ys2p"].Points.Add(Ys3_dash);
+        }
+
+        private void btnChart_i2p_A_B_C_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnChart_Mcp_Mdp_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnChart_dT_dTi_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnChart_T2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnChart_e1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnChart_omega1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnChart_Ac_Ad_Click(object sender, EventArgs e)
+        {
+
         }
 
 /*=================================================================================================== 
@@ -370,7 +509,8 @@ namespace MachineKinematics
         {
             double temp = 0;
             if (Double.TryParse(textBox10.Text, out temp) && textBox10.Text.Length != 0)
-                lbl10.Text = "\u2714";
+                if(temp >= 0 && temp < 1)
+                    lbl10.Text = "\u2714";
             else
                 lbl10.Text = "\u2715";
         }
@@ -391,5 +531,131 @@ namespace MachineKinematics
                 e.Handled = true;
             }
         }
+
+/*=================================================================================================== 
+ *=== fill dgvLegend 
+ *===================================================================================================*/
+
+        private void fillDgvLegend()
+        {
+            // ₁ ₂ ₃ ₄ ₅ φ ′ ᴵ Δ ε ω ᶜ
+            dgvLegend.Font = new Font("Consolas", 12);
+            dgvLegend.RowCount = 30;
+
+            dgvLegend.Rows[0].Cells[0].Value = "Кинематические характеристики исполнительного механизма";
+
+            dgvLegend.Rows[1].Cells[0].Value = "Обобщённая координата";
+            dgvLegend.Rows[1].Cells[1].Value = "φ₁";
+            dgvLegend.Rows[1].Cells[2].Value = "Fi";
+
+            dgvLegend.Rows[2].Cells[0].Value = "Перемещение ползуна";
+            dgvLegend.Rows[2].Cells[1].Value = "Sь";
+            dgvLegend.Rows[2].Cells[2].Value = "SB";
+
+            dgvLegend.Rows[3].Cells[0].Value = "Передаточная функция кулисы";
+            dgvLegend.Rows[3].Cells[1].Value = "i₃₁";
+            dgvLegend.Rows[3].Cells[2].Value = "i31";
+
+            dgvLegend.Rows[4].Cells[0].Value = "Передаточная функция шатуна";
+            dgvLegend.Rows[4].Cells[1].Value = "i₄₁";
+            dgvLegend.Rows[4].Cells[2].Value = "i41";
+
+            dgvLegend.Rows[5].Cells[0].Value = "Передаточная функция ползуна";
+            dgvLegend.Rows[5].Cells[1].Value = "i₅₁";
+            dgvLegend.Rows[5].Cells[2].Value = "i51";
+
+            dgvLegend.Rows[6].Cells[0].Value = "Проекция аналога скорости точки S₃ на ось x";
+            dgvLegend.Rows[6].Cells[1].Value = "X′s₃";
+            dgvLegend.Rows[6].Cells[2].Value = "xS3P";
+
+            dgvLegend.Rows[7].Cells[0].Value = "Проекция аналога скорости точки S₃ на ось y";
+            dgvLegend.Rows[7].Cells[1].Value = "Y′s₃";
+            dgvLegend.Rows[7].Cells[2].Value = "yS3P";
+
+            dgvLegend.Rows[8].Cells[0].Value = "Проекция аналога скорости точки S₄ на ось x";
+            dgvLegend.Rows[8].Cells[1].Value = "X′s₄";
+            dgvLegend.Rows[8].Cells[2].Value = "yS4P";
+
+            dgvLegend.Rows[9].Cells[0].Value = "Проекция аналога скорости точки S₄ на ось y";
+            dgvLegend.Rows[9].Cells[1].Value = "Y′s₄";
+            dgvLegend.Rows[9].Cells[2].Value = "yS4P";
+
+            dgvLegend.Rows[10].Cells[0].Value = "Производная передаточной функции шатуна";
+            dgvLegend.Rows[10].Cells[1].Value = "i′₃₁ + i′₄₁";
+            dgvLegend.Rows[10].Cells[2].Value = "i31P + i41P";
+
+            dgvLegend.Rows[11].Cells[0].Value = "Производная передаточной функции ползуна";
+            dgvLegend.Rows[11].Cells[1].Value = "i′₅₁ + i′₅₁";
+            dgvLegend.Rows[11].Cells[2].Value = "i51P + i51";
+
+            dgvLegend.Rows[12].Cells[0].Value = "Проекция аналога ускорения точки S₂ на ось x";
+            dgvLegend.Rows[12].Cells[1].Value = "X′′s₂";
+            dgvLegend.Rows[12].Cells[2].Value = "yS2PP";
+
+            dgvLegend.Rows[13].Cells[0].Value = "Проекция аналога ускорения точки S₂ на ось y";
+            dgvLegend.Rows[13].Cells[1].Value = "Y′′s₂";
+            dgvLegend.Rows[13].Cells[2].Value = "yS2PP";
+
+            dgvLegend.Rows[14].Cells[0].Value = "Переменная составляющая приведенного момента инерции";
+
+            dgvLegend.Rows[15].Cells[0].Value = "Часть Iɪɪᴵᴵ от массы шатуна";
+            dgvLegend.Rows[15].Cells[1].Value = "A";
+            dgvLegend.Rows[15].Cells[2].Value = "A";
+
+            dgvLegend.Rows[16].Cells[0].Value = "Часть Iɪɪᴵᴵ от момента инерции шатуна";
+            dgvLegend.Rows[16].Cells[1].Value = "B";
+            dgvLegend.Rows[16].Cells[2].Value = "B";
+
+            dgvLegend.Rows[17].Cells[0].Value = "Часть Iɪɪᴵᴵ от массы ползуна";
+            dgvLegend.Rows[17].Cells[1].Value = "C";
+            dgvLegend.Rows[17].Cells[2].Value = "C";
+
+            dgvLegend.Rows[18].Cells[0].Value = "Часть Iɪɪᴵᴵ от массы кулисы";
+            dgvLegend.Rows[18].Cells[1].Value = "D";
+            dgvLegend.Rows[18].Cells[2].Value = "D";
+
+            dgvLegend.Rows[19].Cells[0].Value = "Часть Iɪɪᴵᴵ от момента инерции кулисы";
+            dgvLegend.Rows[19].Cells[1].Value = "E";
+            dgvLegend.Rows[19].Cells[2].Value = "E";
+
+            dgvLegend.Rows[20].Cells[0].Value = "Переменная составляющая приведенного момента инерции";
+            dgvLegend.Rows[20].Cells[1].Value = "Iɪɪᴵᴵ";
+            dgvLegend.Rows[20].Cells[2].Value = "I2p";
+
+            dgvLegend.Rows[21].Cells[0].Value = "Производная произведённого момента инерции";
+            dgvLegend.Rows[21].Cells[1].Value = "dIɪɪ / dφ₁";
+            dgvLegend.Rows[21].Cells[2].Value = "dIpdFi";
+
+            dgvLegend.Rows[22].Cells[0].Value = "Определение закона движения звена произведения";
+
+            dgvLegend.Rows[23].Cells[0].Value = "Приведённый момент сил сопротивления";
+            dgvLegend.Rows[23].Cells[1].Value = "Mɪɪᶜ";
+            dgvLegend.Rows[23].Cells[2].Value = "Mcp";
+
+            dgvLegend.Rows[24].Cells[0].Value = "Работа сил сопротивления";
+            dgvLegend.Rows[24].Cells[1].Value = "Ac";
+            dgvLegend.Rows[24].Cells[2].Value = "Ac";
+
+            dgvLegend.Rows[25].Cells[0].Value = "Работа движущих сил";
+            dgvLegend.Rows[25].Cells[1].Value = "Aд";
+            dgvLegend.Rows[25].Cells[2].Value = "Ad";
+
+            dgvLegend.Rows[26].Cells[0].Value = "Изменение кинеической энергии машины";
+            dgvLegend.Rows[26].Cells[1].Value = "ΔT";
+            dgvLegend.Rows[26].Cells[2].Value = "dT";
+
+            dgvLegend.Rows[27].Cells[0].Value = "Изменение кинеической энергии пост. сост-ей прив-го момента инерции";
+            dgvLegend.Rows[27].Cells[1].Value = "ΔTɪ";
+            dgvLegend.Rows[27].Cells[2].Value = "dTI";
+
+            dgvLegend.Rows[28].Cells[0].Value = "Угловая скорость кривошипа";
+            dgvLegend.Rows[28].Cells[1].Value = "ω₁";
+            dgvLegend.Rows[28].Cells[2].Value = "w1";
+
+            dgvLegend.Rows[29].Cells[0].Value = "Угловое ускорение кривошипа";
+            dgvLegend.Rows[29].Cells[1].Value = "ε₁";
+            dgvLegend.Rows[29].Cells[2].Value = "e1";
+        }
+
     }
 }

@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,18 +103,19 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.button14 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnChart_omega1 = new System.Windows.Forms.Button();
+            this.btnChart_Ac_Ad = new System.Windows.Forms.Button();
+            this.btnChart_e1 = new System.Windows.Forms.Button();
+            this.btnChart_T2 = new System.Windows.Forms.Button();
+            this.btnChart_dT_dTi = new System.Windows.Forms.Button();
+            this.btnChart_Mcp_Mdp = new System.Windows.Forms.Button();
+            this.btnChart_i2p_A_B_C = new System.Windows.Forms.Button();
+            this.btnChart_i21_i21P = new System.Windows.Forms.Button();
+            this.btnChart_xs2p_ys2p_xs2pp_ys2pp = new System.Windows.Forms.Button();
+            this.btnChart_sd_i51_i51P = new System.Windows.Forms.Button();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.tpCharts = new System.Windows.Forms.TabPage();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dgvLegend = new System.Windows.Forms.DataGridView();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -136,6 +140,8 @@
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
+            this.tpCharts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).BeginInit();
             this.SuspendLayout();
@@ -887,16 +893,16 @@
             // 
             // groupBox9
             // 
-            this.groupBox9.Controls.Add(this.button14);
-            this.groupBox9.Controls.Add(this.button13);
-            this.groupBox9.Controls.Add(this.button12);
-            this.groupBox9.Controls.Add(this.button11);
-            this.groupBox9.Controls.Add(this.button10);
-            this.groupBox9.Controls.Add(this.button9);
-            this.groupBox9.Controls.Add(this.button4);
-            this.groupBox9.Controls.Add(this.button3);
-            this.groupBox9.Controls.Add(this.button2);
-            this.groupBox9.Controls.Add(this.button1);
+            this.groupBox9.Controls.Add(this.btnChart_omega1);
+            this.groupBox9.Controls.Add(this.btnChart_Ac_Ad);
+            this.groupBox9.Controls.Add(this.btnChart_e1);
+            this.groupBox9.Controls.Add(this.btnChart_T2);
+            this.groupBox9.Controls.Add(this.btnChart_dT_dTi);
+            this.groupBox9.Controls.Add(this.btnChart_Mcp_Mdp);
+            this.groupBox9.Controls.Add(this.btnChart_i2p_A_B_C);
+            this.groupBox9.Controls.Add(this.btnChart_i21_i21P);
+            this.groupBox9.Controls.Add(this.btnChart_xs2p_ys2p_xs2pp_ys2pp);
+            this.groupBox9.Controls.Add(this.btnChart_sd_i51_i51P);
             this.groupBox9.Location = new System.Drawing.Point(698, 201);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(198, 164);
@@ -904,95 +910,105 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Графики";
             // 
-            // button14
+            // btnChart_omega1
             // 
-            this.button14.Location = new System.Drawing.Point(6, 135);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(91, 23);
-            this.button14.TabIndex = 9;
-            this.button14.Text = "ω1";
-            this.button14.UseVisualStyleBackColor = true;
+            this.btnChart_omega1.Location = new System.Drawing.Point(6, 135);
+            this.btnChart_omega1.Name = "btnChart_omega1";
+            this.btnChart_omega1.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_omega1.TabIndex = 9;
+            this.btnChart_omega1.Text = "ω1";
+            this.btnChart_omega1.UseVisualStyleBackColor = true;
+            this.btnChart_omega1.Click += new System.EventHandler(this.btnChart_omega1_Click);
             // 
-            // button13
+            // btnChart_Ac_Ad
             // 
-            this.button13.Location = new System.Drawing.Point(101, 135);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(91, 23);
-            this.button13.TabIndex = 8;
-            this.button13.Text = "Ac, Ad";
-            this.button13.UseVisualStyleBackColor = true;
+            this.btnChart_Ac_Ad.Location = new System.Drawing.Point(101, 135);
+            this.btnChart_Ac_Ad.Name = "btnChart_Ac_Ad";
+            this.btnChart_Ac_Ad.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_Ac_Ad.TabIndex = 8;
+            this.btnChart_Ac_Ad.Text = "Ac, Ad";
+            this.btnChart_Ac_Ad.UseVisualStyleBackColor = true;
+            this.btnChart_Ac_Ad.Click += new System.EventHandler(this.btnChart_Ac_Ad_Click);
             // 
-            // button12
+            // btnChart_e1
             // 
-            this.button12.Location = new System.Drawing.Point(148, 106);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(44, 23);
-            this.button12.TabIndex = 7;
-            this.button12.Text = "e1";
-            this.button12.UseVisualStyleBackColor = true;
+            this.btnChart_e1.Location = new System.Drawing.Point(148, 106);
+            this.btnChart_e1.Name = "btnChart_e1";
+            this.btnChart_e1.Size = new System.Drawing.Size(44, 23);
+            this.btnChart_e1.TabIndex = 7;
+            this.btnChart_e1.Text = "e1";
+            this.btnChart_e1.UseVisualStyleBackColor = true;
+            this.btnChart_e1.Click += new System.EventHandler(this.btnChart_e1_Click);
             // 
-            // button11
+            // btnChart_T2
             // 
-            this.button11.Location = new System.Drawing.Point(101, 106);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(44, 23);
-            this.button11.TabIndex = 6;
-            this.button11.Text = "T2";
-            this.button11.UseVisualStyleBackColor = true;
+            this.btnChart_T2.Location = new System.Drawing.Point(101, 106);
+            this.btnChart_T2.Name = "btnChart_T2";
+            this.btnChart_T2.Size = new System.Drawing.Size(44, 23);
+            this.btnChart_T2.TabIndex = 6;
+            this.btnChart_T2.Text = "T2";
+            this.btnChart_T2.UseVisualStyleBackColor = true;
+            this.btnChart_T2.Click += new System.EventHandler(this.btnChart_T2_Click);
             // 
-            // button10
+            // btnChart_dT_dTi
             // 
-            this.button10.Location = new System.Drawing.Point(6, 106);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(91, 23);
-            this.button10.TabIndex = 5;
-            this.button10.Text = "dT, dTi";
-            this.button10.UseVisualStyleBackColor = true;
+            this.btnChart_dT_dTi.Location = new System.Drawing.Point(6, 106);
+            this.btnChart_dT_dTi.Name = "btnChart_dT_dTi";
+            this.btnChart_dT_dTi.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_dT_dTi.TabIndex = 5;
+            this.btnChart_dT_dTi.Text = "dT, dTi";
+            this.btnChart_dT_dTi.UseVisualStyleBackColor = true;
+            this.btnChart_dT_dTi.Click += new System.EventHandler(this.btnChart_dT_dTi_Click);
             // 
-            // button9
+            // btnChart_Mcp_Mdp
             // 
-            this.button9.Location = new System.Drawing.Point(101, 77);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(91, 23);
-            this.button9.TabIndex = 4;
-            this.button9.Text = "Mcp, Mdp";
-            this.button9.UseVisualStyleBackColor = true;
+            this.btnChart_Mcp_Mdp.Location = new System.Drawing.Point(101, 77);
+            this.btnChart_Mcp_Mdp.Name = "btnChart_Mcp_Mdp";
+            this.btnChart_Mcp_Mdp.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_Mcp_Mdp.TabIndex = 4;
+            this.btnChart_Mcp_Mdp.Text = "Mcp, Mdp";
+            this.btnChart_Mcp_Mdp.UseVisualStyleBackColor = true;
+            this.btnChart_Mcp_Mdp.Click += new System.EventHandler(this.btnChart_Mcp_Mdp_Click);
             // 
-            // button4
+            // btnChart_i2p_A_B_C
             // 
-            this.button4.Location = new System.Drawing.Point(6, 77);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(91, 23);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "i2p, A, B, C";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnChart_i2p_A_B_C.Location = new System.Drawing.Point(6, 77);
+            this.btnChart_i2p_A_B_C.Name = "btnChart_i2p_A_B_C";
+            this.btnChart_i2p_A_B_C.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_i2p_A_B_C.TabIndex = 3;
+            this.btnChart_i2p_A_B_C.Text = "i2p, A, B, C";
+            this.btnChart_i2p_A_B_C.UseVisualStyleBackColor = true;
+            this.btnChart_i2p_A_B_C.Click += new System.EventHandler(this.btnChart_i2p_A_B_C_Click);
             // 
-            // button3
+            // btnChart_i21_i21P
             // 
-            this.button3.Location = new System.Drawing.Point(101, 19);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(91, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "i21, i21P";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnChart_i21_i21P.Location = new System.Drawing.Point(101, 19);
+            this.btnChart_i21_i21P.Name = "btnChart_i21_i21P";
+            this.btnChart_i21_i21P.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_i21_i21P.TabIndex = 2;
+            this.btnChart_i21_i21P.Text = "i21, i21P";
+            this.btnChart_i21_i21P.UseVisualStyleBackColor = true;
+            this.btnChart_i21_i21P.Click += new System.EventHandler(this.btnChart_i21_i21P_Click);
             // 
-            // button2
+            // btnChart_xs2p_ys2p_xs2pp_ys2pp
             // 
-            this.button2.Location = new System.Drawing.Point(6, 48);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(186, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "xS2P, yS2P, xS2PP, yS2PP";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Location = new System.Drawing.Point(6, 48);
+            this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Name = "btnChart_xs2p_ys2p_xs2pp_ys2pp";
+            this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Size = new System.Drawing.Size(186, 23);
+            this.btnChart_xs2p_ys2p_xs2pp_ys2pp.TabIndex = 1;
+            this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Text = "xS2P, yS2P, xS2PP, yS2PP";
+            this.btnChart_xs2p_ys2p_xs2pp_ys2pp.UseVisualStyleBackColor = true;
+            this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Click += new System.EventHandler(this.btnChart_xs2p_ys2p_xs2pp_ys2pp_Click);
             // 
-            // button1
+            // btnChart_sd_i51_i51P
             // 
-            this.button1.Location = new System.Drawing.Point(6, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(91, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "sB, i51, i51P";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnChart_sd_i51_i51P.Location = new System.Drawing.Point(6, 19);
+            this.btnChart_sd_i51_i51P.Name = "btnChart_sd_i51_i51P";
+            this.btnChart_sd_i51_i51P.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_sd_i51_i51P.TabIndex = 0;
+            this.btnChart_sd_i51_i51P.Text = "sB, i51, i51P";
+            this.btnChart_sd_i51_i51P.UseVisualStyleBackColor = true;
+            this.btnChart_sd_i51_i51P.Click += new System.EventHandler(this.btnChart_sd_i51_i51P_Click);
             // 
             // dgvResults
             // 
@@ -1004,12 +1020,29 @@
             // 
             // tpCharts
             // 
+            this.tpCharts.Controls.Add(this.chart1);
             this.tpCharts.Location = new System.Drawing.Point(4, 22);
             this.tpCharts.Name = "tpCharts";
             this.tpCharts.Size = new System.Drawing.Size(899, 448);
             this.tpCharts.TabIndex = 3;
             this.tpCharts.Text = "Графики";
             this.tpCharts.UseVisualStyleBackColor = true;
+            // 
+            // chart1
+            // 
+            chartArea14.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea14);
+            legend14.Name = "Legend1";
+            this.chart1.Legends.Add(legend14);
+            this.chart1.Location = new System.Drawing.Point(19, 3);
+            this.chart1.Name = "chart1";
+            series14.ChartArea = "ChartArea1";
+            series14.Legend = "Legend1";
+            series14.Name = "Series1";
+            this.chart1.Series.Add(series14);
+            this.chart1.Size = new System.Drawing.Size(754, 423);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "chart1";
             // 
             // tabPage1
             // 
@@ -1025,16 +1058,23 @@
             // 
             // dgvLegend
             // 
+            this.dgvLegend.AllowUserToResizeColumns = false;
+            this.dgvLegend.AllowUserToResizeRows = false;
+            this.dgvLegend.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvLegend.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvLegend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLegend.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colTitle,
             this.colNotation,
             this.colIdentificator});
+            this.dgvLegend.GridColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvLegend.Location = new System.Drawing.Point(3, 3);
+            this.dgvLegend.MultiSelect = false;
             this.dgvLegend.Name = "dgvLegend";
+            this.dgvLegend.ReadOnly = true;
+            this.dgvLegend.RowHeadersVisible = false;
             this.dgvLegend.RowHeadersWidth = 25;
-            this.dgvLegend.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvLegend.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvLegend.Size = new System.Drawing.Size(893, 442);
             this.dgvLegend.TabIndex = 0;
             // 
@@ -1043,21 +1083,21 @@
             this.colTitle.HeaderText = "Наименование параметра";
             this.colTitle.Name = "colTitle";
             this.colTitle.ReadOnly = true;
-            this.colTitle.Width = 585;
+            this.colTitle.Width = 166;
             // 
             // colNotation
             // 
             this.colNotation.HeaderText = "Обозначение";
             this.colNotation.Name = "colNotation";
             this.colNotation.ReadOnly = true;
-            this.colNotation.Width = 150;
+            this.colNotation.Width = 99;
             // 
             // colIdentificator
             // 
             this.colIdentificator.HeaderText = "Идентификатор";
             this.colIdentificator.Name = "colIdentificator";
             this.colIdentificator.ReadOnly = true;
-            this.colIdentificator.Width = 150;
+            this.colIdentificator.Width = 112;
             // 
             // MainForm
             // 
@@ -1097,6 +1137,8 @@
             this.groupBox10.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
+            this.tpCharts.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).EndInit();
             this.ResumeLayout(false);
@@ -1148,9 +1190,6 @@
         private System.Windows.Forms.ToolStripMenuItem легендаОбозначенийToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView dgvLegend;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNotation;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colIdentificator;
         private System.Windows.Forms.DataGridView dgvResults;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnStart;
@@ -1162,16 +1201,16 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnChart_omega1;
+        private System.Windows.Forms.Button btnChart_Ac_Ad;
+        private System.Windows.Forms.Button btnChart_e1;
+        private System.Windows.Forms.Button btnChart_T2;
+        private System.Windows.Forms.Button btnChart_dT_dTi;
+        private System.Windows.Forms.Button btnChart_Mcp_Mdp;
+        private System.Windows.Forms.Button btnChart_i2p_A_B_C;
+        private System.Windows.Forms.Button btnChart_i21_i21P;
+        private System.Windows.Forms.Button btnChart_xs2p_ys2p_xs2pp_ys2pp;
+        private System.Windows.Forms.Button btnChart_sd_i51_i51P;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.TextBox tbResTitle3;
         private System.Windows.Forms.TextBox tbResTitle2;
@@ -1195,6 +1234,10 @@
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.ComboBox cbDirection;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNotation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIdentificator;
     }
 }
 
