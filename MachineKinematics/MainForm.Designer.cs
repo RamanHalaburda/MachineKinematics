@@ -121,6 +121,7 @@
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNotation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdentificator = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpInput.SuspendLayout();
@@ -144,6 +145,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).BeginInit();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -1019,7 +1021,7 @@
             // 
             // tpCharts
             // 
-            this.tpCharts.Controls.Add(this.chart1);
+            this.tpCharts.Controls.Add(this.groupBox8);
             this.tpCharts.Location = new System.Drawing.Point(4, 22);
             this.tpCharts.Name = "tpCharts";
             this.tpCharts.Size = new System.Drawing.Size(899, 448);
@@ -1033,13 +1035,13 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(19, 3);
+            this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(754, 423);
+            this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -1082,7 +1084,7 @@
             this.colTitle.HeaderText = "Наименование параметра";
             this.colTitle.Name = "colTitle";
             this.colTitle.ReadOnly = true;
-            this.colTitle.Width = 166;
+            this.colTitle.Width = 151;
             // 
             // colNotation
             // 
@@ -1097,6 +1099,16 @@
             this.colIdentificator.Name = "colIdentificator";
             this.colIdentificator.ReadOnly = true;
             this.colIdentificator.Width = 112;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.chart1);
+            this.groupBox8.Location = new System.Drawing.Point(3, 3);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(893, 442);
+            this.groupBox8.TabIndex = 1;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "groupBox8";
             // 
             // MainForm
             // 
@@ -1140,6 +1152,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).EndInit();
+            this.groupBox8.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1237,6 +1250,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNotation;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdentificator;
+        private System.Windows.Forms.GroupBox groupBox8;
     }
 }
 

@@ -67,8 +67,8 @@ namespace MachineKinematics
         {
             textBox1.Text = "0,25";
             textBox2.Text = "0,1";
-            textBox3.Text = "0,2";
-            textBox4.Text = "0,4";
+            textBox3.Text = "0,4";
+            textBox4.Text = "0,2";
             textBox6.Text = "0,5";
             textBox7.Text = "0,5";
             textBox8.Text = "10";
@@ -126,8 +126,11 @@ namespace MachineKinematics
             Pen arrow = new Pen(Brushes.Black, 1);
             arrow.EndCap = System.Drawing.Drawing2D.LineCap.Round;
 
-            int scale = 600;
+            int scale = 800;
             int scale_L0_OB = (int)(L0 * (double)scale);
+            int scale_L1_OA = (int)(L1 * (double)scale);
+            int scale_L3_BC = (int)(L3 * (double)scale);
+            int scale_L3_BS3 = (int)(L5 * (double)scale);
 
             int x_mid = gbAnimation.Width / 2;
             int x_left = 20;
@@ -137,6 +140,9 @@ namespace MachineKinematics
 
             int fix_x_bottom = x_mid;
             int fix_y_bottom = y_bottom - 10;
+
+            int fix_x_mid = x_mid;
+            int fix_y_mid = y_bottom - 10 - scale_L0_OB;
 
  
             // draw bottom fix point
@@ -148,26 +154,27 @@ namespace MachineKinematics
                 e.Graphics.DrawLine(arrow, i, y_bottom + 15, 5 + i, y_bottom + 10);
 
             // draw fixed point for top slider
+
             // left top line
-            e.Graphics.DrawLine(arrow, x_left + 100, y_top + 10, x_left + 115, y_top + 10);
+            e.Graphics.DrawLine(arrow, x_left + 200, y_top + 10, x_left + 215, y_top + 10);
             // left bottom line
-            e.Graphics.DrawLine(arrow, x_left + 100, y_top + 20, x_left + 115, y_top + 20);
+            e.Graphics.DrawLine(arrow, x_left + 200, y_top + 20, x_left + 215, y_top + 20);
             // left top dash
-            for (int i = (x_left + 100); i <= (x_left + 115 - 3); i = i + 4)
+            for (int i = (x_left + 200); i <= (x_left + 215 - 3); i = i + 4)
                 e.Graphics.DrawLine(arrow, i, y_top + 10, 4 + i, y_top + 5);
             // left bottom dash
-            for (int i = (x_left + 100); i <= (x_left + 115 - 3); i = i + 4)
+            for (int i = (x_left + 200); i <= (x_left + 215 - 3); i = i + 4)
                 e.Graphics.DrawLine(arrow, 4 + i, y_top + 20, i, y_top + 25);
 
             // right top line
-            e.Graphics.DrawLine(arrow, x_right - 100, y_top + 10, x_right - 115, y_top + 10);
+            e.Graphics.DrawLine(arrow, x_right - 200, y_top + 10, x_right - 215, y_top + 10);
             // right bottom line
-            e.Graphics.DrawLine(arrow, x_right - 100, y_top + 20, x_right - 115, y_top + 20);
+            e.Graphics.DrawLine(arrow, x_right - 200, y_top + 20, x_right - 215, y_top + 20);
             // right top dash
-            for (int i = (x_right - 115); i <= (x_right - 100 - 3); i = i + 4)
+            for (int i = (x_right - 215); i <= (x_right - 200 - 3); i = i + 4)
                 e.Graphics.DrawLine(arrow, i, y_top + 10, 4 + i, y_top + 5);
             // right bottom dash
-            for (int i = (x_right - 115); i <= (x_right - 100 - 3); i = i + 4)
+            for (int i = (x_right - 215); i <= (x_right - 200 - 3); i = i + 4)
                 e.Graphics.DrawLine(arrow, 4 + i, y_top + 20, i, y_top + 25);
 
             // draw top slider
@@ -177,12 +184,19 @@ namespace MachineKinematics
             e.Graphics.DrawLine(arrow, x_mid - 15, y_bottom + 10 - scale_L0_OB, x_mid + 15, y_bottom + 10 - scale_L0_OB);
             e.Graphics.DrawLine(arrow, x_mid, y_bottom - 10 - scale_L0_OB, x_mid - 9, y_bottom + 10 - scale_L0_OB);
             e.Graphics.DrawLine(arrow, x_mid, y_bottom - 10 - scale_L0_OB, x_mid + 9, y_bottom + 10 - scale_L0_OB);
-            e.Graphics.DrawEllipse(arrow, x_mid - 3, y_bottom - 10 - 3 - scale_L0_OB, 6, 6 );
+            e.Graphics.DrawEllipse(arrow, x_mid - 3, y_bottom - 10 - 3 - scale_L0_OB, 6, 6);
             for (int i = (x_mid - 15); i <= (x_mid + 15 - 5); i = i + 5)
                 e.Graphics.DrawLine(arrow, i, y_bottom + 15 - scale_L0_OB, 5 + i, y_bottom + 10 - scale_L0_OB);
 
-            //draw bottom rocker
-            //e.Graphics.DrawLine(arrow, fix_x_bottom, fix_y_bottom, fix_x_bottom, fix_y_bottom - (int)(L0 * (double)scale));
+            // draw bottom rocker
+            e.Graphics.DrawLine(arrow, fix_x_bottom, fix_y_bottom, fix_x_bottom, fix_y_bottom - scale_L3_BC);
+
+            // draw mid rocker
+            e.Graphics.DrawLine(arrow, fix_x_mid, fix_y_mid, fix_x_mid + scale_L1_OA, fix_y_mid);
+
+            // draw mid 'поршень'
+            e.Graphics.DrawRectangle(arrow, fix_x_mid + scale_L1_OA, fix_y_mid, 10,20);
+
 
             
 
@@ -266,7 +280,13 @@ namespace MachineKinematics
 
                         fi3[i] = Math.Acos((L1 * Math.Cos(fi_1)) / L[i]);
 
-                        Xc[i] = L3 * cos_fi3[i];
+                        if (i == 0 || i == 12)
+                            Xc[i] = 0f;
+                        else
+                            Xc[i] = L3 * cos_fi3[i];
+                        
+                        dgvResults.Rows[i].Cells[1].Value = String.Format("{0:0.####}", Xc[i]);
+
                         Yc[i] = L3 * sin_fi3[i];
                         Xs3[i] = L5 * cos_fi3[i];
                         Ys3[i] = L5 * sin_fi3[i];
@@ -372,12 +392,14 @@ namespace MachineKinematics
 
         private void btnChart_sd_i51_i51P_Click(object sender, EventArgs e)
         {
-
+            groupBox8.Text = btnChart_sd_i51_i51P.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
         private void btnChart_i21_i21P_Click(object sender, EventArgs e)
         {
-
+            groupBox8.Text = btnChart_i21_i21P.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
         private void btnChart_xs2p_ys2p_xs2pp_ys2pp_Click(object sender, EventArgs e)
@@ -390,7 +412,7 @@ namespace MachineKinematics
             chart1.Series.Add("Ys2pp").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
 
             //chart1.DataSource = dgvResults.DataSource;
-            for (int i = 0; i < dgvResults.RowCount; ++i)
+            for (int i = 0; i < dgvResults.RowCount - 1; ++i)
             {
                 chart1.Series["Xs2p"].Points.AddXY(fi_array[i], Xs3_dash[i]);
                 chart1.Series["Ys2p"].Points.AddXY(fi_array[i], Ys3_dash[i]);
@@ -408,41 +430,51 @@ namespace MachineKinematics
             
             //chart1.Series["Xs2p"].Points.Add(Xs3_dash);
             //chart1.Series["Ys2p"].Points.Add(Ys3_dash);
+
+            groupBox8.Text = btnChart_xs2p_ys2p_xs2pp_ys2pp.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
         private void btnChart_i2p_A_B_C_Click(object sender, EventArgs e)
         {
-
+            groupBox8.Text = btnChart_i2p_A_B_C.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
         private void btnChart_Mcp_Mdp_Click(object sender, EventArgs e)
         {
-
+            groupBox8.Text = btnChart_Mcp_Mdp.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
         private void btnChart_dT_dTi_Click(object sender, EventArgs e)
         {
-
+            groupBox8.Text = btnChart_dT_dTi.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
         private void btnChart_T2_Click(object sender, EventArgs e)
         {
-
+            groupBox8.Text = btnChart_T2.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
         private void btnChart_e1_Click(object sender, EventArgs e)
         {
-
+            groupBox8.Text = btnChart_e1.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
         private void btnChart_omega1_Click(object sender, EventArgs e)
         {
-
+            groupBox8.Text = btnChart_omega1.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
         private void btnChart_Ac_Ad_Click(object sender, EventArgs e)
         {
-
+            groupBox8.Text = btnChart_Ac_Ad.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
 /*=================================================================================================== 
