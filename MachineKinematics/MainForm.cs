@@ -110,10 +110,7 @@ namespace MachineKinematics
                 }
 
             forDebug();
-
-            // run animation
-            this.gbAnimation.Paint += new PaintEventHandler(TabPage_Paint);
-
+            
             // tabPage2
 
             // tabPage3
@@ -124,14 +121,78 @@ namespace MachineKinematics
         }
 
         protected void TabPage_Paint(object sender, PaintEventArgs e)
-        {
-            
+        {            
             base.OnPaint(e);
             Pen arrow = new Pen(Brushes.Black, 1);
             arrow.EndCap = System.Drawing.Drawing2D.LineCap.Round;
 
-            e.Graphics.DrawLine(arrow, 10, 20, 600, 20);
+            int scale = 600;
+            int scale_L0_OB = (int)(L0 * (double)scale);
 
+            int x_mid = gbAnimation.Width / 2;
+            int x_left = 20;
+            int x_right = gbAnimation.Width - 20;
+            int y_top = 20;
+            int y_bottom = gbAnimation.Height - 20;
+
+            int fix_x_bottom = x_mid;
+            int fix_y_bottom = y_bottom - 10;
+
+ 
+            // draw bottom fix point
+            e.Graphics.DrawLine(arrow, x_mid - 15, y_bottom + 10, x_mid + 15, y_bottom + 10);
+            e.Graphics.DrawLine(arrow, x_mid, y_bottom - 10, x_mid - 9, y_bottom + 10);
+            e.Graphics.DrawLine(arrow, x_mid, y_bottom - 10, x_mid + 9, y_bottom + 10);
+            e.Graphics.DrawEllipse(arrow, x_mid - 3, y_bottom - 10 - 3, 6, 6);
+            for (int i = (x_mid - 15); i <= (x_mid + 15 - 5); i = i + 5)
+                e.Graphics.DrawLine(arrow, i, y_bottom + 15, 5 + i, y_bottom + 10);
+
+            // draw fixed point for top slider
+            // left top line
+            e.Graphics.DrawLine(arrow, x_left + 100, y_top + 10, x_left + 115, y_top + 10);
+            // left bottom line
+            e.Graphics.DrawLine(arrow, x_left + 100, y_top + 20, x_left + 115, y_top + 20);
+            // left top dash
+            for (int i = (x_left + 100); i <= (x_left + 115 - 3); i = i + 4)
+                e.Graphics.DrawLine(arrow, i, y_top + 10, 4 + i, y_top + 5);
+            // left bottom dash
+            for (int i = (x_left + 100); i <= (x_left + 115 - 3); i = i + 4)
+                e.Graphics.DrawLine(arrow, 4 + i, y_top + 20, i, y_top + 25);
+
+            // right top line
+            e.Graphics.DrawLine(arrow, x_right - 100, y_top + 10, x_right - 115, y_top + 10);
+            // right bottom line
+            e.Graphics.DrawLine(arrow, x_right - 100, y_top + 20, x_right - 115, y_top + 20);
+            // right top dash
+            for (int i = (x_right - 115); i <= (x_right - 100 - 3); i = i + 4)
+                e.Graphics.DrawLine(arrow, i, y_top + 10, 4 + i, y_top + 5);
+            // right bottom dash
+            for (int i = (x_right - 115); i <= (x_right - 100 - 3); i = i + 4)
+                e.Graphics.DrawLine(arrow, 4 + i, y_top + 20, i, y_top + 25);
+
+            // draw top slider
+            e.Graphics.DrawLine(arrow, x_left + 50, y_top + 15, x_right - 50, y_top + 15);
+
+            // draw mid fix point
+            e.Graphics.DrawLine(arrow, x_mid - 15, y_bottom + 10 - scale_L0_OB, x_mid + 15, y_bottom + 10 - scale_L0_OB);
+            e.Graphics.DrawLine(arrow, x_mid, y_bottom - 10 - scale_L0_OB, x_mid - 9, y_bottom + 10 - scale_L0_OB);
+            e.Graphics.DrawLine(arrow, x_mid, y_bottom - 10 - scale_L0_OB, x_mid + 9, y_bottom + 10 - scale_L0_OB);
+            e.Graphics.DrawEllipse(arrow, x_mid - 3, y_bottom - 10 - 3 - scale_L0_OB, 6, 6 );
+            for (int i = (x_mid - 15); i <= (x_mid + 15 - 5); i = i + 5)
+                e.Graphics.DrawLine(arrow, i, y_bottom + 15 - scale_L0_OB, 5 + i, y_bottom + 10 - scale_L0_OB);
+
+            //draw bottom rocker
+            //e.Graphics.DrawLine(arrow, fix_x_bottom, fix_y_bottom, fix_x_bottom, fix_y_bottom - (int)(L0 * (double)scale));
+
+            
+
+
+
+            /*
+            e.Graphics.DrawLine(arrow, 10, 20, 610, 20);
+            for(int i = 10; i <= 610; i = i + 20 )
+                e.Graphics.DrawLine(arrow, i, 20, 10 + i, 30);
+            */
             /*
             for (int i = 0; i < 10; i += 5)
             {
@@ -257,6 +318,9 @@ namespace MachineKinematics
                 }
 
                 tabControl1.SelectedIndex = 2;
+
+                // run animation
+                this.gbAnimation.Paint += new PaintEventHandler(TabPage_Paint);
             }
             else
             {

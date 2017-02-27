@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,7 +85,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tpAnimation = new System.Windows.Forms.TabPage();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.gbAnimation = new System.Windows.Forms.GroupBox();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -716,7 +716,7 @@
             // 
             // tpAnimation
             // 
-            this.tpAnimation.Controls.Add(this.groupBox8);
+            this.tpAnimation.Controls.Add(this.gbAnimation);
             this.tpAnimation.Controls.Add(this.btnStop);
             this.tpAnimation.Controls.Add(this.btnStart);
             this.tpAnimation.Controls.Add(this.comboBox1);
@@ -727,17 +727,16 @@
             this.tpAnimation.TabIndex = 1;
             this.tpAnimation.Text = "Анимация";
             this.tpAnimation.UseVisualStyleBackColor = true;
-            this.tpAnimation.Paint += new System.Windows.Forms.PaintEventHandler(this.TabPage_Paint);
             // 
-            // groupBox8
+            // gbAnimation
             // 
-            this.groupBox8.Location = new System.Drawing.Point(6, 45);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(671, 308);
-            this.groupBox8.TabIndex = 7;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "groupBox8";
-            this.groupBox8.Paint += new System.Windows.Forms.PaintEventHandler(this.TabPage_Paint);
+            this.gbAnimation.Location = new System.Drawing.Point(6, 35);
+            this.gbAnimation.Name = "gbAnimation";
+            this.gbAnimation.Size = new System.Drawing.Size(887, 410);
+            this.gbAnimation.TabIndex = 7;
+            this.gbAnimation.TabStop = false;
+            this.gbAnimation.Text = "groupBox8";
+            this.gbAnimation.Paint += new System.Windows.Forms.PaintEventHandler(this.TabPage_Paint);
             // 
             // btnStop
             // 
@@ -1030,16 +1029,16 @@
             // 
             // chart1
             // 
-            chartArea14.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea14);
-            legend14.Name = "Legend1";
-            this.chart1.Legends.Add(legend14);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(19, 3);
             this.chart1.Name = "chart1";
-            series14.ChartArea = "ChartArea1";
-            series14.Legend = "Legend1";
-            series14.Name = "Series1";
-            this.chart1.Series.Add(series14);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(754, 423);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1194,7 +1193,7 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.GroupBox gbAnimation;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button8;
