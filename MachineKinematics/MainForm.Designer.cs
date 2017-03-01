@@ -115,13 +115,14 @@
             this.btnChart_sd_i51_i51P = new System.Windows.Forms.Button();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.tpCharts = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dgvLegend = new System.Windows.Forms.DataGridView();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNotation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdentificator = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.btnChart_xc_dash = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpInput.SuspendLayout();
@@ -142,10 +143,10 @@
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.tpCharts.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).BeginInit();
-            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -894,6 +895,7 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.btnChart_xc_dash);
             this.groupBox9.Controls.Add(this.btnChart_omega1);
             this.groupBox9.Controls.Add(this.btnChart_Ac_Ad);
             this.groupBox9.Controls.Add(this.btnChart_e1);
@@ -915,7 +917,7 @@
             // 
             this.btnChart_omega1.Location = new System.Drawing.Point(6, 135);
             this.btnChart_omega1.Name = "btnChart_omega1";
-            this.btnChart_omega1.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_omega1.Size = new System.Drawing.Size(46, 23);
             this.btnChart_omega1.TabIndex = 9;
             this.btnChart_omega1.Text = "ω1";
             this.btnChart_omega1.UseVisualStyleBackColor = true;
@@ -1029,6 +1031,16 @@
             this.tpCharts.Text = "Графики";
             this.tpCharts.UseVisualStyleBackColor = true;
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.chart1);
+            this.groupBox8.Location = new System.Drawing.Point(3, 3);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(893, 442);
+            this.groupBox8.TabIndex = 1;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "groupBox8";
+            // 
             // chart1
             // 
             chartArea1.Name = "ChartArea1";
@@ -1100,15 +1112,15 @@
             this.colIdentificator.ReadOnly = true;
             this.colIdentificator.Width = 112;
             // 
-            // groupBox8
+            // btnChart_xc_dash
             // 
-            this.groupBox8.Controls.Add(this.chart1);
-            this.groupBox8.Location = new System.Drawing.Point(3, 3);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(893, 442);
-            this.groupBox8.TabIndex = 1;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "groupBox8";
+            this.btnChart_xc_dash.Location = new System.Drawing.Point(53, 135);
+            this.btnChart_xc_dash.Name = "btnChart_xc_dash";
+            this.btnChart_xc_dash.Size = new System.Drawing.Size(44, 23);
+            this.btnChart_xc_dash.TabIndex = 10;
+            this.btnChart_xc_dash.Text = "Xc\'";
+            this.btnChart_xc_dash.UseVisualStyleBackColor = true;
+            this.btnChart_xc_dash.Click += new System.EventHandler(this.btnChart_xc_dash_Click);
             // 
             // MainForm
             // 
@@ -1149,10 +1161,10 @@
             this.groupBox9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
             this.tpCharts.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).EndInit();
-            this.groupBox8.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1251,6 +1263,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colNotation;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdentificator;
         private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Button btnChart_xc_dash;
     }
 }
 

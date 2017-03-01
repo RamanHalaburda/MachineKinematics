@@ -49,6 +49,7 @@ namespace MachineKinematics
         double[] Ya_dash = new double[13]; // Uay 
         double[] Ua3a2 = new double[13];
         double[] i31 = new double[13];
+        double[] Sd = new double[13]; // SD 'перемещение ползуна'
         double[] Xc_dash = new double[13];  // Ucx
         double[] Yc_dash = new double[13];  // Ucy 
         double[] Uc = new double[13];
@@ -65,14 +66,14 @@ namespace MachineKinematics
 
         private void forDebug()
         {
-            textBox1.Text = "0,25";
-            textBox2.Text = "0,1";
-            textBox3.Text = "0,4";
-            textBox4.Text = "0,2";
-            textBox6.Text = "0,5";
-            textBox7.Text = "0,5";
+            textBox1.Text = "0,3457";
+            textBox2.Text = "0,15";
+            textBox3.Text = "0,6914";
+            textBox4.Text = "0,6";
+            textBox6.Text = "1";
+            textBox7.Text = "1";
             textBox8.Text = "10";
-            textBox9.Text = "100";
+            textBox9.Text = "9,42";
             textBox10.Text = "0,05";
             textBox11.Text = "0,1";
         }
@@ -126,7 +127,7 @@ namespace MachineKinematics
             Pen arrow = new Pen(Brushes.Black, 1);
             arrow.EndCap = System.Drawing.Drawing2D.LineCap.Round;
 
-            int scale = 800;
+            int scale = 400;
             int scale_L0_OB = (int)(L0 * (double)scale);
             int scale_L1_OA = (int)(L1 * (double)scale);
             int scale_L3_BC = (int)(L3 * (double)scale);
@@ -270,22 +271,25 @@ namespace MachineKinematics
                         dgvResults.Rows[i].HeaderCell.Value = String.Format("{0:0.####}", fi_1);
                         fi_array[i] = fi_1;
 
-                        Xa[i] = L1 * Math.Cos(fi_1);
-                        Ya[i] = L1 * Math.Sin(fi_1);
+                        Xa[i] = L1 * Math.Cos(fi_1 * Math.PI / 180);
+                        Ya[i] = L1 * Math.Sin(fi_1 * Math.PI / 180);
 
-                        L[i] = Math.Sqrt(Math.Pow(L0, 2) + Math.Pow(L1, 2) + 2 * L0 * L1 * Math.Sin(fi_1));
+                        L[i] = Math.Sqrt(Math.Pow(L0, 2) + Math.Pow(L1, 2) + 2 * L0 * L1 * Math.Sin(fi_1 * Math.PI / 180F));
 
-                        cos_fi3[i] = (L1 * Math.Cos(fi_1)) / L[i];
-                        sin_fi3[i] = (L0 + L1 * Math.Sin(fi_1)) / L[i];
+                        cos_fi3[i] = (L1 * Math.Cos(fi_1 * Math.PI / 180)) / L[i];
+                        tbResValue3.Text = Convert.ToString(cos_fi3[0]);
+                        sin_fi3[i] = (L0 + L1 * Math.Sin(fi_1 * Math.PI / 180)) / L[i];
 
-                        fi3[i] = Math.Acos((L1 * Math.Cos(fi_1)) / L[i]);
-
+                        fi3[i] = Math.Acos((L1 * Math.Cos(fi_1 * Math.PI / 180)) / L[i]) * (180 / Math.PI);
+                        /*
                         if (i == 0 || i == 12)
                             Xc[i] = 0f;
                         else
                             Xc[i] = L3 * cos_fi3[i];
+                        */
+                        Xc[i] = L3 * cos_fi3[i];
                         
-                        dgvResults.Rows[i].Cells[1].Value = String.Format("{0:0.####}", Xc[i]);
+                        //dgvResults.Rows[i].Cells[1].Value = String.Format("{0:0.####}", Xc[i]);
 
                         Yc[i] = L3 * sin_fi3[i];
                         Xs3[i] = L5 * cos_fi3[i];
@@ -296,12 +300,17 @@ namespace MachineKinematics
 // =============== second part of calculating =================
                     try
                     {
-                        Xa_dash[i] = -L1 * Math.Sin(fi_1);
-                        Ya_dash[i] = L1 * Math.Cos(fi_1);
+                        Xa_dash[i] = -L1 * Math.Sin(fi_1 * Math.PI / 180);
+                        Ya_dash[i] = L1 * Math.Cos(fi_1 * Math.PI / 180);
 
-                        Ua3a2[i] = -L1 * Math.Sin(fi_1 - fi3[i]);
-                        i31[i] = (L1 / L[i]) * Math.Cos(fi_1 - fi3[i]);
+                        Ua3a2[i] = -L1 * Math.Sin((fi_1 - fi3[i]) * Math.PI / 180);
+                        i31[i] = (L1 / L[i]) * Math.Cos((fi_1 - fi3[i]) * Math.PI / 180);
+                        tbResValue1.Text = Convert.ToString(fi3[0]);
+                        tbResValue2.Text = Convert.ToString(L[0]);
                         dgvResults.Rows[i].Cells[2].Value = String.Format("{0:0.####}", i31[i]);
+
+                        Sd[i] = Xc[i] - L3 * cos_fi3[0];
+                        dgvResults.Rows[i].Cells[1].Value = String.Format("{0:0.####}", Sd[i]);
 
                         Xc_dash[i] = (-i31[i]) * L3 * sin_fi3[i];
                         Yc_dash[i] = i31[i] * L3 * cos_fi3[i];
@@ -315,7 +324,7 @@ namespace MachineKinematics
 
                         Us5[i] = Xc_dash[i];
 
-                        i31_dash[i] = (Math.Pow(i31[i], 2) * sin_fi3[i] - (L1 * Math.Sin(fi_1) / L[i])) / cos_fi3[i];
+                        i31_dash[i] = (Math.Pow(i31[i], 2) * sin_fi3[i] - (L1 * Math.Sin(fi_1 * Math.PI / 180) / L[i])) / cos_fi3[i];
                         dgvResults.Rows[i].Cells[3].Value = String.Format("{0:0.####}", i31_dash[i]);
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
@@ -392,8 +401,21 @@ namespace MachineKinematics
 
         private void btnChart_sd_i51_i51P_Click(object sender, EventArgs e)
         {
+            chart1.Series.Clear();
+
+            chart1.Series.Add("Sd").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("i31").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("i31'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+
             groupBox8.Text = btnChart_sd_i51_i51P.Text;
             tabControl1.SelectedIndex = 3;
+
+            for (int i = 0; i < dgvResults.RowCount - 1; ++i)
+            {
+                chart1.Series["Sd"].Points.AddXY(fi_array[i], Sd[i]);
+                chart1.Series["i31"].Points.AddXY(fi_array[i], i31[i]);
+                chart1.Series["i31'"].Points.AddXY(fi_array[i], i31_dash[i]);
+            }
         }
 
         private void btnChart_i21_i21P_Click(object sender, EventArgs e)
@@ -414,10 +436,10 @@ namespace MachineKinematics
             //chart1.DataSource = dgvResults.DataSource;
             for (int i = 0; i < dgvResults.RowCount - 1; ++i)
             {
-                chart1.Series["Xs2p"].Points.AddXY(fi_array[i], Xs3_dash[i]);
-                chart1.Series["Ys2p"].Points.AddXY(fi_array[i], Ys3_dash[i]);
-                chart1.Series["Xs2pp"].Points.AddXY(fi_array[i], Xs3_doubledash[i]);
-                chart1.Series["Ys2pp"].Points.AddXY(fi_array[i], Ys3_doubledash[i]);
+                chart1.Series["Xs2p"].Points.AddXY(i, Xs3_dash[i]);
+                chart1.Series["Ys2p"].Points.AddXY(i, Ys3_dash[i]);
+                chart1.Series["Xs2pp"].Points.AddXY(i, Xs3_doubledash[i]);
+                chart1.Series["Ys2pp"].Points.AddXY(i, Ys3_doubledash[i]);
                 //chart1.Series["Xs2p"].Points.AddXY(Xs3_dash[i], Ys3_dash[i]);
                 /*
                 chart1.Series["Xs2p"].Points.AddXY(dgvResults.Rows[i].Cells[4].Value, dgvResults.Rows[i].Cells[5].Value);
@@ -477,6 +499,23 @@ namespace MachineKinematics
             tabControl1.SelectedIndex = 3;
         }
 
+        private void btnChart_xc_dash_Click(object sender, EventArgs e)
+        {
+            chart1.Series.Clear();
+
+            chart1.Series.Add("Xc'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+
+            groupBox8.Text = btnChart_xc_dash.Text;
+            tabControl1.SelectedIndex = 3;
+
+            for (int i = 0; i < dgvResults.RowCount; ++i)
+            {
+                chart1.Series["Xc'"].Points.AddXY(i, Xc_dash[i]);
+                //chart1.Series["Ys2p"].Points.AddXY(fi_array[i], i3 [i]);
+                //chart1.Series["Xs2pp"].Points.AddXY(fi_array[i], Xs3_doubledash[i]);
+            }
+        }
+
 /*=================================================================================================== 
  *=== Validate input data  
  *===================================================================================================*/
@@ -502,7 +541,7 @@ namespace MachineKinematics
             double OA = 0;
             if (Double.TryParse(textBox2.Text, out OA) && Double.TryParse(textBox1.Text, out OB))
             {
-                double fi = 270 + Math.Acos(OA / OB) * (180 / Math.PI);
+                double fi = 270 - Math.Acos(OA / OB) * (180 / Math.PI);
                 if (Double.IsNaN(fi) || Double.IsInfinity(fi))
                 {
                     throw new ArgumentException("Угол φ не найден.\nПрограмма обнуляет значения.\nПопробуйте снова.");
@@ -746,6 +785,6 @@ namespace MachineKinematics
             dgvLegend.Rows[29].Cells[0].Value = "Угловое ускорение кривошипа";
             dgvLegend.Rows[29].Cells[1].Value = "ε₁";
             dgvLegend.Rows[29].Cells[2].Value = "e1";
-        }
+        }        
     }
 }
