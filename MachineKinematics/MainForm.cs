@@ -93,22 +93,12 @@ namespace MachineKinematics
             for (int i = 0; i < 13; ++i)
                 dgvTitles.Rows[i].Cells[0].Value = "Fpc" + (i + 1) + " =";
             dgvTitles.Enabled = false;
-            cbDirection.SelectedIndex = 0;
+            cbDirection.SelectedIndex = 1;
 
             lbl1.Text = lbl2.Text = lbl3.Text = lbl4.Text = lbl5.Text = lbl6.Text = lbl7.Text =
                 lbl8.Text = lbl9.Text = lbl10.Text = lbl11.Text = "\u2715";
 
-            for (int i = 0; i <= 12; ++i)
-                if (i > 0 && i < 6)
-                {
-                    dgvInput.Rows[i].Cells[0].Value = 2000;
-                    Fpc[i] = 2000F;
-                }
-                else
-                {
-                    dgvInput.Rows[i].Cells[0].Value = 100;
-                    Fpc[i] = 100F;
-                }
+            fillDgvInput();
 
             forDebug();
             
@@ -214,8 +204,8 @@ namespace MachineKinematics
                 e.Graphics.DrawLine(arrow, 200 + i, 200 + i, 100 + i, 100 + i);
                 Thread.Sleep(500);
             }
-            arrow.Dispose();*/
-            
+            */
+            arrow.Dispose();
         }
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
@@ -356,40 +346,7 @@ namespace MachineKinematics
                 MessageBox.Show("Что-то пошло не так!");
             }
         }
-        
-        private Boolean checkInput()
-        {
-            if (lbl1.Text == "\u2714" && lbl2.Text == "\u2714" && lbl3.Text == "\u2714"
-                && lbl4.Text == "\u2714" && lbl5.Text == "\u2714" && lbl6.Text == "\u2714"
-                && lbl7.Text == "\u2714" && lbl8.Text == "\u2714" && lbl9.Text == "\u2714"
-                && lbl10.Text == "\u2714" && lbl11.Text == "\u2714")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
-        private void fillColumnHeaderResult()
-        {
-            dgvResults.ColumnCount = 8;
-            dgvResults.RowCount = 13;
-            dgvResults.RowHeadersWidth = 90;
-            for (int i = 0; i < dgvResults.ColumnCount; ++i)
-                dgvResults.Columns[i].Width = 60;
-
-            dgvResults.Columns[0].HeaderText = "φo";
-            dgvResults.Columns[1].HeaderCell.Value = "Sd";
-            dgvResults.Columns[2].HeaderCell.Value = "i31";
-            dgvResults.Columns[3].HeaderCell.Value = "i31p";
-            dgvResults.Columns[4].HeaderCell.Value = "x3p";
-            dgvResults.Columns[5].HeaderCell.Value = "y3p";
-            dgvResults.Columns[6].HeaderCell.Value = "x3pp";
-            dgvResults.Columns[7].HeaderCell.Value = "y3pp";
-        }
-        
         private void легендаОбозначенийToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedIndex = 4;
@@ -519,6 +476,21 @@ namespace MachineKinematics
 /*=================================================================================================== 
  *=== Validate input data  
  *===================================================================================================*/
+
+        private Boolean checkInput()
+        {
+            if (lbl1.Text == "\u2714" && lbl2.Text == "\u2714" && lbl3.Text == "\u2714"
+                && lbl4.Text == "\u2714" && lbl5.Text == "\u2714" && lbl6.Text == "\u2714"
+                && lbl7.Text == "\u2714" && lbl8.Text == "\u2714" && lbl9.Text == "\u2714"
+                && lbl10.Text == "\u2714" && lbl11.Text == "\u2714")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         private void dgvInput_CurrentCellChanged(object sender, EventArgs e)
         {
@@ -661,6 +633,42 @@ namespace MachineKinematics
                 e.Handled = true;
             }
         }
+/*=================================================================================================== 
+ *=== filling some fields  
+ *===================================================================================================*/
+
+        private void fillColumnHeaderResult()
+        {
+            dgvResults.ColumnCount = 8;
+            dgvResults.RowCount = 13;
+            dgvResults.RowHeadersWidth = 90;
+            for (int i = 0; i < dgvResults.ColumnCount; ++i)
+                dgvResults.Columns[i].Width = 60;
+
+            dgvResults.Columns[0].HeaderText = "φo";
+            dgvResults.Columns[1].HeaderCell.Value = "Sd";
+            dgvResults.Columns[2].HeaderCell.Value = "i31";
+            dgvResults.Columns[3].HeaderCell.Value = "i31p";
+            dgvResults.Columns[4].HeaderCell.Value = "x3p";
+            dgvResults.Columns[5].HeaderCell.Value = "y3p";
+            dgvResults.Columns[6].HeaderCell.Value = "x3pp";
+            dgvResults.Columns[7].HeaderCell.Value = "y3pp";
+        }
+
+        private void fillDgvInput()
+        {
+            for (int i = 0; i <= 12; ++i)
+                if (i > 4 && i < 11)
+                {
+                    dgvInput.Rows[i].Cells[0].Value = 2500;
+                    Fpc[i] = 2500F;
+                }
+                else
+                {
+                    dgvInput.Rows[i].Cells[0].Value = 5000;
+                    Fpc[i] = 5000F;
+                }
+        }
 
 /*=================================================================================================== 
  *=== fill dgvLegend 
@@ -785,6 +793,22 @@ namespace MachineKinematics
             dgvLegend.Rows[29].Cells[0].Value = "Угловое ускорение кривошипа";
             dgvLegend.Rows[29].Cells[1].Value = "ε₁";
             dgvLegend.Rows[29].Cells[2].Value = "e1";
-        }        
+        }
+
+/*=================================================================================================== 
+ *=== some math  
+ *===================================================================================================*/
+
+        double angleToRadian(double param)
+        {
+            return (param * Math.PI / 180F);
+        }
+
+        double radianToAngle(double param)
+        {
+            return (param * 180F / Math.PI);
+        }
+
+
     }
 }
