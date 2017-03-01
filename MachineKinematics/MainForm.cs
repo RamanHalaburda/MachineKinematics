@@ -22,7 +22,9 @@ namespace MachineKinematics
         double L5 = 0; // Lbs3
         double fi_zero = 0; // pseudo-constant
         double fi_clone = 0; // for iterations
-        double[] fi_array = new double[13];
+        const double delta_fi = 2F;
+        const UInt16 dimension = 181;
+        double[] fi_array = new double[dimension];
         double m3 = 0;
         double m4 = 0;
         double Is4 = 0;
@@ -30,39 +32,39 @@ namespace MachineKinematics
         double delta = 0;
         double I_0_p = 0;
 
-        double[] Fpc = new double[13]; // the forces of useful resistance
+        double[] Fpc = new double[dimension]; // the forces of useful resistance
 
         // first step
-        double[] Xa = new double[13];
-        double[] Ya = new double[13];
-        double[] L = new double[13];
-        double[] cos_fi3 = new double[13];
-        double[] sin_fi3 = new double[13];
-        double[] fi3 = new double[13];
-        double[] Xc = new double[13];
-        double[] Yc = new double[13];
-        double[] Xs3 = new double[13];
-        double[] Ys3 = new double[13];
+        double[] Xa = new double[dimension];
+        double[] Ya = new double[dimension];
+        double[] L = new double[dimension];
+        double[] cos_fi3 = new double[dimension];
+        double[] sin_fi3 = new double[dimension];
+        double[] fi3 = new double[dimension];
+        double[] Xc = new double[dimension];
+        double[] Yc = new double[dimension];
+        double[] Xs3 = new double[dimension];
+        double[] Ys3 = new double[dimension];
 
         // second step
-        double[] Xa_dash = new double[13]; // Uax 
-        double[] Ya_dash = new double[13]; // Uay 
-        double[] Ua3a2 = new double[13];
-        double[] i31 = new double[13];
-        double[] Sd = new double[13]; // SD 'перемещение ползуна'
-        double[] Xc_dash = new double[13];  // Ucx
-        double[] Yc_dash = new double[13];  // Ucy 
-        double[] Uc = new double[13];
-        double[] Xs3_dash = new double[13]; // Us3x 
-        double[] Ys3_dash = new double[13]; // Us3y
-        double[] Us3 = new double[13];
-        double[] Us5 = new double[13];
-        double[] i31_dash = new double[13];
+        double[] Xa_dash = new double[dimension]; // Uax 
+        double[] Ya_dash = new double[dimension]; // Uay 
+        double[] Ua3a2 = new double[dimension];
+        double[] i31 = new double[dimension];
+        double[] Sd = new double[dimension]; // SD 'перемещение ползуна'
+        double[] Xc_dash = new double[dimension];  // Ucx
+        double[] Yc_dash = new double[dimension];  // Ucy 
+        double[] Uc = new double[dimension];
+        double[] Xs3_dash = new double[dimension]; // Us3x 
+        double[] Ys3_dash = new double[dimension]; // Us3y
+        double[] Us3 = new double[dimension];
+        double[] Us5 = new double[dimension];
+        double[] i31_dash = new double[dimension];
 
         // added
-        double[] Xs3_doubledash = new double[13];
-        double[] Ys3_doubledash = new double[13];
-        double[] is51_dash = new double[13];
+        double[] Xs3_doubledash = new double[dimension];
+        double[] Ys3_doubledash = new double[dimension];
+        double[] is51_dash = new double[dimension];
 
         private void forDebug()
         {
@@ -99,7 +101,6 @@ namespace MachineKinematics
                 lbl8.Text = lbl9.Text = lbl10.Text = lbl11.Text = "\u2715";
 
             fillDgvInput();
-
             forDebug();
             
             // tabPage2
@@ -241,9 +242,9 @@ namespace MachineKinematics
                 
                 Double.TryParse(textBox11.Text , out I_0_p);
 
-                int i = 0;
+                int i = 0, j = 0;
                 double fi_1 = 0F;
-                for (fi_1 = fi_clone; i < 13; ++i)
+                for (fi_1 = fi_clone; i < dimension; ++i)
                 {
                     if (fi_1 < 0)
                     {
@@ -255,85 +256,89 @@ namespace MachineKinematics
                         fi_1 = fi_1 - 360;
                     }
 
-// =============== first part of calculating =================
+                    // =============== first part of calculating =================
                     try
                     {
-                        dgvResults.Rows[i].HeaderCell.Value = String.Format("{0:0.####}", fi_1);
+
                         fi_array[i] = fi_1;
 
-                        Xa[i] = L1 * Math.Cos(fi_1 * Math.PI / 180);
-                        Ya[i] = L1 * Math.Sin(fi_1 * Math.PI / 180);
+                        Xa[i] = L1 * Math.Cos(degToRad(fi_1));
+                        Ya[i] = L1 * Math.Sin(degToRad(fi_1));
 
-                        L[i] = Math.Sqrt(Math.Pow(L0, 2) + Math.Pow(L1, 2) + 2 * L0 * L1 * Math.Sin(fi_1 * Math.PI / 180F));
+                        L[i] = Math.Sqrt(Math.Pow(L0, 2) + Math.Pow(L1, 2) + 2 * L0 * L1 * Math.Sin(degToRad(fi_1)));
 
-                        cos_fi3[i] = (L1 * Math.Cos(fi_1 * Math.PI / 180)) / L[i];
+                        cos_fi3[i] = (L1 * Math.Cos(degToRad(fi_1))) / L[i];
+                        /*for debug*/
                         tbResValue3.Text = Convert.ToString(cos_fi3[0]);
-                        sin_fi3[i] = (L0 + L1 * Math.Sin(fi_1 * Math.PI / 180)) / L[i];
+                        sin_fi3[i] = (L0 + L1 * Math.Sin(degToRad(fi_1))) / L[i];
 
-                        fi3[i] = Math.Acos((L1 * Math.Cos(fi_1 * Math.PI / 180)) / L[i]) * (180 / Math.PI);
-                        /*
-                        if (i == 0 || i == 12)
-                            Xc[i] = 0f;
-                        else
-                            Xc[i] = L3 * cos_fi3[i];
-                        */
+                        fi3[i] = radToDeg(Math.Acos((L1 * Math.Cos(degToRad(fi_1))) / L[i]));
+
                         Xc[i] = L3 * cos_fi3[i];
-                        
-                        //dgvResults.Rows[i].Cells[1].Value = String.Format("{0:0.####}", Xc[i]);
-
                         Yc[i] = L3 * sin_fi3[i];
                         Xs3[i] = L5 * cos_fi3[i];
                         Ys3[i] = L5 * sin_fi3[i];
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
-// =============== second part of calculating =================
+                    // =============== second part of calculating =================
                     try
                     {
-                        Xa_dash[i] = -L1 * Math.Sin(fi_1 * Math.PI / 180);
-                        Ya_dash[i] = L1 * Math.Cos(fi_1 * Math.PI / 180);
+                        Xa_dash[i] = -L1 * Math.Sin(degToRad(fi_1));
+                        Ya_dash[i] = L1 * Math.Cos(degToRad(fi_1));
 
-                        Ua3a2[i] = -L1 * Math.Sin((fi_1 - fi3[i]) * Math.PI / 180);
-                        i31[i] = (L1 / L[i]) * Math.Cos((fi_1 - fi3[i]) * Math.PI / 180);
+                        Ua3a2[i] = -L1 * Math.Sin(degToRad(fi_1 - fi3[i]));
+                        i31[i] = (L1 / L[i]) * Math.Cos(degToRad(fi_1 - fi3[i]));
+                        /*for debug*/
                         tbResValue1.Text = Convert.ToString(fi3[0]);
+                        /*for debug*/
                         tbResValue2.Text = Convert.ToString(L[0]);
-                        dgvResults.Rows[i].Cells[2].Value = String.Format("{0:0.####}", i31[i]);
 
                         Sd[i] = Xc[i] - L3 * cos_fi3[0];
-                        dgvResults.Rows[i].Cells[1].Value = String.Format("{0:0.####}", Sd[i]);
 
                         Xc_dash[i] = (-i31[i]) * L3 * sin_fi3[i];
                         Yc_dash[i] = i31[i] * L3 * cos_fi3[i];
                         Uc[i] = i31[i] * L5;
 
                         Xs3_dash[i] = (-i31[i]) * L5 * sin_fi3[i];
-                        dgvResults.Rows[i].Cells[4].Value = String.Format("{0:0.####}", Xs3_dash[i]);
                         Ys3_dash[i] = i31[i] * L5 * cos_fi3[i];
-                        dgvResults.Rows[i].Cells[5].Value = String.Format("{0:0.####}", Ys3_dash[i]);
+
                         Us3[i] = i31[i] * L5;
 
                         Us5[i] = Xc_dash[i];
 
-                        i31_dash[i] = (Math.Pow(i31[i], 2) * sin_fi3[i] - (L1 * Math.Sin(fi_1 * Math.PI / 180) / L[i])) / cos_fi3[i];
-                        dgvResults.Rows[i].Cells[3].Value = String.Format("{0:0.####}", i31_dash[i]);
+                        i31_dash[i] = (Math.Pow(i31[i], 2) * sin_fi3[i] - (L1 * Math.Sin(degToRad(fi_1)) / L[i])) / cos_fi3[i];
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
-// =============== added part of calculating =================
+                    // =============== added part of calculating =================
                     try
                     {
                         Xs3_doubledash[i] = (-L5) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
-                        dgvResults.Rows[i].Cells[6].Value = String.Format("{0:0.####}", Xs3_doubledash[i]);
                         Ys3_doubledash[i] = L5 * (i31_dash[i] * cos_fi3[i] - Math.Pow(i31[i], 2) * sin_fi3[i]);
-                        dgvResults.Rows[i].Cells[7].Value = String.Format("{0:0.####}", Ys3_doubledash[i]);
                         is51_dash[i] = (-L3) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
+                    if ((i % 15 == 0) || (i == 0))
+                    {
+                        
+                        dgvResults.Rows[j].HeaderCell.Value = String.Format("{0:0.#####}", j);
+                        dgvResults.Rows[j].Cells[0].Value = String.Format("{0:0.#####}", fi_1);
+                        dgvResults.Rows[j].Cells[1].Value = String.Format("{0:0.#####}", Sd[j]);
+                        dgvResults.Rows[j].Cells[2].Value = String.Format("{0:0.#####}", i31[j]);
+                        dgvResults.Rows[j].Cells[3].Value = String.Format("{0:0.#####}", i31_dash[j]);
+                        dgvResults.Rows[j].Cells[4].Value = String.Format("{0:0.#####}", Xs3_dash[j]);
+                        dgvResults.Rows[j].Cells[5].Value = String.Format("{0:0.#####}", Ys3_dash[j]);
+                        dgvResults.Rows[j].Cells[6].Value = String.Format("{0:0.#####}", Xs3_doubledash[j]);
+                        dgvResults.Rows[j].Cells[7].Value = String.Format("{0:0.#####}", Ys3_doubledash[j]);
+                        ++j;
+                    }
+
                     if (cbDirection.SelectedIndex == 0)
-                        fi_1 -= 30;
+                        fi_1 -= delta_fi;
                     else
-                        fi_1 += 30;
+                        fi_1 += delta_fi;
                 }
 
                 tabControl1.SelectedIndex = 2;
@@ -799,12 +804,12 @@ namespace MachineKinematics
  *=== some math  
  *===================================================================================================*/
 
-        double angleToRadian(double param)
+        double degToRad(double param)
         {
             return (param * Math.PI / 180F);
         }
 
-        double radianToAngle(double param)
+        double radToDeg(double param)
         {
             return (param * 180F / Math.PI);
         }
