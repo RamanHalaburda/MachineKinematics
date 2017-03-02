@@ -277,9 +277,15 @@ namespace MachineKinematics
                         tbResValue2.Text = Convert.ToString(L[0]);
 
                         Sd[i] = Xc[i] - L3 * cos_fi3[0];
-
+                        
                         Xc_dash[i] = (-i31[i]) * L3 * sin_fi3[i];
                         Yc_dash[i] = i31[i] * L3 * cos_fi3[i];
+                        
+                        /*my dif*/
+                        //Xc_dash[i] = -L3 * sin_fi3[i];
+                        //Yc_dash[i] = L3 * cos_fi3[i];
+                        /*end my dif*/
+                        
                         Uc[i] = i31[i] * L3;
 
                         Xs3_dash[i] = (-i31[i]) * L5 * sin_fi3[i];
@@ -289,7 +295,10 @@ namespace MachineKinematics
 
                         Us5[i] = Xc_dash[i];
 
-                        i31_dash[i] = (Math.Pow(i31[i], 2) * sin_fi3[i] - (L1 * Math.Sin(degToRad(fi_1)) / L[i])) / cos_fi3[i];
+                        //i31_dash[i] = (Math.Pow(i31[i], 2) * sin_fi3[i] - (L1 * Math.Sin(degToRad(fi_1)) / L[i])) / cos_fi3[i];
+                        /*my dif*/
+                        i31_dash[i] = L1 / L[i];
+                        /*end my dif*/
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
@@ -342,7 +351,7 @@ namespace MachineKinematics
  *=== Build charts  
  *===================================================================================================*/
 
-        private void btnChart_sd_i51_i51P_Click(object sender, EventArgs e)
+        private void btnChart_sd_i31_i31P_Click(object sender, EventArgs e)
         {
             chart1.Series.Clear();
 
@@ -356,8 +365,8 @@ namespace MachineKinematics
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Sd"].Points.AddXY(i, Sd[i]);
-                //chart1.Series["i31"].Points.AddXY(fi_array[i], i31[i]);
-                //chart1.Series["i31'"].Points.AddXY(fi_array[i], i31_dash[i]);
+                chart1.Series["i31"].Points.AddXY(i, i31[i]);
+                chart1.Series["i31'"].Points.AddXY(i, i31_dash[i]);
             }
         }
 
@@ -446,16 +455,20 @@ namespace MachineKinematics
         {
             chart1.Series.Clear();
 
+            chart1.Series.Add("Xc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("Yc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Xc'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("Yc'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
 
             groupBox8.Text = btnChart_xc_dash.Text;
             tabControl1.SelectedIndex = 3;
 
             for (int i = 0; i < dimension; ++i)
             {
+                chart1.Series["Xc"].Points.AddXY(i, Xc[i]);
+                chart1.Series["Yc"].Points.AddXY(i, Yc[i]);
                 chart1.Series["Xc'"].Points.AddXY(i, Xc_dash[i]);
-                //chart1.Series["Ys2p"].Points.AddXY(fi_array[i], i3 [i]);
-                //chart1.Series["Xs2pp"].Points.AddXY(fi_array[i], Xs3_doubledash[i]);
+                chart1.Series["Yc'"].Points.AddXY(i, Yc_dash[i]);
             }
         }
 
