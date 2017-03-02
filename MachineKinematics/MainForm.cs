@@ -14,7 +14,7 @@ namespace MachineKinematics
     public partial class MainForm : Form
     {
         public MainForm() { InitializeComponent(); }
-        
+
         // input data
         double L0 = 0; // Lob
         double L1 = 0; // Loa
@@ -102,18 +102,18 @@ namespace MachineKinematics
 
             fillDgvInput();
             forDebug();
-            
+
             // tabPage2
 
             // tabPage3
             tbResTitle1.Enabled = tbResTitle2.Enabled = tbResTitle3.Enabled = false;
 
             // tabPage5
-            fillDgvLegend();            
+            fillDgvLegend();
         }
 
         protected void TabPage_Paint(object sender, PaintEventArgs e)
-        {            
+        {
             base.OnPaint(e);
             Pen arrow = new Pen(Brushes.Black, 1);
             arrow.EndCap = System.Drawing.Drawing2D.LineCap.Round;
@@ -136,7 +136,7 @@ namespace MachineKinematics
             int fix_x_mid = x_mid;
             int fix_y_mid = y_bottom - 10 - scale_L0_OB;
 
- 
+
             // draw bottom fix point
             e.Graphics.DrawLine(arrow, x_mid - 15, y_bottom + 10, x_mid + 15, y_bottom + 10);
             e.Graphics.DrawLine(arrow, x_mid, y_bottom - 10, x_mid - 9, y_bottom + 10);
@@ -187,25 +187,9 @@ namespace MachineKinematics
             e.Graphics.DrawLine(arrow, fix_x_mid, fix_y_mid, fix_x_mid + scale_L1_OA, fix_y_mid);
 
             // draw mid 'поршень'
-            e.Graphics.DrawRectangle(arrow, fix_x_mid + scale_L1_OA, fix_y_mid, 10,20);
+            e.Graphics.DrawRectangle(arrow, fix_x_mid + scale_L1_OA, fix_y_mid, 10, 20);
 
-
-            
-
-
-
-            /*
-            e.Graphics.DrawLine(arrow, 10, 20, 610, 20);
-            for(int i = 10; i <= 610; i = i + 20 )
-                e.Graphics.DrawLine(arrow, i, 20, 10 + i, 30);
-            */
-            /*
-            for (int i = 0; i < 10; i += 5)
-            {
-                e.Graphics.DrawLine(arrow, 200 + i, 200 + i, 100 + i, 100 + i);
-                Thread.Sleep(500);
-            }
-            */
+            /*Thread.Sleep(500);*/
             arrow.Dispose();
         }
 
@@ -222,25 +206,23 @@ namespace MachineKinematics
             {
                 fillColumnHeaderResult();
 
-                MessageBox.Show("Поехали!");
+                Double.TryParse(textBox1.Text, out L0); // Lob
+                Double.TryParse(textBox2.Text, out L1); // Loa
+                Double.TryParse(textBox3.Text, out L3); // Lbc
+                Double.TryParse(textBox4.Text, out L5); // Lbs3
 
-                Double.TryParse(textBox1.Text , out L0); // Lob
-                Double.TryParse(textBox2.Text , out L1); // Loa
-                Double.TryParse(textBox3.Text , out L3); // Lbc
-                Double.TryParse(textBox4.Text , out L5); // Lbs3
-
-                Double.TryParse(textBox5.Text , out fi_zero); // pseudo-constant
+                Double.TryParse(textBox5.Text, out fi_zero); // pseudo-constant
                 fi_clone = fi_zero;                           // for iterations
-                
-                Double.TryParse(textBox6.Text , out m3);
-                Double.TryParse(textBox7.Text , out m4);
-                Double.TryParse(textBox8.Text , out Is4);
-                
-                Double.TryParse(textBox9.Text , out omega_1cp);
-                
-                Double.TryParse(textBox10.Text , out delta);
-                
-                Double.TryParse(textBox11.Text , out I_0_p);
+
+                Double.TryParse(textBox6.Text, out m3);
+                Double.TryParse(textBox7.Text, out m4);
+                Double.TryParse(textBox8.Text, out Is4);
+
+                Double.TryParse(textBox9.Text, out omega_1cp);
+
+                Double.TryParse(textBox10.Text, out delta);
+
+                Double.TryParse(textBox11.Text, out I_0_p);
 
                 int i = 0, j = 0;
                 double fi_1 = 0F;
@@ -256,7 +238,7 @@ namespace MachineKinematics
                         fi_1 = fi_1 - 360;
                     }
 
-                    // =============== first part of calculating =================
+// =============== first part of calculating =================
                     try
                     {
 
@@ -281,7 +263,7 @@ namespace MachineKinematics
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
-                    // =============== second part of calculating =================
+// =============== second part of calculating =================
                     try
                     {
                         Xa_dash[i] = -L1 * Math.Sin(degToRad(fi_1));
@@ -298,7 +280,7 @@ namespace MachineKinematics
 
                         Xc_dash[i] = (-i31[i]) * L3 * sin_fi3[i];
                         Yc_dash[i] = i31[i] * L3 * cos_fi3[i];
-                        Uc[i] = i31[i] * L5;
+                        Uc[i] = i31[i] * L3;
 
                         Xs3_dash[i] = (-i31[i]) * L5 * sin_fi3[i];
                         Ys3_dash[i] = i31[i] * L5 * cos_fi3[i];
@@ -311,7 +293,7 @@ namespace MachineKinematics
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
 
-                    // =============== added part of calculating =================
+// =============== added part of calculating =================
                     try
                     {
                         Xs3_doubledash[i] = (-L5) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
@@ -322,16 +304,15 @@ namespace MachineKinematics
 
                     if ((i % 15 == 0) || (i == 0))
                     {
-                        
-                        dgvResults.Rows[j].HeaderCell.Value = String.Format("{0:0.#####}", j);
+                        dgvResults.Rows[j].HeaderCell.Value = String.Format("{0:0.#####}", j + 1);
                         dgvResults.Rows[j].Cells[0].Value = String.Format("{0:0.#####}", fi_1);
-                        dgvResults.Rows[j].Cells[1].Value = String.Format("{0:0.#####}", Sd[j]);
-                        dgvResults.Rows[j].Cells[2].Value = String.Format("{0:0.#####}", i31[j]);
-                        dgvResults.Rows[j].Cells[3].Value = String.Format("{0:0.#####}", i31_dash[j]);
-                        dgvResults.Rows[j].Cells[4].Value = String.Format("{0:0.#####}", Xs3_dash[j]);
-                        dgvResults.Rows[j].Cells[5].Value = String.Format("{0:0.#####}", Ys3_dash[j]);
-                        dgvResults.Rows[j].Cells[6].Value = String.Format("{0:0.#####}", Xs3_doubledash[j]);
-                        dgvResults.Rows[j].Cells[7].Value = String.Format("{0:0.#####}", Ys3_doubledash[j]);
+                        dgvResults.Rows[j].Cells[1].Value = String.Format("{0:0.#####}", Sd[i]);
+                        dgvResults.Rows[j].Cells[2].Value = String.Format("{0:0.#####}", i31[i]);
+                        dgvResults.Rows[j].Cells[3].Value = String.Format("{0:0.#####}", i31_dash[i]);
+                        dgvResults.Rows[j].Cells[4].Value = String.Format("{0:0.#####}", Xs3_dash[i]);
+                        dgvResults.Rows[j].Cells[5].Value = String.Format("{0:0.#####}", Ys3_dash[i]);
+                        dgvResults.Rows[j].Cells[6].Value = String.Format("{0:0.#####}", Xs3_doubledash[i]);
+                        dgvResults.Rows[j].Cells[7].Value = String.Format("{0:0.#####}", Ys3_doubledash[i]);
                         ++j;
                     }
 
@@ -372,11 +353,11 @@ namespace MachineKinematics
             groupBox8.Text = btnChart_sd_i51_i51P.Text;
             tabControl1.SelectedIndex = 3;
 
-            for (int i = 0; i < dgvResults.RowCount - 1; ++i)
+            for (int i = 0; i < dimension; ++i)
             {
-                chart1.Series["Sd"].Points.AddXY(fi_array[i], Sd[i]);
-                chart1.Series["i31"].Points.AddXY(fi_array[i], i31[i]);
-                chart1.Series["i31'"].Points.AddXY(fi_array[i], i31_dash[i]);
+                chart1.Series["Sd"].Points.AddXY(i, Sd[i]);
+                //chart1.Series["i31"].Points.AddXY(fi_array[i], i31[i]);
+                //chart1.Series["i31'"].Points.AddXY(fi_array[i], i31_dash[i]);
             }
         }
 
@@ -396,7 +377,7 @@ namespace MachineKinematics
             chart1.Series.Add("Ys2pp").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
 
             //chart1.DataSource = dgvResults.DataSource;
-            for (int i = 0; i < dgvResults.RowCount - 1; ++i)
+            for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Xs2p"].Points.AddXY(i, Xs3_dash[i]);
                 chart1.Series["Ys2p"].Points.AddXY(i, Ys3_dash[i]);
@@ -411,7 +392,7 @@ namespace MachineKinematics
                 //chart1.Series["Ys2p"].Points.Add(Ys3_dash);
                 //chart1.Series["Xs2pp"].Points.AddXY(dgvResults.Rows[i].Cells[6].Value, dgvResults.Rows[i].Cells[7].Value);
             }
-            
+
             //chart1.Series["Xs2p"].Points.Add(Xs3_dash);
             //chart1.Series["Ys2p"].Points.Add(Ys3_dash);
 
@@ -470,7 +451,7 @@ namespace MachineKinematics
             groupBox8.Text = btnChart_xc_dash.Text;
             tabControl1.SelectedIndex = 3;
 
-            for (int i = 0; i < dgvResults.RowCount; ++i)
+            for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Xc'"].Points.AddXY(i, Xc_dash[i]);
                 //chart1.Series["Ys2p"].Points.AddXY(fi_array[i], i3 [i]);
@@ -511,7 +492,7 @@ namespace MachineKinematics
                         MessageBox.Show("Допускаются лишь следующие символы: {0-9}, {,}.");
                     }
         }
-        
+
         private void btnFi_Click(object sender, EventArgs e)
         {
             double OB = 0;
@@ -616,10 +597,10 @@ namespace MachineKinematics
         {
             double temp = 0;
             if (Double.TryParse(textBox10.Text, out temp) && textBox10.Text.Length != 0)
-                if(temp >= 0 && temp < 1)
+                if (temp >= 0 && temp < 1)
                     lbl10.Text = "\u2714";
-            else
-                lbl10.Text = "\u2715";
+                else
+                    lbl10.Text = "\u2715";
         }
 
         private void textBox11_TextChanged(object sender, EventArgs e)
@@ -638,9 +619,9 @@ namespace MachineKinematics
                 e.Handled = true;
             }
         }
-/*=================================================================================================== 
- *=== filling some fields  
- *===================================================================================================*/
+        /*=================================================================================================== 
+         *=== filling some fields  
+         *===================================================================================================*/
 
         private void fillColumnHeaderResult()
         {
@@ -675,9 +656,9 @@ namespace MachineKinematics
                 }
         }
 
-/*=================================================================================================== 
- *=== fill dgvLegend 
- *===================================================================================================*/
+        /*=================================================================================================== 
+         *=== fill dgvLegend 
+         *===================================================================================================*/
 
         private void fillDgvLegend()
         {
@@ -804,16 +785,14 @@ namespace MachineKinematics
  *=== some math  
  *===================================================================================================*/
 
-        double degToRad(double param)
+        public double degToRad(double param)
         {
             return (param * Math.PI / 180F);
         }
 
-        double radToDeg(double param)
+        public double radToDeg(double param)
         {
             return (param * 180F / Math.PI);
         }
-
-
     }
 }

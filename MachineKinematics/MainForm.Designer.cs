@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,6 +103,7 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.btnChart_xc_dash = new System.Windows.Forms.Button();
             this.btnChart_omega1 = new System.Windows.Forms.Button();
             this.btnChart_Ac_Ad = new System.Windows.Forms.Button();
             this.btnChart_e1 = new System.Windows.Forms.Button();
@@ -122,7 +123,6 @@
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNotation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdentificator = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnChart_xc_dash = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpInput.SuspendLayout();
@@ -913,6 +913,16 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Графики";
             // 
+            // btnChart_xc_dash
+            // 
+            this.btnChart_xc_dash.Location = new System.Drawing.Point(53, 135);
+            this.btnChart_xc_dash.Name = "btnChart_xc_dash";
+            this.btnChart_xc_dash.Size = new System.Drawing.Size(44, 23);
+            this.btnChart_xc_dash.TabIndex = 10;
+            this.btnChart_xc_dash.Text = "Xc\'";
+            this.btnChart_xc_dash.UseVisualStyleBackColor = true;
+            this.btnChart_xc_dash.Click += new System.EventHandler(this.btnChart_xc_dash_Click);
+            // 
             // btnChart_omega1
             // 
             this.btnChart_omega1.Location = new System.Drawing.Point(6, 135);
@@ -999,7 +1009,7 @@
             this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Name = "btnChart_xs2p_ys2p_xs2pp_ys2pp";
             this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Size = new System.Drawing.Size(186, 23);
             this.btnChart_xs2p_ys2p_xs2pp_ys2pp.TabIndex = 1;
-            this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Text = "xS2P, yS2P, xS2PP, yS2PP";
+            this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Text = "xS3P, yS3P, xS3PP, yS3PP";
             this.btnChart_xs2p_ys2p_xs2pp_ys2pp.UseVisualStyleBackColor = true;
             this.btnChart_xs2p_ys2p_xs2pp_ys2pp.Click += new System.EventHandler(this.btnChart_xs2p_ys2p_xs2pp_ys2pp_Click);
             // 
@@ -1009,12 +1019,13 @@
             this.btnChart_sd_i51_i51P.Name = "btnChart_sd_i51_i51P";
             this.btnChart_sd_i51_i51P.Size = new System.Drawing.Size(91, 23);
             this.btnChart_sd_i51_i51P.TabIndex = 0;
-            this.btnChart_sd_i51_i51P.Text = "sB, i51, i51P";
+            this.btnChart_sd_i51_i51P.Text = "sD, i51, i51P";
             this.btnChart_sd_i51_i51P.UseVisualStyleBackColor = true;
             this.btnChart_sd_i51_i51P.Click += new System.EventHandler(this.btnChart_sd_i51_i51P_Click);
             // 
             // dgvResults
             // 
+            this.dgvResults.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResults.Location = new System.Drawing.Point(3, 3);
             this.dgvResults.Name = "dgvResults";
@@ -1043,16 +1054,16 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1111,16 +1122,6 @@
             this.colIdentificator.Name = "colIdentificator";
             this.colIdentificator.ReadOnly = true;
             this.colIdentificator.Width = 112;
-            // 
-            // btnChart_xc_dash
-            // 
-            this.btnChart_xc_dash.Location = new System.Drawing.Point(53, 135);
-            this.btnChart_xc_dash.Name = "btnChart_xc_dash";
-            this.btnChart_xc_dash.Size = new System.Drawing.Size(44, 23);
-            this.btnChart_xc_dash.TabIndex = 10;
-            this.btnChart_xc_dash.Text = "Xc\'";
-            this.btnChart_xc_dash.UseVisualStyleBackColor = true;
-            this.btnChart_xc_dash.Click += new System.EventHandler(this.btnChart_xc_dash_Click);
             // 
             // MainForm
             // 
