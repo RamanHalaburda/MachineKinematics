@@ -66,6 +66,10 @@ namespace MachineKinematics
         double[] Ys3_doubledash = new double[dimension];
         double[] is51_dash = new double[dimension];
 
+        // added 06.03.2017
+        double[] Xc_doubledash = new double[dimension];
+        double[] Yc_doubledash = new double[dimension];
+
         private void forDebug()
         {
             textBox1.Text = "0,3457";
@@ -251,7 +255,7 @@ namespace MachineKinematics
 
                         cos_fi3[i] = (L1 * Math.Cos(degToRad(fi_1))) / L[i];
                         /*for debug*/
-                        tbResValue3.Text = Convert.ToString(cos_fi3[0]);
+                        //tbResValue3.Text = Convert.ToString(cos_fi3[0]);
                         sin_fi3[i] = (L0 + L1 * Math.Sin(degToRad(fi_1))) / L[i];
 
                         fi3[i] = radToDeg(Math.Acos((L1 * Math.Cos(degToRad(fi_1))) / L[i]));
@@ -272,9 +276,9 @@ namespace MachineKinematics
                         Ua3a2[i] = -L1 * Math.Sin(degToRad(fi_1 - fi3[i]));
                         i31[i] = (L1 / L[i]) * Math.Cos(degToRad(fi_1 - fi3[i]));
                         /*for debug*/
-                        tbResValue1.Text = Convert.ToString(fi3[0]);
+                        //tbResValue1.Text = Convert.ToString(fi3[0]);
                         /*for debug*/
-                        tbResValue2.Text = Convert.ToString(L[0]);
+                        //tbResValue2.Text = Convert.ToString(L[0]);
 
                         Sd[i] = Xc[i] - L3 * cos_fi3[0];
                         
@@ -297,10 +301,18 @@ namespace MachineKinematics
 
                         //i31_dash[i] = (Math.Pow(i31[i], 2) * sin_fi3[i] - (L1 * Math.Sin(degToRad(fi_1)) / L[i])) / cos_fi3[i];
                         /*my dif*/
-                        i31_dash[i] = L1 / L[i];
+                        //i31_dash[i] = L1 / L[i];
                         /*end my dif*/
+                        i31_dash[i] = (-Ua3a2[i]) * (2 * i31[i] - 1) / L[i];
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
+
+                    try
+                    {
+                        Xc_doubledash[i] = (-L3) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
+                        Yc_doubledash[i] = (-L3) * (Math.Pow(i31[i],2) * sin_fi3[i] + i31_dash[i] * cos_fi3[i]);
+                    }
+                    catch (Exception exe) { MessageBox.Show(exe.Data + "\n" + exe.Message); }
 
 // =============== added part of calculating =================
                     try
@@ -456,9 +468,8 @@ namespace MachineKinematics
             chart1.Series.Clear();
 
             chart1.Series.Add("Xc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            chart1.Series.Add("Yc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Xc'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            chart1.Series.Add("Yc'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("Xc''").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
 
             groupBox8.Text = btnChart_xc_dash.Text;
             tabControl1.SelectedIndex = 3;
@@ -466,9 +477,8 @@ namespace MachineKinematics
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Xc"].Points.AddXY(i, Xc[i]);
-                chart1.Series["Yc"].Points.AddXY(i, Yc[i]);
                 chart1.Series["Xc'"].Points.AddXY(i, Xc_dash[i]);
-                chart1.Series["Yc'"].Points.AddXY(i, Yc_dash[i]);
+                chart1.Series["Xc''"].Points.AddXY(i, Xc_doubledash[i]);
             }
         }
 
