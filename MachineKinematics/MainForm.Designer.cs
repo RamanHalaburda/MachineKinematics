@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -247,7 +247,7 @@
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(419, 81);
             this.button15.TabIndex = 13;
-            this.button15.Text = "Запустить вычисления";
+            this.button15.Text = "Выполнить вычисления";
             this.button15.UseVisualStyleBackColor = false;
             this.button15.Click += new System.EventHandler(this.начатьToolStripMenuItem_Click);
             // 
@@ -730,6 +730,7 @@
             this.tpAnimation.TabIndex = 1;
             this.tpAnimation.Text = "Анимация";
             this.tpAnimation.UseVisualStyleBackColor = true;
+            this.tpAnimation.Enter += new System.EventHandler(this.tpAnimation_Enter);
             // 
             // gbAnimation
             // 
@@ -779,6 +780,7 @@
             this.tpOutput.TabIndex = 2;
             this.tpOutput.Text = "Полученные данные";
             this.tpOutput.UseVisualStyleBackColor = true;
+            this.tpOutput.Enter += new System.EventHandler(this.tpAnimation_Enter);
             // 
             // groupBox11
             // 
@@ -919,7 +921,7 @@
             this.btnChart_xc_dash.Name = "btnChart_xc_dash";
             this.btnChart_xc_dash.Size = new System.Drawing.Size(123, 23);
             this.btnChart_xc_dash.TabIndex = 10;
-            this.btnChart_xc_dash.Text = "Xc, Yc, Xc\', Yc\'";
+            this.btnChart_xc_dash.Text = "Xc, Xc\', Xc\'\'";
             this.btnChart_xc_dash.UseVisualStyleBackColor = true;
             this.btnChart_xc_dash.Click += new System.EventHandler(this.btnChart_xc_dash_Click);
             // 
@@ -1041,6 +1043,7 @@
             this.tpCharts.TabIndex = 3;
             this.tpCharts.Text = "Графики";
             this.tpCharts.UseVisualStyleBackColor = true;
+            this.tpCharts.Enter += new System.EventHandler(this.tpAnimation_Enter);
             // 
             // groupBox8
             // 
@@ -1054,16 +1057,16 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";

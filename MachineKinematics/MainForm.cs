@@ -15,6 +15,9 @@ namespace MachineKinematics
     {
         public MainForm() { InitializeComponent(); }
 
+        // flag for access to all TabPages
+        Boolean accessFlag = false;
+
         // input data
         double L0 = 0; // Lob
         double L1 = 0; // Loa
@@ -51,7 +54,7 @@ namespace MachineKinematics
         double[] Ya_dash = new double[dimension]; // Uay 
         double[] Ua3a2 = new double[dimension];
         double[] i31 = new double[dimension];
-        double[] Sd = new double[dimension]; // SD 'перемещение ползуна'
+        double[] Sd = new double[dimension]; // SD - slider movement
         double[] Xc_dash = new double[dimension];  // Ucx
         double[] Yc_dash = new double[dimension];  // Ucy 
         double[] Uc = new double[dimension];
@@ -61,7 +64,7 @@ namespace MachineKinematics
         double[] Us5 = new double[dimension];
         double[] i31_dash = new double[dimension];
 
-        // added
+        // added 27.02.2017
         double[] Xs3_doubledash = new double[dimension];
         double[] Ys3_doubledash = new double[dimension];
         double[] is51_dash = new double[dimension];
@@ -97,17 +100,20 @@ namespace MachineKinematics
             dgvTitles.Columns[0].Width = dgvInput.Columns[0].Width = 77;
             dgvTitles.DefaultCellStyle.Font = dgvInput.DefaultCellStyle.Font = new Font("Lucida Calligraphy", 12);
             for (int i = 0; i < 13; ++i)
+            {
                 dgvTitles.Rows[i].Cells[0].Value = "Fpc" + (i + 1) + " =";
+            }
             dgvTitles.Enabled = false;
             cbDirection.SelectedIndex = 1;
 
-            lbl1.Text = lbl2.Text = lbl3.Text = lbl4.Text = lbl5.Text = lbl6.Text = lbl7.Text =
-                lbl8.Text = lbl9.Text = lbl10.Text = lbl11.Text = "\u2715";
+            lbl1.Text = lbl2.Text = lbl3.Text = lbl4.Text = lbl5.Text = lbl6.Text = 
+                lbl7.Text = lbl8.Text = lbl9.Text = lbl10.Text = lbl11.Text = "\u2715";
 
             fillDgvInput();
             forDebug();
 
             // tabPage2
+            gbAnimation.Text = cbDirection.Text;
 
             // tabPage3
             tbResTitle1.Enabled = tbResTitle2.Enabled = tbResTitle3.Enabled = false;
@@ -245,7 +251,6 @@ namespace MachineKinematics
 // =============== first part of calculating =================
                     try
                     {
-
                         fi_array[i] = fi_1;
 
                         Xa[i] = L1 * Math.Cos(degToRad(fi_1));
@@ -254,8 +259,6 @@ namespace MachineKinematics
                         L[i] = Math.Sqrt(Math.Pow(L0, 2) + Math.Pow(L1, 2) + 2 * L0 * L1 * Math.Sin(degToRad(fi_1)));
 
                         cos_fi3[i] = (L1 * Math.Cos(degToRad(fi_1))) / L[i];
-                        /*for debug*/
-                        //tbResValue3.Text = Convert.ToString(cos_fi3[0]);
                         sin_fi3[i] = (L0 + L1 * Math.Sin(degToRad(fi_1))) / L[i];
 
                         fi3[i] = radToDeg(Math.Acos((L1 * Math.Cos(degToRad(fi_1))) / L[i]));
@@ -275,21 +278,12 @@ namespace MachineKinematics
 
                         Ua3a2[i] = -L1 * Math.Sin(degToRad(fi_1 - fi3[i]));
                         i31[i] = (L1 / L[i]) * Math.Cos(degToRad(fi_1 - fi3[i]));
-                        /*for debug*/
-                        //tbResValue1.Text = Convert.ToString(fi3[0]);
-                        /*for debug*/
-                        //tbResValue2.Text = Convert.ToString(L[0]);
 
                         Sd[i] = Xc[i] - L3 * cos_fi3[0];
                         
                         Xc_dash[i] = (-i31[i]) * L3 * sin_fi3[i];
                         Yc_dash[i] = i31[i] * L3 * cos_fi3[i];
-                        
-                        /*my dif*/
-                        //Xc_dash[i] = -L3 * sin_fi3[i];
-                        //Yc_dash[i] = L3 * cos_fi3[i];
-                        /*end my dif*/
-                        
+                                                
                         Uc[i] = i31[i] * L3;
 
                         Xs3_dash[i] = (-i31[i]) * L5 * sin_fi3[i];
@@ -299,10 +293,6 @@ namespace MachineKinematics
 
                         Us5[i] = Xc_dash[i];
 
-                        //i31_dash[i] = (Math.Pow(i31[i], 2) * sin_fi3[i] - (L1 * Math.Sin(degToRad(fi_1)) / L[i])) / cos_fi3[i];
-                        /*my dif*/
-                        //i31_dash[i] = L1 / L[i];
-                        /*end my dif*/
                         i31_dash[i] = (-Ua3a2[i]) * (2 * i31[i] - 1) / L[i];
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
@@ -343,6 +333,7 @@ namespace MachineKinematics
                         fi_1 += delta_fi;
                 }
 
+                accessFlag = true;
                 tabControl1.SelectedIndex = 2;
 
                 // run animation
@@ -397,26 +388,13 @@ namespace MachineKinematics
             chart1.Series.Add("Xs2pp").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Ys2pp").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
 
-            //chart1.DataSource = dgvResults.DataSource;
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Xs2p"].Points.AddXY(i, Xs3_dash[i]);
                 chart1.Series["Ys2p"].Points.AddXY(i, Ys3_dash[i]);
                 chart1.Series["Xs2pp"].Points.AddXY(i, Xs3_doubledash[i]);
                 chart1.Series["Ys2pp"].Points.AddXY(i, Ys3_doubledash[i]);
-                //chart1.Series["Xs2p"].Points.AddXY(Xs3_dash[i], Ys3_dash[i]);
-                /*
-                chart1.Series["Xs2p"].Points.AddXY(dgvResults.Rows[i].Cells[4].Value, dgvResults.Rows[i].Cells[5].Value);
-                chart1.Series["Xs2pp"].Points.AddXY(dgvResults.Rows[i].Cells[6].Value, dgvResults.Rows[i].Cells[7].Value);
-                */
-                //chart1.Series["Xs2p"].Points.Add(Xs3_dash);
-                //chart1.Series["Ys2p"].Points.Add(Ys3_dash);
-                //chart1.Series["Xs2pp"].Points.AddXY(dgvResults.Rows[i].Cells[6].Value, dgvResults.Rows[i].Cells[7].Value);
             }
-
-            //chart1.Series["Xs2p"].Points.Add(Xs3_dash);
-            //chart1.Series["Ys2p"].Points.Add(Ys3_dash);
-
             groupBox8.Text = btnChart_xs2p_ys2p_xs2pp_ys2pp.Text;
             tabControl1.SelectedIndex = 3;
         }
@@ -470,16 +448,15 @@ namespace MachineKinematics
             chart1.Series.Add("Xc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Xc'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Xc''").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-
-            groupBox8.Text = btnChart_xc_dash.Text;
-            tabControl1.SelectedIndex = 3;
-
+            
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Xc"].Points.AddXY(i, Xc[i]);
                 chart1.Series["Xc'"].Points.AddXY(i, Xc_dash[i]);
                 chart1.Series["Xc''"].Points.AddXY(i, Xc_doubledash[i]);
             }
+            groupBox8.Text = btnChart_xc_dash.Text;
+            tabControl1.SelectedIndex = 3;
         }
 
 /*=================================================================================================== 
@@ -535,104 +512,78 @@ namespace MachineKinematics
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void tpAnimation_Enter(object sender, EventArgs e)
+        {
+            if (!accessFlag)
+            {
+                tabControl1.SelectedTab = tpInput;
+                MessageBox.Show("Вычисления не выполнены. \n"
+                    + "Для доступа к \n\t- анимации \n\t- результатам вычислений \n\t- графикам \nвведите все исходные данные и нажмите кнопку \"Выполнить вычисления\"");
+            }
+        }
+
+        private void validateInput(TextBox tb, Label lbl)
         {
             double temp = 0;
-            if (Double.TryParse(textBox1.Text, out temp) && textBox1.Text.Length != 0)
-                lbl1.Text = "\u2714";
+            if (Double.TryParse(tb.Text, out temp) && tb.Text.Length != 0)
+                lbl.Text = "\u2714";
             else
-                lbl1.Text = "\u2715";
+                lbl.Text = "\u2715";
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox1, lbl1);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox2.Text, out temp) && textBox2.Text.Length != 0)
-                lbl2.Text = "\u2714";
-            else
-                lbl2.Text = "\u2715";
+            validateInput(textBox2, lbl2);
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox3.Text, out temp) && textBox3.Text.Length != 0)
-                lbl3.Text = "\u2714";
-            else
-                lbl3.Text = "\u2715";
+            validateInput(textBox3, lbl3);
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox4.Text, out temp) && textBox4.Text.Length != 0)
-                lbl4.Text = "\u2714";
-            else
-                lbl4.Text = "\u2715";
+            validateInput(textBox4, lbl4);
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox5.Text, out temp) && textBox5.Text.Length != 0)
-                lbl5.Text = "\u2714";
-            else
-                lbl5.Text = "\u2715";
+            validateInput(textBox5, lbl5);
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox6.Text, out temp) && textBox6.Text.Length != 0)
-                lbl6.Text = "\u2714";
-            else
-                lbl6.Text = "\u2715";
+            validateInput(textBox6, lbl6);
         }
 
         private void textBox7_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox7.Text, out temp) && textBox7.Text.Length != 0)
-                lbl7.Text = "\u2714";
-            else
-                lbl7.Text = "\u2715";
+            validateInput(textBox7, lbl7);
         }
 
         private void textBox8_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox8.Text, out temp) && textBox8.Text.Length != 0)
-                lbl8.Text = "\u2714";
-            else
-                lbl8.Text = "\u2715";
+            validateInput(textBox8, lbl8);
         }
 
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox9.Text, out temp) && textBox9.Text.Length != 0)
-                lbl9.Text = "\u2714";
-            else
-                lbl9.Text = "\u2715";
+            validateInput(textBox9, lbl9);
         }
 
         private void textBox10_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox10.Text, out temp) && textBox10.Text.Length != 0)
-                if (temp >= 0 && temp < 1)
-                    lbl10.Text = "\u2714";
-                else
-                    lbl10.Text = "\u2715";
+            validateInput(textBox10, lbl10);
         }
 
         private void textBox11_TextChanged(object sender, EventArgs e)
         {
-            double temp = 0;
-            if (Double.TryParse(textBox11.Text, out temp) && textBox11.Text.Length != 0)
-                lbl11.Text = "\u2714";
-            else
-                lbl11.Text = "\u2715";
+            validateInput(textBox11, lbl11);
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -642,9 +593,10 @@ namespace MachineKinematics
                 e.Handled = true;
             }
         }
-        /*=================================================================================================== 
-         *=== filling some fields  
-         *===================================================================================================*/
+
+/*=================================================================================================== 
+ *=== filling some fields  
+ *===================================================================================================*/
 
         private void fillColumnHeaderResult()
         {
@@ -679,9 +631,9 @@ namespace MachineKinematics
                 }
         }
 
-        /*=================================================================================================== 
-         *=== fill dgvLegend 
-         *===================================================================================================*/
+/*=================================================================================================== 
+ *=== fill dgvLegend 
+ *===================================================================================================*/
 
         private void fillDgvLegend()
         {
@@ -816,6 +768,6 @@ namespace MachineKinematics
         public double radToDeg(double param)
         {
             return (param * 180F / Math.PI);
-        }
+        }        
     }
 }
