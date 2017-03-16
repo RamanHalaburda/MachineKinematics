@@ -34,10 +34,11 @@ namespace MachineKinematics
         double omega_1cp = 0;
         double delta = 0;
         double I_0_p = 0;
+        double sign_omega_1 = 1; // added 16.03.2016
 
         double[] Fpc = new double[dimension]; // the forces of useful resistance
 
-        // first step
+        // part 1.1 (first step)
         double[] Xa = new double[dimension];
         double[] Ya = new double[dimension];
         double[] L = new double[dimension];
@@ -49,7 +50,7 @@ namespace MachineKinematics
         double[] Xs3 = new double[dimension];
         double[] Ys3 = new double[dimension];
 
-        // second step
+        // part 1.2 (second step)
         double[] Xa_dash = new double[dimension]; // Uax 
         double[] Ya_dash = new double[dimension]; // Uay 
         double[] Ua3a2 = new double[dimension];
@@ -64,15 +65,41 @@ namespace MachineKinematics
         double[] Us5 = new double[dimension];
         double[] i31_dash = new double[dimension];
 
+        // added 06.03.2017
+        double[] Xc_doubledash = new double[dimension];
+        double[] Yc_doubledash = new double[dimension];
+
+        // part 1.3 (third step)
         // added 27.02.2017
         double[] Xs3_doubledash = new double[dimension];
         double[] Ys3_doubledash = new double[dimension];
         double[] is51_dash = new double[dimension];
 
-        // added 06.03.2017
-        double[] Xc_doubledash = new double[dimension];
-        double[] Yc_doubledash = new double[dimension];
+// part 2.*
+// added 16.03.2017
+        // 2.1
+        double[] M_c_pi = new double[dimension];
+        double[] A_ci = new double[dimension];
+        double[] M_p_D = new double[dimension];
 
+        // 2.2
+        double[] I_pa_second = new double[dimension];
+        double[] differential_d_Yp_d_fi1 = new double[dimension];
+
+        // 2.3
+        double[] A_d_i = new double[dimension];
+        double[] fi_1_i = new double[dimension];
+        double[] delta_T_i = new double[dimension];
+        double[] delta_T_i_first = new double[dimension];
+        double[] delta_T_first_ab = new double[dimension];
+        double[] I_p_first = new double[dimension];
+        double[] I_M = new double[dimension];
+
+        // 2.4
+        double[] T_first_i = new double[dimension];
+        double[] omega_1_i = new double[dimension];
+        double[] Epsilon_1_i = new double[dimension];
+ 
         private void forDebug()
         {
             textBox1.Text = "0,3457";
@@ -234,6 +261,16 @@ namespace MachineKinematics
 
                 Double.TryParse(textBox11.Text, out I_0_p);
 
+                // calculeate sign(+ or -) for omega_1 
+                if (cbDirection.SelectedIndex == 1)
+                {
+                    sign_omega_1 = 1F;
+                }
+                else 
+                {
+                    sign_omega_1 = -1F;
+                }
+
                 int i = 0, j = 0;
                 double fi_1 = 0F;
                 for (fi_1 = fi_clone; i < dimension; ++i)
@@ -247,8 +284,13 @@ namespace MachineKinematics
                     {
                         fi_1 = fi_1 - 360;
                     }
+/*
+    +-----------------------------------------------------------+
+    |       PART ONE (1.0)                                      |            
+    +-----------------------------------------------------------+
+*/
 
-// =============== first part of calculating =================
+// =============== 1.1 part of calculating =================
                     try
                     {
                         fi_array[i] = fi_1;
@@ -268,9 +310,9 @@ namespace MachineKinematics
                         Xs3[i] = L5 * cos_fi3[i];
                         Ys3[i] = L5 * sin_fi3[i];
                     }
-                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 1.1"); }
 
-// =============== second part of calculating =================
+// =============== 1.2 part of calculating =================
                     try
                     {
                         Xa_dash[i] = -L1 * Math.Sin(degToRad(fi_1));
@@ -295,23 +337,70 @@ namespace MachineKinematics
 
                         i31_dash[i] = (-Ua3a2[i]) * (2 * i31[i] - 1) / L[i];
                     }
-                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 1.2.1"); }
 
                     try
                     {
+                        // added 06.03.2017
                         Xc_doubledash[i] = (-L3) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
                         Yc_doubledash[i] = (-L3) * (Math.Pow(i31[i],2) * sin_fi3[i] + i31_dash[i] * cos_fi3[i]);
                     }
-                    catch (Exception exe) { MessageBox.Show(exe.Data + "\n" + exe.Message); }
+                    catch (Exception exe) { MessageBox.Show(exe.Data + "\n" + exe.Message + "\nОшибка в части 1.2.2"); }
 
-// =============== added part of calculating =================
+// =============== 1.3 (added 06.03.2017) part of calculating =================
                     try
                     {
+                        // added 06.03.2017
                         Xs3_doubledash[i] = (-L5) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
                         Ys3_doubledash[i] = L5 * (i31_dash[i] * cos_fi3[i] - Math.Pow(i31[i], 2) * sin_fi3[i]);
                         is51_dash[i] = (-L3) * (Math.Pow(i31[i], 2) * cos_fi3[i] + i31_dash[i] * sin_fi3[i]);
                     }
-                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message); }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 1.3"); }
+
+/*
+    +-----------------------------------------------------------+
+    |                PART TWO (2.0) added 16.03.2017            |            
+    +-----------------------------------------------------------+
+*/
+
+// =============== 2.1 part of calculating =================
+                    try
+                    {
+                        //M_c_pi[i] = Fpc * ;
+                        //A_ci[i] = ;
+                        //M_p_D[i];
+                    }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.1"); }
+
+// =============== 2.2 part of calculating =================
+                    try
+                    {
+                        //I_pa_second[i];
+                        //differential_d_Yp_d_fi1[-];
+                    }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.2"); }
+
+// =============== 2.3 part of calculating =================
+                    try
+                    {
+                        //A_d_i[i];
+                        //fi_1_i[i];
+                        //delta_T_i[i];
+                        //delta_T_i_first[i];
+                        //delta_T_first_ab[i];
+                        //I_p_first[i];
+                        //I_M = new double[dimension];
+                    }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.3"); }
+
+// =============== 2.4 part of calculating =================
+                    try
+                    {
+                        //T_first_i[i];
+                        //omega_1_i[i];
+                        //Epsilon_1_i[i];
+                    }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.4"); }
 
                     if ((i % 15 == 0) || (i == 0))
                     {
