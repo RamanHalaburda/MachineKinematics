@@ -34,7 +34,7 @@ namespace MachineKinematics
         double omega_1cp = 0;
         double delta = 0;
         double I_0_p = 0;
-        double sign_omega_1 = 1; // added 16.03.2016
+        double sign_omega1 = 1; // added 16.03.2016
 
         double[] Fpc = new double[dimension]; // the forces of useful resistance
 
@@ -81,6 +81,14 @@ namespace MachineKinematics
         double[] M_c_pi = new double[dimension];
         double[] A_ci = new double[dimension];
         double[] M_p_D = new double[dimension];
+
+        const double G2 = 0; // in our case (machine)
+        double G3 = 0;       // not const, calculate in general block
+        const double G4 = 0; // in our case (machine)
+ 
+        double[] Ys2_dash = new double[dimension]; // == Ya_dash
+        double[] Ys4_dash = new double[dimension]; // == Yc_dash
+        double[] Xd_dash = new double[dimension];  // == Xc_dash
 
         // 2.2
         double[] I_pa_second = new double[dimension];
@@ -366,7 +374,12 @@ namespace MachineKinematics
 // =============== 2.1 part of calculating =================
                     try
                     {
-                        //M_c_pi[i] = Fpc * ;
+                        // preparing calculations
+                        Xd_dash[i] = Xc_dash[i];
+                        Ys2_dash[i] = Ya_dash[i];
+                        Ys4_dash[i] = Yc_dash[i];
+
+                        M_c_pi[i] = sign_omega1 * (Fpc[i] * Xd_dash[i] - G2 * Ys2_dash[i] - G3 * Ys3_dash[i] - G4 * Ys4_dash[i]);
                         //A_ci[i] = ;
                         //M_p_D[i];
                     }
@@ -566,7 +579,7 @@ namespace MachineKinematics
                 return false;
             }
         }
-
+        /*
         private void dgvInput_CurrentCellChanged(object sender, EventArgs e)
         {
             double temp = 0;
@@ -580,6 +593,23 @@ namespace MachineKinematics
                         Fpc[i] = 0;
                         MessageBox.Show("Допускаются лишь следующие символы: {0-9}, {,}.");
                     }
+            double a;
+        }*/
+
+        private void dgvInput_CurrentCellChanged(object sender, EventArgs e)
+        {
+            double temp = 0;
+            for (int i = 0; i <= dimension; ++i)
+                if ((Convert.ToString(dgvInput.Rows[i / 30].Cells[0].Value) != ""))
+                    if (Double.TryParse(Convert.ToString(dgvInput.Rows[i / 30].Cells[0].Value), out temp))
+                        Fpc[i] = Convert.ToDouble(dgvInput.Rows[i / 30].Cells[0].Value);
+                    else
+                    {
+                        dgvInput.Rows[i / 30].Cells[0].Value = Convert.ToString(0);
+                        Fpc[i] = 0;
+                        MessageBox.Show("Допускаются лишь следующие символы: {0-9}, {,}.");
+                    }
+            double a;
         }
 
         private void btnFi_Click(object sender, EventArgs e)

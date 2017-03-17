@@ -1134,6 +1134,8 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximumSize = new System.Drawing.Size(947, 545);
+            this.MinimumSize = new System.Drawing.Size(947, 545);
             this.Name = "MainForm";
             this.Text = "Динамика машинного агрегата";
             this.Load += new System.EventHandler(this.Form1_Load);
