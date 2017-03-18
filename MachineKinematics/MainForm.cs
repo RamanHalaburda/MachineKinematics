@@ -36,8 +36,15 @@ namespace MachineKinematics
         double I_0_p = 0;
         double sign_omega1 = 1; // added 16.03.2016
 
-        double[] Fpc = new double[dimension]; // the forces of useful resistance
+        // added 19.03.2016
+        double m1 = 0;
+        double m5 = 0;
+        double Is3 = 0;
+        double Is1 = 0;
 
+        // added at start
+        double[] Fpc = new double[dimension]; // the forces of useful resistance
+        
         // part 1.1 (first step)
         double[] Xa = new double[dimension];
         double[] Ya = new double[dimension];
@@ -86,7 +93,7 @@ namespace MachineKinematics
         const double g = 9.8196; // Acceleration of free fall on the Earth's surface
         double G3 = 0;           // not const, calculate in general block
         const double G4 = 0;     // in our case (machine)
- 
+
         double[] Ys2_dash = new double[dimension]; // == Ya_dash
         double[] Ys4_dash = new double[dimension]; // == Yc_dash
         double[] Xd_dash = new double[dimension];  // == Xc_dash
@@ -94,6 +101,19 @@ namespace MachineKinematics
         // 2.2
         double[] I_pa_second = new double[dimension];
         double[] differential_d_Yp_d_fi1 = new double[dimension];
+
+        double A, B, C, D, E, F, G; // temp variables for calculating the I_pa_second
+        double Xs2_dash = 0; // == Xa_dash
+        // Ys2_dash == Ya_dash
+        const double Is2 = 0; // const for our case (machine)
+        double i21 = 0; // == i31
+        const double m2 = 0;         // const for our case (machine)
+        double Xs4_dash = 0;
+        // Ys4_dash - now define
+        // m4 = 0 - now define, 0 for our case (machine)
+        // Is4 = 0 - now define, 0 for our case (machine)
+        const double i41 = 0; // const for our case (machine)
+        double Xs5_dash = 0; // == Xc_dash
 
         // 2.3
         double[] A_d_i = new double[dimension];
@@ -109,13 +129,14 @@ namespace MachineKinematics
         double[] omega_1_i = new double[dimension];
         double[] Epsilon_1_i = new double[dimension];
  
+        // fill textBoxes for debugging
         private void forDebug()
         {
             textBox1.Text = "0,3457";
             textBox2.Text = "0,15";
             textBox3.Text = "0,6914";
             textBox4.Text = "0,6";
-            textBox6.Text = "1";
+            textBox6.Text = "13,8";
             textBox7.Text = "1";
             textBox8.Text = "10";
             textBox9.Text = "9,42";
@@ -384,15 +405,61 @@ namespace MachineKinematics
                         Ys4_dash[i] = Yc_dash[i];
 
                         M_c_pi[i] = sign_omega1 * (Fpc[i] * Xd_dash[i] - G2 * Ys2_dash[i] - G3 * Ys3_dash[i] - G4 * Ys4_dash[i]);
-                        //A_ci[i] = ;
-                        //M_p_D[i];
+
+                        double delta_fi1 = sign_omega1 * 2 * Math.PI / 180F;
+                        if (i == 0)
+                        {
+                            A_ci[i] = 0 /* A_ci[i-1] */ + 0.5 * (0 /* M_c_pi[i-1] */ + M_c_pi[i]);
+                        }
+                        else
+                        {
+                            A_ci[i] = A_ci[i - 1] + delta_fi1 * 0.5 * (M_c_pi[i - 1] + M_c_pi[i]);
+                        }
+
+/*
++------------------------------+
+|   maybe wrong calculation    |
++------------------------------+*/
+                        M_p_D[i] = - (A_ci[i] / (2F * Math.PI));
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.1"); }
 
 // =============== 2.2 part of calculating =================
                     try
-                    {
-                        //I_pa_second[i];
+                    { 
+                        Xs2_dash = Xa_dash[i];
+                        Ys2_dash = Ya_dash;
+                        // Is2 = 0 - const for our case (machine)
+                        i21 = i31[i];
+                        // m2 = 0 - const for our case (machine)
+                        // Xs4_dash = 0 - const for our case (machine)
+                        // Ys4_dash - now define
+                        // m4 = 0 - now define, 0 for our case (machine)
+                        // Is4 = 0 - now define, 0 for our case (machine)
+                        // i41 = 0 - const for our case (machine)
+                        Xs5_dash = Xc_dash[i];
+
+/*
++--------------------------------------------------+
+|   refresh interface for new parameters           |
++--------------------------------------------------+*/
+                        // A, B, C, D, E, F, G - temp variables for calculating the I_pa_second
+                        // A, B - second point
+                        A = m2 * (Math.Pow(Xs2_dash, 2) + Math.Pow(Ys2_dash[i], 2));
+                        B = Is2 * Math.Pow(i21, 2);
+                        // C, D - third point
+                        C = m3 * (Math.Pow(Xs3_dash[i], 2) + Math.Pow(Ys3_dash[i], 2));
+                        D = Is3 * Math.Pow(i31[i], 2);
+                        // E, F - fourth point
+                        E = m4 * (Math.Pow(Xs4_dash, 2) + Math.Pow(Ys4_dash[i], 2));
+                        F = Is4 * Math.Pow(i41, 2);
+                        // G - fifth point
+                        G = m5 * Math.Pow(Xs5_dash, 2);
+
+                        // calculating final value of I_pa_second[i]
+                        I_pa_second[i] = A + B + C + D + E + F + G;
+
+
                         //differential_d_Yp_d_fi1[-];
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.2"); }
@@ -513,6 +580,16 @@ namespace MachineKinematics
 
         private void btnChart_Mcp_Mdp_Click(object sender, EventArgs e)
         {
+            chart1.Series.Clear();
+
+            chart1.Series.Add("Mpc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("Ac").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+
+            for (int i = 0; i < dimension; ++i)
+            {
+                chart1.Series["Mpc"].Points.AddXY(i, M_c_pi[i]);
+                chart1.Series["Ac"].Points.AddXY(i, A_ci[i]);
+            }
             groupBox8.Text = btnChart_Mcp_Mdp.Text;
             tabControl1.SelectedIndex = 3;
         }
