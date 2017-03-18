@@ -82,9 +82,10 @@ namespace MachineKinematics
         double[] A_ci = new double[dimension];
         double[] M_p_D = new double[dimension];
 
-        const double G2 = 0; // in our case (machine)
-        double G3 = 0;       // not const, calculate in general block
-        const double G4 = 0; // in our case (machine)
+        const double G2 = 0;     // in our case (machine)
+        const double g = 9.8196; // Acceleration of free fall on the Earth's surface
+        double G3 = 0;           // not const, calculate in general block
+        const double G4 = 0;     // in our case (machine)
  
         double[] Ys2_dash = new double[dimension]; // == Ya_dash
         double[] Ys4_dash = new double[dimension]; // == Yc_dash
@@ -139,7 +140,7 @@ namespace MachineKinematics
                 dgvTitles.Rows[i].Cells[0].Value = "Fpc" + (i + 1) + " =";
             }
             dgvTitles.Enabled = false;
-            cbDirection.SelectedIndex = 1;
+            cbDirection.SelectedIndex = 0;
 
             lbl1.Text = lbl2.Text = lbl3.Text = lbl4.Text = lbl5.Text = lbl6.Text = 
                 lbl7.Text = lbl8.Text = lbl9.Text = lbl10.Text = lbl11.Text = "\u2715";
@@ -272,12 +273,15 @@ namespace MachineKinematics
                 // calculeate sign(+ or -) for omega_1 
                 if (cbDirection.SelectedIndex == 1)
                 {
-                    sign_omega_1 = 1F;
+                    sign_omega1 = 1F;
                 }
                 else 
                 {
-                    sign_omega_1 = -1F;
+                    sign_omega1 = -1F;
                 }
+
+                // calculate G3
+                G3 = m3 * g;
 
                 int i = 0, j = 0;
                 double fi_1 = 0F;
@@ -579,38 +583,29 @@ namespace MachineKinematics
                 return false;
             }
         }
-        /*
-        private void dgvInput_CurrentCellChanged(object sender, EventArgs e)
-        {
-            double temp = 0;
-            for (int i = 0; i <= 12; ++i)
-                if ((Convert.ToString(dgvInput.Rows[i].Cells[0].Value) != ""))
-                    if (Double.TryParse(Convert.ToString(dgvInput.Rows[i].Cells[0].Value), out temp))
-                        Fpc[i] = Convert.ToDouble(dgvInput.Rows[i].Cells[0].Value);
-                    else
-                    {
-                        dgvInput.Rows[i].Cells[0].Value = Convert.ToString(0);
-                        Fpc[i] = 0;
-                        MessageBox.Show("Допускаются лишь следующие символы: {0-9}, {,}.");
-                    }
-            double a;
-        }*/
 
-        private void dgvInput_CurrentCellChanged(object sender, EventArgs e)
+        private void dgvInput_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            // must repair filling array Fpc;
             double temp = 0;
-            for (int i = 0; i <= dimension; ++i)
-                if ((Convert.ToString(dgvInput.Rows[i / 30].Cells[0].Value) != ""))
-                    if (Double.TryParse(Convert.ToString(dgvInput.Rows[i / 30].Cells[0].Value), out temp))
-                        Fpc[i] = Convert.ToDouble(dgvInput.Rows[i / 30].Cells[0].Value);
+            int Fpc_index = 0;
+            for (int i = 0; i < dimension; ++i)
+            {
+                Fpc_index = i / (dimension / dgvInput.RowCount + 2);
+                if ((Convert.ToString(dgvInput.Rows[Fpc_index].Cells[0].Value) != ""))
+                    if (Double.TryParse(Convert.ToString(dgvInput.Rows[Fpc_index].Cells[0].Value), out temp))
+                    {
+                        Fpc[i] = Convert.ToDouble(dgvInput.Rows[Fpc_index].Cells[0].Value);
+                    }
                     else
                     {
-                        dgvInput.Rows[i / 30].Cells[0].Value = Convert.ToString(0);
+                        dgvInput.Rows[Fpc_index].Cells[0].Value = Convert.ToString(0);
                         Fpc[i] = 0;
-                        MessageBox.Show("Допускаются лишь следующие символы: {0-9}, {,}.");
+                        MessageBox.Show("Допускаются лишь следующие символы: {0-9}, {,}.\n"
+                            + "Пустая ячейка не допускается.");
                     }
-            double a;
-        }
+            }
+        } 
 
         private void btnFi_Click(object sender, EventArgs e)
         {
@@ -887,6 +882,6 @@ namespace MachineKinematics
         public double radToDeg(double param)
         {
             return (param * 180F / Math.PI);
-        }        
+        }
     }
 }
