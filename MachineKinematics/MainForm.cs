@@ -36,7 +36,7 @@ namespace MachineKinematics
         double I_0_p = 0;
         double sign_omega1 = 1; // added 16.03.2016
 
-        // added 19.03.2016
+        // added 19.03.2017
         double m1 = 0;
         double m5 = 0;
         double Is3 = 0;
@@ -102,18 +102,18 @@ namespace MachineKinematics
         double[] I_pa_second = new double[dimension];
         double[] differential_d_Yp_d_fi1 = new double[dimension];
 
-        double A, B, C, D, E, F, G; // temp variables for calculating the I_pa_second
-        double Xs2_dash = 0; // == Xa_dash
-        // Ys2_dash == Ya_dash
-        const double Is2 = 0; // const for our case (machine)
-        double i21 = 0; // == i31
+        double A, B, C, D, E, F, G;  // temp variables for calculating the I_pa_second
+        double Xs2_dash = 0;         // == Xa_dash
+                                     // Ys2_dash == Ya_dash
+        const double Is2 = 0;        // const for our case (machine)
+        double i21 = 0;              // == i31
         const double m2 = 0;         // const for our case (machine)
         double Xs4_dash = 0;
-        // Ys4_dash - now define
-        // m4 = 0 - now define, 0 for our case (machine)
-        // Is4 = 0 - now define, 0 for our case (machine)
-        const double i41 = 0; // const for our case (machine)
-        double Xs5_dash = 0; // == Xc_dash
+                                     // Ys4_dash - now define
+                                     // m4 = 0 - now define, 0 for our case (machine)
+                                     // Is4 = 0 - now define, 0 for our case (machine)
+        const double i41 = 0;        // const for our case (machine)
+        double Xs5_dash = 0;         // == Xc_dash
 
         // 2.3
         double[] A_d_i = new double[dimension];
@@ -128,7 +128,11 @@ namespace MachineKinematics
         double[] T_first_i = new double[dimension];
         double[] omega_1_i = new double[dimension];
         double[] Epsilon_1_i = new double[dimension];
- 
+
+/*
++--------------------------------------------------+
+|   must will be add comments                      |
++--------------------------------------------------+*/
         // fill textBoxes for debugging
         private void forDebug()
         {
@@ -136,7 +140,7 @@ namespace MachineKinematics
             textBox2.Text = "0,15";
             textBox3.Text = "0,6914";
             textBox4.Text = "0,6";
-            textBox6.Text = "13,8";
+            textBox6.Text = "13,8"; // changed 19.03.2017
             textBox7.Text = "1";
             textBox8.Text = "10";
             textBox9.Text = "9,42";
@@ -959,6 +963,18 @@ namespace MachineKinematics
         public double radToDeg(double param)
         {
             return (param * 180F / Math.PI);
+        }
+
+        // start animate
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // pause animate
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
