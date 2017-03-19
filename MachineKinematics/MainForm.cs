@@ -136,16 +136,30 @@ namespace MachineKinematics
         // fill textBoxes for debugging
         private void forDebug()
         {
-            textBox1.Text = "0,3457";
-            textBox2.Text = "0,15";
-            textBox3.Text = "0,6914";
-            textBox4.Text = "0,6";
-            textBox6.Text = "13,8"; // changed 19.03.2017
-            textBox7.Text = "1";
-            textBox8.Text = "10";
-            textBox9.Text = "9,42";
-            textBox10.Text = "0,05";
-            textBox11.Text = "0,1";
+            textBox1.Text = "0,3457";   // l0
+            textBox2.Text = "0,15";     // l1
+            textBox3.Text = "0,6914";   // l3
+            textBox4.Text = "0,6";      // l5 = Sd
+            textBox6.Text = "13,8";     // m3  // value is changed at 19.03.2017
+            textBox7.Text = "1";        // m4
+            textBox8.Text = "10";       // Is2
+            textBox9.Text = "9,42";     // ω1cp
+            textBox10.Text = "0,05";    // δ
+            textBox11.Text = "0,1";     // I0
+
+            /*
+            +--------------------------------------------------+
+            |   change kilogramms by gramms                    |
+            +--------------------------------------------------+*/
+            // added 19.03.2017
+            textBox12.Text = "3";       // m1
+            textBox13.Text = "55,2";    // m5
+            textBox14.Text = "0,00567"; // Is1
+            textBox15.Text = "0,5541";  // Is3
+            textBox16.Text = "51,429";  // ψ
+            textBox17.Text = "90";      // η₁
+
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -655,7 +669,10 @@ namespace MachineKinematics
             if (lbl1.Text == "\u2714" && lbl2.Text == "\u2714" && lbl3.Text == "\u2714"
                 && lbl4.Text == "\u2714" && lbl5.Text == "\u2714" && lbl6.Text == "\u2714"
                 && lbl7.Text == "\u2714" && lbl8.Text == "\u2714" && lbl9.Text == "\u2714"
-                && lbl10.Text == "\u2714" && lbl11.Text == "\u2714")
+                && lbl10.Text == "\u2714" && lbl11.Text == "\u2714" 
+                // added at 19.03.2017
+                && lbl12.Text == "\u2714" && lbl13.Text == "\u2714" && lbl14.Text == "\u2714"
+                && lbl15.Text == "\u2714" && lbl16.Text == "\u2714" && lbl17.Text == "\u2714")
             {
                 return true;
             }
@@ -787,6 +804,37 @@ namespace MachineKinematics
             {
                 e.Handled = true;
             }
+        }
+
+        // added 19.03.2017
+        private void textBox12_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox12, lbl12);
+        }
+
+        private void textBox13_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox13, lbl13);
+        }
+
+        private void textBox14_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox14, lbl14);
+        }
+
+        private void textBox15_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox15, lbl15);
+        }
+
+        private void textBox16_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox16, lbl16);
+        }
+
+        private void textBox17_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox17, lbl17);
         }
 
 /*=================================================================================================== 
