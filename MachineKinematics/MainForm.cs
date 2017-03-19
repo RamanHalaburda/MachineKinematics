@@ -309,6 +309,15 @@ namespace MachineKinematics
 
                 Double.TryParse(textBox11.Text, out I_0_p);
 
+                //added 19.03.2017
+                Double.TryParse(textBox12.Text, out m1);
+                Double.TryParse(textBox13.Text, out m5);
+                Double.TryParse(textBox14.Text, out Is1);
+                Double.TryParse(textBox15.Text, out Is3);
+
+                Double.TryParse(textBox16.Text, out );
+                Double.TryParse(textBox17.Text, out );
+
                 // calculeate sign(+ or -) for omega_1 
                 if (cbDirection.SelectedIndex == 1)
                 {
