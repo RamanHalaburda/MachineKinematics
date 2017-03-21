@@ -131,10 +131,6 @@ namespace MachineKinematics
         double[] omega_1_i = new double[dimension];
         double[] Epsilon_1_i = new double[dimension];
 
-/*
-+--------------------------------------------------+
-|   must will be add comments                      |
-+--------------------------------------------------+*/
         // fill textBoxes for debugging
         private void forDebug()
         {
@@ -387,10 +383,6 @@ namespace MachineKinematics
                         // i41 = 0 - const for our case (machine)
                         Xs5_dash = Xc_dash[i];
 
-/*
-+--------------------------------------------------+
-|   refresh interface for new parameters           |
-+--------------------------------------------------+*/
                         // A, B, C, D, E, F, G - temp variables for calculating the I_pa_second
                         // A, B - second point
                         A = m2 * (Math.Pow(Xs2_dash, 2) + Math.Pow(Ys2_dash[i], 2));
@@ -587,6 +579,23 @@ namespace MachineKinematics
                 chart1.Series["Xc''"].Points.AddXY(i, Xc_doubledash[i]);
             }
             groupBox8.Text = btnChart_xc_dash.Text;
+            tabControl1.SelectedIndex = 3;
+        }
+
+
+        private void btn_I_pa_second_d_Yp_d_fi1_Click(object sender, EventArgs e)
+        {
+            chart1.Series.Clear();
+
+            chart1.Series.Add("I_pa_second").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("d_Yp_d_fi1'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+
+            for (int i = 0; i < dimension; ++i)
+            {
+                chart1.Series["I_pa_second"].Points.AddXY(i, I_pa_second[i]);
+                //chart1.Series["d_Yp_d_fi1"].Points.AddXY(i, Xc_dash[i]);
+            }
+            groupBox8.Text = btnChart_I_pa_second_d_Yp_d_fi1.Text;
             tabControl1.SelectedIndex = 3;
         }
 

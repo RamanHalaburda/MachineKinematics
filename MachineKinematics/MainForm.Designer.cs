@@ -28,15 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.легендаОбозначенийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpInput = new System.Windows.Forms.TabPage();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.lbl17 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.lbl16 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.textBox16 = new System.Windows.Forms.TextBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.button16 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
@@ -115,6 +122,7 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.btnChart_I_pa_second_d_Yp_d_fi1 = new System.Windows.Forms.Button();
             this.btnChart_xc_dash = new System.Windows.Forms.Button();
             this.btnChart_omega1 = new System.Windows.Forms.Button();
             this.btnChart_Ac_Ad = new System.Windows.Forms.Button();
@@ -135,16 +143,10 @@
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNotation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdentificator = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.lbl16 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.textBox16 = new System.Windows.Forms.TextBox();
-            this.lbl17 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.textBox17 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpInput.SuspendLayout();
+            this.groupBox13.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInput)).BeginInit();
@@ -166,7 +168,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).BeginInit();
-            this.groupBox13.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -235,6 +236,80 @@
             this.tpInput.TabIndex = 0;
             this.tpInput.Text = "Входные параметры";
             this.tpInput.UseVisualStyleBackColor = true;
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox13.Controls.Add(this.lbl17);
+            this.groupBox13.Controls.Add(this.label23);
+            this.groupBox13.Controls.Add(this.textBox17);
+            this.groupBox13.Controls.Add(this.lbl16);
+            this.groupBox13.Controls.Add(this.label21);
+            this.groupBox13.Controls.Add(this.textBox16);
+            this.groupBox13.Location = new System.Drawing.Point(6, 393);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(273, 75);
+            this.groupBox13.TabIndex = 17;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Средняя угловая скорость кривошипа";
+            // 
+            // lbl17
+            // 
+            this.lbl17.AutoSize = true;
+            this.lbl17.Location = new System.Drawing.Point(254, 52);
+            this.lbl17.Name = "lbl17";
+            this.lbl17.Size = new System.Drawing.Size(13, 13);
+            this.lbl17.TabIndex = 19;
+            this.lbl17.Text = "_";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Lucida Calligraphy", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(6, 50);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(19, 17);
+            this.label23.TabIndex = 18;
+            this.label23.Text = "η₁";
+            // 
+            // textBox17
+            // 
+            this.textBox17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox17.Location = new System.Drawing.Point(123, 46);
+            this.textBox17.Name = "textBox17";
+            this.textBox17.Size = new System.Drawing.Size(129, 21);
+            this.textBox17.TabIndex = 17;
+            this.textBox17.TextChanged += new System.EventHandler(this.textBox17_TextChanged);
+            this.textBox17.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            // 
+            // lbl16
+            // 
+            this.lbl16.AutoSize = true;
+            this.lbl16.Location = new System.Drawing.Point(254, 25);
+            this.lbl16.Name = "lbl16";
+            this.lbl16.Size = new System.Drawing.Size(13, 13);
+            this.lbl16.TabIndex = 16;
+            this.lbl16.Text = "_";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Lucida Calligraphy", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(6, 23);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(17, 17);
+            this.label21.TabIndex = 9;
+            this.label21.Text = "ψ";
+            // 
+            // textBox16
+            // 
+            this.textBox16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox16.Location = new System.Drawing.Point(123, 19);
+            this.textBox16.Name = "textBox16";
+            this.textBox16.Size = new System.Drawing.Size(129, 21);
+            this.textBox16.TabIndex = 8;
+            this.textBox16.TextChanged += new System.EventHandler(this.textBox16_TextChanged);
+            this.textBox16.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // groupBox12
             // 
@@ -1048,6 +1123,7 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.btnChart_I_pa_second_d_Yp_d_fi1);
             this.groupBox9.Controls.Add(this.btnChart_xc_dash);
             this.groupBox9.Controls.Add(this.btnChart_omega1);
             this.groupBox9.Controls.Add(this.btnChart_Ac_Ad);
@@ -1066,11 +1142,22 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Графики";
             // 
+            // btnChart_I_pa_second_d_Yp_d_fi1
+            // 
+            this.btnChart_I_pa_second_d_Yp_d_fi1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnChart_I_pa_second_d_Yp_d_fi1.Location = new System.Drawing.Point(84, 135);
+            this.btnChart_I_pa_second_d_Yp_d_fi1.Name = "btnChart_I_pa_second_d_Yp_d_fi1";
+            this.btnChart_I_pa_second_d_Yp_d_fi1.Size = new System.Drawing.Size(102, 23);
+            this.btnChart_I_pa_second_d_Yp_d_fi1.TabIndex = 11;
+            this.btnChart_I_pa_second_d_Yp_d_fi1.Text = "Ipaᴵᴵ, dYp/dφ1";
+            this.btnChart_I_pa_second_d_Yp_d_fi1.UseVisualStyleBackColor = true;
+            this.btnChart_I_pa_second_d_Yp_d_fi1.Click += new System.EventHandler(this.btn_I_pa_second_d_Yp_d_fi1_Click);
+            // 
             // btnChart_xc_dash
             // 
             this.btnChart_xc_dash.Location = new System.Drawing.Point(6, 135);
             this.btnChart_xc_dash.Name = "btnChart_xc_dash";
-            this.btnChart_xc_dash.Size = new System.Drawing.Size(123, 23);
+            this.btnChart_xc_dash.Size = new System.Drawing.Size(72, 23);
             this.btnChart_xc_dash.TabIndex = 10;
             this.btnChart_xc_dash.Text = "Xc, Xc\', Xc\'\'";
             this.btnChart_xc_dash.UseVisualStyleBackColor = true;
@@ -1088,9 +1175,9 @@
             // 
             // btnChart_Ac_Ad
             // 
-            this.btnChart_Ac_Ad.Location = new System.Drawing.Point(135, 135);
+            this.btnChart_Ac_Ad.Location = new System.Drawing.Point(68, 106);
             this.btnChart_Ac_Ad.Name = "btnChart_Ac_Ad";
-            this.btnChart_Ac_Ad.Size = new System.Drawing.Size(57, 23);
+            this.btnChart_Ac_Ad.Size = new System.Drawing.Size(47, 23);
             this.btnChart_Ac_Ad.TabIndex = 8;
             this.btnChart_Ac_Ad.Text = "Ac, Ad";
             this.btnChart_Ac_Ad.UseVisualStyleBackColor = true;
@@ -1098,7 +1185,7 @@
             // 
             // btnChart_e1
             // 
-            this.btnChart_e1.Location = new System.Drawing.Point(135, 106);
+            this.btnChart_e1.Location = new System.Drawing.Point(109, 77);
             this.btnChart_e1.Name = "btnChart_e1";
             this.btnChart_e1.Size = new System.Drawing.Size(20, 23);
             this.btnChart_e1.TabIndex = 7;
@@ -1108,7 +1195,7 @@
             // 
             // btnChart_T2
             // 
-            this.btnChart_T2.Location = new System.Drawing.Point(101, 106);
+            this.btnChart_T2.Location = new System.Drawing.Point(127, 106);
             this.btnChart_T2.Name = "btnChart_T2";
             this.btnChart_T2.Size = new System.Drawing.Size(28, 23);
             this.btnChart_T2.TabIndex = 6;
@@ -1120,7 +1207,7 @@
             // 
             this.btnChart_dT_dTi.Location = new System.Drawing.Point(6, 106);
             this.btnChart_dT_dTi.Name = "btnChart_dT_dTi";
-            this.btnChart_dT_dTi.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_dT_dTi.Size = new System.Drawing.Size(56, 23);
             this.btnChart_dT_dTi.TabIndex = 5;
             this.btnChart_dT_dTi.Text = "dT, dTi";
             this.btnChart_dT_dTi.UseVisualStyleBackColor = true;
@@ -1128,9 +1215,9 @@
             // 
             // btnChart_Mcp_Mdp
             // 
-            this.btnChart_Mcp_Mdp.Location = new System.Drawing.Point(101, 77);
+            this.btnChart_Mcp_Mdp.Location = new System.Drawing.Point(135, 77);
             this.btnChart_Mcp_Mdp.Name = "btnChart_Mcp_Mdp";
-            this.btnChart_Mcp_Mdp.Size = new System.Drawing.Size(91, 23);
+            this.btnChart_Mcp_Mdp.Size = new System.Drawing.Size(57, 23);
             this.btnChart_Mcp_Mdp.TabIndex = 4;
             this.btnChart_Mcp_Mdp.Text = "Mpc, Ac";
             this.btnChart_Mcp_Mdp.UseVisualStyleBackColor = true;
@@ -1208,16 +1295,16 @@
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1277,80 +1364,6 @@
             this.colIdentificator.ReadOnly = true;
             this.colIdentificator.Width = 112;
             // 
-            // groupBox13
-            // 
-            this.groupBox13.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.groupBox13.Controls.Add(this.lbl17);
-            this.groupBox13.Controls.Add(this.label23);
-            this.groupBox13.Controls.Add(this.textBox17);
-            this.groupBox13.Controls.Add(this.lbl16);
-            this.groupBox13.Controls.Add(this.label21);
-            this.groupBox13.Controls.Add(this.textBox16);
-            this.groupBox13.Location = new System.Drawing.Point(6, 393);
-            this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(273, 75);
-            this.groupBox13.TabIndex = 17;
-            this.groupBox13.TabStop = false;
-            this.groupBox13.Text = "Средняя угловая скорость кривошипа";
-            // 
-            // lbl16
-            // 
-            this.lbl16.AutoSize = true;
-            this.lbl16.Location = new System.Drawing.Point(254, 25);
-            this.lbl16.Name = "lbl16";
-            this.lbl16.Size = new System.Drawing.Size(13, 13);
-            this.lbl16.TabIndex = 16;
-            this.lbl16.Text = "_";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Lucida Calligraphy", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(6, 23);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(17, 17);
-            this.label21.TabIndex = 9;
-            this.label21.Text = "ψ";
-            // 
-            // textBox16
-            // 
-            this.textBox16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox16.Location = new System.Drawing.Point(123, 19);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(129, 21);
-            this.textBox16.TabIndex = 8;
-            this.textBox16.TextChanged += new System.EventHandler(this.textBox16_TextChanged);
-            this.textBox16.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
-            // 
-            // lbl17
-            // 
-            this.lbl17.AutoSize = true;
-            this.lbl17.Location = new System.Drawing.Point(254, 52);
-            this.lbl17.Name = "lbl17";
-            this.lbl17.Size = new System.Drawing.Size(13, 13);
-            this.lbl17.TabIndex = 19;
-            this.lbl17.Text = "_";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Lucida Calligraphy", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(6, 50);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(19, 17);
-            this.label23.TabIndex = 18;
-            this.label23.Text = "η₁";
-            // 
-            // textBox17
-            // 
-            this.textBox17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox17.Location = new System.Drawing.Point(123, 46);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(129, 21);
-            this.textBox17.TabIndex = 17;
-            this.textBox17.TextChanged += new System.EventHandler(this.textBox17_TextChanged);
-            this.textBox17.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1367,6 +1380,8 @@
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tpInput.ResumeLayout(false);
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInput)).EndInit();
@@ -1395,8 +1410,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).EndInit();
-            this.groupBox13.ResumeLayout(false);
-            this.groupBox13.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1515,6 +1528,7 @@
         private System.Windows.Forms.Label lbl16;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.Button btnChart_I_pa_second_d_Yp_d_fi1;
     }
 }
 
