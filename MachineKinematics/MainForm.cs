@@ -160,8 +160,6 @@ namespace MachineKinematics
             textBox15.Text = "0,5541";  // Is3
             textBox16.Text = "51,429";  // ψ
             textBox17.Text = "90";      // η₁
-
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -357,7 +355,7 @@ namespace MachineKinematics
                         double delta_fi1 = sign_omega1 * 2 * Math.PI / 180F;
                         if (i == 0)
                         {
-                            A_c_i[i] = 0 /* A_ci[i-1] */ + 0.5 * (0 /* M_c_pi[i-1] */ + M_c_pi[i]);
+                            A_c_i[i] = 0.5 * M_c_pi[i] * delta_fi1;
                         }
                         else
                         {
@@ -849,13 +847,13 @@ namespace MachineKinematics
             for (int i = 0; i <= 12; ++i)
                 if (i > 4 && i < 11)
                 {
-                    dgvInput.Rows[i].Cells[0].Value = 2500;
-                    Fpc[i] = 2500F;
+                    Fpc[i] = 5000F;
+                    dgvInput.Rows[i].Cells[0].Value = Fpc[i].ToString();                    
                 }
                 else
                 {
-                    dgvInput.Rows[i].Cells[0].Value = 5000;
-                    Fpc[i] = 5000F;
+                    Fpc[i] = 0F;
+                    dgvInput.Rows[i].Cells[0].Value = Fpc[i].ToString();                    
                 }
         }
 
