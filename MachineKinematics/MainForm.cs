@@ -362,10 +362,6 @@ namespace MachineKinematics
                             A_c_i[i] = A_c_i[i - 1] + delta_fi1 * 0.5 * (M_c_pi[i - 1] + M_c_pi[i]);
                         }
 
-/*
-+------------------------------+
-|   maybe wrong calculation    |
-+------------------------------+*/
                         M_p_D[i] = - (A_c_i[i] / (2F * Math.PI));
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.1"); }
@@ -558,6 +554,8 @@ namespace MachineKinematics
 
         private void btnChart_i2p_A_B_C_Click(object sender, EventArgs e)
         {
+            chart1.Series.Clear();
+
             groupBox8.Text = btnChart_i2p_A_B_C.Text;
             tabControl1.SelectedIndex = 3;
         }
@@ -580,7 +578,9 @@ namespace MachineKinematics
 
         private void btnChart_dT_dTi_Click(object sender, EventArgs e)
         {
-            groupBox8.Text = btnChart_dT_dTi.Text;
+            chart1.Series.Clear();
+
+            groupBox8.Text = btnChart_dT_dTi.Text;            
             tabControl1.SelectedIndex = 3;
         }
 
