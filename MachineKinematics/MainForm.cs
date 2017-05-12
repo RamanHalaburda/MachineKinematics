@@ -428,7 +428,7 @@ namespace MachineKinematics
                     try
                     {
                         fi_1_i[i] = Math.Abs(delta_fi) * (i - 1);
-                        A_d_i[i] = M_p_D[i] * fi_1_i[i];
+                        A_d_i[i] = M_p_D[i] * degToRad(fi_1_i[i]); // inserted degToRad() 11.05.2017
                         
                         delta_T_i[i] = A_d_i[i] + A_c_i[i];
 /*
@@ -528,6 +528,14 @@ namespace MachineKinematics
 
         private void btnChart_i21_i21P_Click(object sender, EventArgs e)
         {
+            chart1.Series.Clear();
+            chart1.Series.Add("i21").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("i21'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            for (int i = 0; i < dimension; ++i)
+            {
+                chart1.Series["i21"].Points.AddXY(i, i31[i]); // i21 == i31 => i21p == i31p
+                chart1.Series["i21'"].Points.AddXY(i, i31_dash[i]);
+            }
             groupBox8.Text = btnChart_i21_i21P.Text;
             tabControl1.SelectedIndex = 3;
         }
@@ -535,12 +543,10 @@ namespace MachineKinematics
         private void btnChart_xs2p_ys2p_xs2pp_ys2pp_Click(object sender, EventArgs e)
         {
             chart1.Series.Clear();
-
             chart1.Series.Add("Xs2p").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Ys2p").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Xs2pp").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Ys2pp").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Xs2p"].Points.AddXY(i, Xs3_dash[i]);
@@ -552,21 +558,11 @@ namespace MachineKinematics
             tabControl1.SelectedIndex = 3;
         }
 
-        private void btnChart_i2p_A_B_C_Click(object sender, EventArgs e)
-        {
-            chart1.Series.Clear();
-
-            groupBox8.Text = btnChart_i2p_A_B_C.Text;
-            tabControl1.SelectedIndex = 3;
-        }
-
         private void btnChart_Mcp_Mdp_Click(object sender, EventArgs e)
         {
             chart1.Series.Clear();
-
             chart1.Series.Add("Mpc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Ac").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Mpc"].Points.AddXY(i, M_c_pi[i]);
@@ -579,31 +575,39 @@ namespace MachineKinematics
         private void btnChart_dT_dTi_Click(object sender, EventArgs e)
         {
             chart1.Series.Clear();
-
+            chart1.Series.Add("delta Ti").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("delta Ti'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            for (int i = 0; i < dimension; ++i)
+            {
+                chart1.Series["delta Ti"].Points.AddXY(i, delta_T_i[i]);
+                chart1.Series["delta Ti'"].Points.AddXY(i, delta_T_i_first[i]);
+            }
             groupBox8.Text = btnChart_dT_dTi.Text;            
             tabControl1.SelectedIndex = 3;
         }
-
-        private void btnChart_T2_Click(object sender, EventArgs e)
-        {
-            groupBox8.Text = btnChart_T2.Text;
-            tabControl1.SelectedIndex = 3;
-        }
-
-        private void btnChart_e1_Click(object sender, EventArgs e)
-        {
-            groupBox8.Text = btnChart_e1.Text;
-            tabControl1.SelectedIndex = 3;
-        }
-
+        
         private void btnChart_omega1_Click(object sender, EventArgs e)
         {
+            chart1.Series.Clear();
+            chart1.Series.Add("ω1").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            for (int i = 0; i < dimension; ++i)
+            {
+                //chart1.Series["ω1"].Points.AddXY(i, omega_1_i[i]);
+            }
             groupBox8.Text = btnChart_omega1.Text;
             tabControl1.SelectedIndex = 3;
         }
 
-        private void btnChart_Ac_Ad_Click(object sender, EventArgs e)
+        private void btnChart_Ac_Ad_Click(object sender, EventArgs e) // must repair
         {
+            chart1.Series.Clear();
+            chart1.Series.Add("Ac").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("Ad").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            for (int i = 0; i < dimension; ++i)
+            {
+                chart1.Series["Ac"].Points.AddXY(i, A_c_i[i]);
+                chart1.Series["Ad"].Points.AddXY(i, A_d_i[i]);
+            }
             groupBox8.Text = btnChart_Ac_Ad.Text;
             tabControl1.SelectedIndex = 3;
         }
@@ -611,11 +615,9 @@ namespace MachineKinematics
         private void btnChart_xc_dash_Click(object sender, EventArgs e)
         {
             chart1.Series.Clear();
-
             chart1.Series.Add("Xc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Xc'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            chart1.Series.Add("Xc''").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            
+            chart1.Series.Add("Xc''").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;            
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Xc"].Points.AddXY(i, Xc[i]);
@@ -630,14 +632,12 @@ namespace MachineKinematics
         private void btn_I_pa_second_d_Yp_d_fi1_Click(object sender, EventArgs e)
         {
             chart1.Series.Clear();
-
             chart1.Series.Add("I_pa_second").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            chart1.Series.Add("d_Yp_d_fi1'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-
+            chart1.Series.Add("Yp_d_fi1'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["I_pa_second"].Points.AddXY(i, I_pa_second[i]);
-                //chart1.Series["d_Yp_d_fi1"].Points.AddXY(i, Xc_dash[i]);
+                chart1.Series["Yp_d_fi1'"].Points.AddXY(i, differential_d_Yp_d_fi1[i]);
             }
             groupBox8.Text = btnChart_I_pa_second_d_Yp_d_fi1.Text;
             tabControl1.SelectedIndex = 3;

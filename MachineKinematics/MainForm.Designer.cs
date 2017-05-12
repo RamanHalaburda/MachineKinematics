@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,11 +126,8 @@
             this.btnChart_xc_dash = new System.Windows.Forms.Button();
             this.btnChart_omega1 = new System.Windows.Forms.Button();
             this.btnChart_Ac_Ad = new System.Windows.Forms.Button();
-            this.btnChart_e1 = new System.Windows.Forms.Button();
-            this.btnChart_T2 = new System.Windows.Forms.Button();
             this.btnChart_dT_dTi = new System.Windows.Forms.Button();
             this.btnChart_Mcp_Mdp = new System.Windows.Forms.Button();
-            this.btnChart_i2p_A_B_C = new System.Windows.Forms.Button();
             this.btnChart_i21_i21P = new System.Windows.Forms.Button();
             this.btnChart_xs2p_ys2p_xs2pp_ys2pp = new System.Windows.Forms.Button();
             this.btnChart_sd_i51_i51P = new System.Windows.Forms.Button();
@@ -1127,11 +1124,8 @@
             this.groupBox9.Controls.Add(this.btnChart_xc_dash);
             this.groupBox9.Controls.Add(this.btnChart_omega1);
             this.groupBox9.Controls.Add(this.btnChart_Ac_Ad);
-            this.groupBox9.Controls.Add(this.btnChart_e1);
-            this.groupBox9.Controls.Add(this.btnChart_T2);
             this.groupBox9.Controls.Add(this.btnChart_dT_dTi);
             this.groupBox9.Controls.Add(this.btnChart_Mcp_Mdp);
-            this.groupBox9.Controls.Add(this.btnChart_i2p_A_B_C);
             this.groupBox9.Controls.Add(this.btnChart_i21_i21P);
             this.groupBox9.Controls.Add(this.btnChart_xs2p_ys2p_xs2pp_ys2pp);
             this.groupBox9.Controls.Add(this.btnChart_sd_i51_i51P);
@@ -1183,33 +1177,13 @@
             this.btnChart_Ac_Ad.UseVisualStyleBackColor = true;
             this.btnChart_Ac_Ad.Click += new System.EventHandler(this.btnChart_Ac_Ad_Click);
             // 
-            // btnChart_e1
-            // 
-            this.btnChart_e1.Location = new System.Drawing.Point(109, 77);
-            this.btnChart_e1.Name = "btnChart_e1";
-            this.btnChart_e1.Size = new System.Drawing.Size(20, 23);
-            this.btnChart_e1.TabIndex = 7;
-            this.btnChart_e1.Text = "e1";
-            this.btnChart_e1.UseVisualStyleBackColor = true;
-            this.btnChart_e1.Click += new System.EventHandler(this.btnChart_e1_Click);
-            // 
-            // btnChart_T2
-            // 
-            this.btnChart_T2.Location = new System.Drawing.Point(127, 106);
-            this.btnChart_T2.Name = "btnChart_T2";
-            this.btnChart_T2.Size = new System.Drawing.Size(28, 23);
-            this.btnChart_T2.TabIndex = 6;
-            this.btnChart_T2.Text = "T2";
-            this.btnChart_T2.UseVisualStyleBackColor = true;
-            this.btnChart_T2.Click += new System.EventHandler(this.btnChart_T2_Click);
-            // 
             // btnChart_dT_dTi
             // 
             this.btnChart_dT_dTi.Location = new System.Drawing.Point(6, 106);
             this.btnChart_dT_dTi.Name = "btnChart_dT_dTi";
             this.btnChart_dT_dTi.Size = new System.Drawing.Size(56, 23);
             this.btnChart_dT_dTi.TabIndex = 5;
-            this.btnChart_dT_dTi.Text = "dT, dTi";
+            this.btnChart_dT_dTi.Text = "dTi, dTi\'";
             this.btnChart_dT_dTi.UseVisualStyleBackColor = true;
             this.btnChart_dT_dTi.Click += new System.EventHandler(this.btnChart_dT_dTi_Click);
             // 
@@ -1222,16 +1196,6 @@
             this.btnChart_Mcp_Mdp.Text = "Mpc, Ac";
             this.btnChart_Mcp_Mdp.UseVisualStyleBackColor = true;
             this.btnChart_Mcp_Mdp.Click += new System.EventHandler(this.btnChart_Mcp_Mdp_Click);
-            // 
-            // btnChart_i2p_A_B_C
-            // 
-            this.btnChart_i2p_A_B_C.Location = new System.Drawing.Point(6, 77);
-            this.btnChart_i2p_A_B_C.Name = "btnChart_i2p_A_B_C";
-            this.btnChart_i2p_A_B_C.Size = new System.Drawing.Size(91, 23);
-            this.btnChart_i2p_A_B_C.TabIndex = 3;
-            this.btnChart_i2p_A_B_C.Text = "i2p, A, B, C";
-            this.btnChart_i2p_A_B_C.UseVisualStyleBackColor = true;
-            this.btnChart_i2p_A_B_C.Click += new System.EventHandler(this.btnChart_i2p_A_B_C_Click);
             // 
             // btnChart_i21_i21P
             // 
@@ -1295,16 +1259,16 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1472,11 +1436,8 @@
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Button btnChart_omega1;
         private System.Windows.Forms.Button btnChart_Ac_Ad;
-        private System.Windows.Forms.Button btnChart_e1;
-        private System.Windows.Forms.Button btnChart_T2;
         private System.Windows.Forms.Button btnChart_dT_dTi;
         private System.Windows.Forms.Button btnChart_Mcp_Mdp;
-        private System.Windows.Forms.Button btnChart_i2p_A_B_C;
         private System.Windows.Forms.Button btnChart_i21_i21P;
         private System.Windows.Forms.Button btnChart_xs2p_ys2p_xs2pp_ys2pp;
         private System.Windows.Forms.Button btnChart_sd_i51_i51P;
