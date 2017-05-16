@@ -89,11 +89,11 @@ namespace MachineKinematics
         // 2.1
         double[] M_c_pi = new double[dimension];
         double[] A_c_i = new double[dimension];
-        double[] M_p_D = new double[dimension];
+        double M_p_D = new double();
 
         const double G2 = 0;     // in our case (machine)
         const double g = 9.8196; // Acceleration of free fall on the Earth's surface
-        double G3 = 0;           // not const, calculate in general block
+        double G3 = 300;           // not const, calculate in general block
         const double G4 = 0;     // in our case (machine)
 
         double[] Ys2_dash = new double[dimension]; // == Ya_dash
@@ -350,7 +350,7 @@ namespace MachineKinematics
                         Ys2_dash[i] = Ya_dash[i];
                         Ys4_dash[i] = Yc_dash[i];
 
-                        M_c_pi[i] = sign_omega1 * (Fpc[i] * Xd_dash[i] - G2 * Ys2_dash[i] - G3 * Ys3_dash[i] - G4 * Ys4_dash[i]);
+                        M_c_pi[i] = sign_omega1 * (-Fpc[i] * Xd_dash[i] - G2 * Ys2_dash[i] - G3 * Ys3_dash[i] - G4 * Ys4_dash[i]);
 
                         double delta_fi1 = sign_omega1 * 2 * Math.PI / 180F;
                         if (i == 0)
@@ -361,10 +361,33 @@ namespace MachineKinematics
                         {
                             A_c_i[i] = A_c_i[i - 1] + delta_fi1 * 0.5 * (M_c_pi[i - 1] + M_c_pi[i]);
                         }
-
-                        M_p_D[i] = - (A_c_i[i] / (2F * Math.PI));
+                            
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.1"); }
+
+                    if (cbDirection.SelectedIndex == 0)
+                        fi_1 -= delta_fi;
+                    else
+                        fi_1 += delta_fi;
+                }
+
+                try
+                {
+                    M_p_D = -(A_c_i[180] / (2F * Math.PI));
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в вычислении M_p_D."); }
+
+                for (fi_1 = fi_clone; i < dimension; ++i)
+                {
+                    if (fi_1 < 0)
+                    {
+                        fi_1 = fi_1 + 360;
+                    }
+
+                    if (fi_1 > 360)
+                    {
+                        fi_1 = fi_1 - 360;
+                    }
 
 // =============== 2.2 part of calculating =================
                     try
@@ -428,7 +451,7 @@ namespace MachineKinematics
                     try
                     {
                         fi_1_i[i] = Math.Abs(delta_fi) * (i - 1);
-                        A_d_i[i] = M_p_D[i] * degToRad(fi_1_i[i]); // inserted degToRad() 11.05.2017
+                        A_d_i[i] = M_p_D * degToRad(fi_1_i[i]); // inserted degToRad() 11.05.2017
                         
                         delta_T_i[i] = A_d_i[i] + A_c_i[i];
 /*
@@ -437,15 +460,12 @@ namespace MachineKinematics
 +-------------------------------------------+*/
                         double delta_T_i_second = (I_pa_second[i] * Math.Pow(omega_1cp, 2)) / 2;
                         delta_T_i_first[i] = delta_T_i[i] - delta_T_i_second;
-
-                        
+                                                
                         delta_T_first_ab[i] = delta_T_first_a - delta_T_first_b;
 
                         I_p_first[i] = delta_T_first_ab[i] / (delta * Math.Pow(omega_1cp, 2));
 
-                        // not initialized
-                        double I_p_zero = 0;
-                        I_M[i] = I_p_first[i] - I_p_zero;
+                        I_M[i] = I_p_first[i] - I_0_p;
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.3"); }
 
@@ -457,7 +477,7 @@ namespace MachineKinematics
                         T_first_i[i] = T_first_cp - delta_T1_cp + delta_T_i_first[i];
                         omega_1_i[i] = sign_omega1 * Math.Sqrt((2 * T_first_i[i]) / I_p_first[i]);
                         Epsilon_1_i[i] = sign_omega1 
-                            * (M_p_D[i] + M_c_pi[i] - (Math.Pow(omega_1_i[i], 2) / 2) * differential_d_Yp_d_fi1[i])
+                            * (M_p_D + M_c_pi[i] - (Math.Pow(omega_1_i[i], 2) / 2) * differential_d_Yp_d_fi1[i])
 /*
 +-------------------------------------------+
 |   maybe I_p_second[i] = I_pa_second[i]    |
@@ -465,6 +485,11 @@ namespace MachineKinematics
                             / (I_p_first[i] + I_pa_second[i]);
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.4"); }
+
+/*
++-------------------------------------------+
+|   output values into dgvResult            |
++-------------------------------------------+*/
 
                     if ((i % 15 == 0) || (i == 0))
                     {
@@ -477,6 +502,7 @@ namespace MachineKinematics
                         dgvResults.Rows[j].Cells[5].Value = String.Format("{0:0.#####}", Ys3_dash[i]);
                         dgvResults.Rows[j].Cells[6].Value = String.Format("{0:0.#####}", Xs3_doubledash[i]);
                         dgvResults.Rows[j].Cells[7].Value = String.Format("{0:0.#####}", Ys3_doubledash[i]);
+                        dgvResults.Rows[j].Cells[8].Value = string.Format("{0:0.#####}", Xc_dash[i]);
                         ++j;
                     }
 
@@ -826,7 +852,7 @@ namespace MachineKinematics
 
         private void fillColumnHeaderResult()
         {
-            dgvResults.ColumnCount = 8;
+            dgvResults.ColumnCount = 9;
             dgvResults.RowCount = 13;
             dgvResults.RowHeadersWidth = 90;
             for (int i = 0; i < dgvResults.ColumnCount; ++i)
@@ -852,7 +878,7 @@ namespace MachineKinematics
                 }
                 else
                 {
-                    Fpc[i] = 0F;
+                    Fpc[i] = 100F;
                     dgvInput.Rows[i].Cells[0].Value = Fpc[i].ToString();                    
                 }
         }
