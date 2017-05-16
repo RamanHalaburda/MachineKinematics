@@ -28,15 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.легендаОбозначенийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpInput = new System.Windows.Forms.TabPage();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.lbl20 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.textBox20 = new System.Windows.Forms.TextBox();
+            this.lbl19 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.lbl18 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.textBox19 = new System.Windows.Forms.TextBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.lbl17 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -143,6 +153,7 @@
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpInput.SuspendLayout();
+            this.groupBox14.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -212,11 +223,12 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 28);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(907, 666);
+            this.tabControl1.Size = new System.Drawing.Size(907, 523);
             this.tabControl1.TabIndex = 6;
             // 
             // tpInput
             // 
+            this.tpInput.Controls.Add(this.groupBox14);
             this.tpInput.Controls.Add(this.groupBox13);
             this.tpInput.Controls.Add(this.groupBox12);
             this.tpInput.Controls.Add(this.groupBox7);
@@ -229,10 +241,116 @@
             this.tpInput.Location = new System.Drawing.Point(4, 22);
             this.tpInput.Name = "tpInput";
             this.tpInput.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInput.Size = new System.Drawing.Size(899, 640);
+            this.tpInput.Size = new System.Drawing.Size(899, 497);
             this.tpInput.TabIndex = 0;
             this.tpInput.Text = "Входные параметры";
             this.tpInput.UseVisualStyleBackColor = true;
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox14.Controls.Add(this.lbl20);
+            this.groupBox14.Controls.Add(this.label22);
+            this.groupBox14.Controls.Add(this.textBox20);
+            this.groupBox14.Controls.Add(this.lbl19);
+            this.groupBox14.Controls.Add(this.label14);
+            this.groupBox14.Controls.Add(this.textBox18);
+            this.groupBox14.Controls.Add(this.lbl18);
+            this.groupBox14.Controls.Add(this.label18);
+            this.groupBox14.Controls.Add(this.textBox19);
+            this.groupBox14.Location = new System.Drawing.Point(6, 393);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(273, 100);
+            this.groupBox14.TabIndex = 18;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Средняя угловая скорость кривошипа";
+            // 
+            // lbl20
+            // 
+            this.lbl20.AutoSize = true;
+            this.lbl20.Location = new System.Drawing.Point(254, 79);
+            this.lbl20.Name = "lbl20";
+            this.lbl20.Size = new System.Drawing.Size(13, 13);
+            this.lbl20.TabIndex = 22;
+            this.lbl20.Text = "_";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Lucida Calligraphy", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(6, 77);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(26, 17);
+            this.label22.TabIndex = 21;
+            this.label22.Text = "G4";
+            // 
+            // textBox20
+            // 
+            this.textBox20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox20.Location = new System.Drawing.Point(123, 73);
+            this.textBox20.Name = "textBox20";
+            this.textBox20.Size = new System.Drawing.Size(129, 21);
+            this.textBox20.TabIndex = 20;
+            this.textBox20.TextChanged += new System.EventHandler(this.textBox20_TextChanged);
+            this.textBox20.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            // 
+            // lbl19
+            // 
+            this.lbl19.AutoSize = true;
+            this.lbl19.Location = new System.Drawing.Point(254, 52);
+            this.lbl19.Name = "lbl19";
+            this.lbl19.Size = new System.Drawing.Size(13, 13);
+            this.lbl19.TabIndex = 19;
+            this.lbl19.Text = "_";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Lucida Calligraphy", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(6, 50);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(25, 17);
+            this.label14.TabIndex = 18;
+            this.label14.Text = "G3";
+            // 
+            // textBox18
+            // 
+            this.textBox18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox18.Location = new System.Drawing.Point(123, 20);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.Size = new System.Drawing.Size(129, 21);
+            this.textBox18.TabIndex = 17;
+            this.textBox18.TextChanged += new System.EventHandler(this.textBox18_TextChanged);
+            this.textBox18.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            // 
+            // lbl18
+            // 
+            this.lbl18.AutoSize = true;
+            this.lbl18.Location = new System.Drawing.Point(254, 25);
+            this.lbl18.Name = "lbl18";
+            this.lbl18.Size = new System.Drawing.Size(13, 13);
+            this.lbl18.TabIndex = 16;
+            this.lbl18.Text = "_";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Lucida Calligraphy", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(6, 23);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(25, 17);
+            this.label18.TabIndex = 9;
+            this.label18.Text = "G2";
+            // 
+            // textBox19
+            // 
+            this.textBox19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox19.Location = new System.Drawing.Point(123, 47);
+            this.textBox19.Name = "textBox19";
+            this.textBox19.Size = new System.Drawing.Size(129, 21);
+            this.textBox19.TabIndex = 8;
+            this.textBox19.TextChanged += new System.EventHandler(this.textBox19_TextChanged);
+            this.textBox19.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // groupBox13
             // 
@@ -243,7 +361,7 @@
             this.groupBox13.Controls.Add(this.lbl16);
             this.groupBox13.Controls.Add(this.label21);
             this.groupBox13.Controls.Add(this.textBox16);
-            this.groupBox13.Location = new System.Drawing.Point(6, 393);
+            this.groupBox13.Location = new System.Drawing.Point(285, 6);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Size = new System.Drawing.Size(273, 75);
             this.groupBox13.TabIndex = 17;
@@ -313,9 +431,9 @@
             this.groupBox12.Controls.Add(this.button16);
             this.groupBox12.Controls.Add(this.button15);
             this.groupBox12.Controls.Add(this.cbDirection);
-            this.groupBox12.Location = new System.Drawing.Point(465, 6);
+            this.groupBox12.Location = new System.Drawing.Point(462, 138);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(431, 439);
+            this.groupBox12.Size = new System.Drawing.Size(431, 355);
             this.groupBox12.TabIndex = 13;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Завершение ввода данных";
@@ -324,7 +442,7 @@
             // 
             this.button16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.button16.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button16.Location = new System.Drawing.Point(6, 399);
+            this.button16.Location = new System.Drawing.Point(6, 315);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(419, 34);
             this.button16.TabIndex = 14;
@@ -336,7 +454,7 @@
             // 
             this.button15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.button15.Font = new System.Drawing.Font("Microsoft YaHei UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button15.Location = new System.Drawing.Point(6, 171);
+            this.button15.Location = new System.Drawing.Point(6, 114);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(419, 81);
             this.button15.TabIndex = 13;
@@ -350,7 +468,7 @@
             this.cbDirection.Items.AddRange(new object[] {
             "По часовой стрелке",
             "Против часовой стрелки"});
-            this.cbDirection.Location = new System.Drawing.Point(118, 121);
+            this.cbDirection.Location = new System.Drawing.Point(118, 87);
             this.cbDirection.Name = "cbDirection";
             this.cbDirection.Size = new System.Drawing.Size(200, 21);
             this.cbDirection.TabIndex = 12;
@@ -359,9 +477,9 @@
             // 
             this.groupBox7.Controls.Add(this.dgvInput);
             this.groupBox7.Controls.Add(this.dgvTitles);
-            this.groupBox7.Location = new System.Drawing.Point(285, 6);
+            this.groupBox7.Location = new System.Drawing.Point(285, 138);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(174, 439);
+            this.groupBox7.Size = new System.Drawing.Size(174, 355);
             this.groupBox7.TabIndex = 11;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Силы полезного трения";
@@ -372,7 +490,7 @@
             this.dgvInput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvInput.Location = new System.Drawing.Point(90, 20);
             this.dgvInput.Name = "dgvInput";
-            this.dgvInput.Size = new System.Drawing.Size(78, 413);
+            this.dgvInput.Size = new System.Drawing.Size(78, 293);
             this.dgvInput.TabIndex = 4;
             this.dgvInput.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInput_CellValueChanged);
             // 
@@ -383,7 +501,7 @@
             this.dgvTitles.Enabled = false;
             this.dgvTitles.Location = new System.Drawing.Point(6, 20);
             this.dgvTitles.Name = "dgvTitles";
-            this.dgvTitles.Size = new System.Drawing.Size(78, 413);
+            this.dgvTitles.Size = new System.Drawing.Size(78, 293);
             this.dgvTitles.TabIndex = 3;
             // 
             // groupBox6
@@ -392,9 +510,9 @@
             this.groupBox6.Controls.Add(this.lbl11);
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Controls.Add(this.textBox11);
-            this.groupBox6.Location = new System.Drawing.Point(6, 577);
+            this.groupBox6.Location = new System.Drawing.Point(564, 75);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(273, 57);
+            this.groupBox6.Size = new System.Drawing.Size(329, 57);
             this.groupBox6.TabIndex = 6;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Приведённый к кривошипу момент инерции всех вращающихся звеньев";
@@ -434,7 +552,7 @@
             this.groupBox5.Controls.Add(this.lbl10);
             this.groupBox5.Controls.Add(this.label10);
             this.groupBox5.Controls.Add(this.textBox10);
-            this.groupBox5.Location = new System.Drawing.Point(6, 526);
+            this.groupBox5.Location = new System.Drawing.Point(285, 87);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(273, 45);
             this.groupBox5.TabIndex = 10;
@@ -476,9 +594,9 @@
             this.groupBox4.Controls.Add(this.lbl9);
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.textBox9);
-            this.groupBox4.Location = new System.Drawing.Point(6, 474);
+            this.groupBox4.Location = new System.Drawing.Point(564, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(273, 46);
+            this.groupBox4.Size = new System.Drawing.Size(329, 65);
             this.groupBox4.TabIndex = 7;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Средняя угловая скорость кривошипа";
@@ -947,7 +1065,7 @@
             this.tpAnimation.Location = new System.Drawing.Point(4, 22);
             this.tpAnimation.Name = "tpAnimation";
             this.tpAnimation.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAnimation.Size = new System.Drawing.Size(899, 640);
+            this.tpAnimation.Size = new System.Drawing.Size(899, 497);
             this.tpAnimation.TabIndex = 1;
             this.tpAnimation.Text = "Анимация";
             this.tpAnimation.UseVisualStyleBackColor = true;
@@ -999,7 +1117,7 @@
             this.tpOutput.Controls.Add(this.dgvResults);
             this.tpOutput.Location = new System.Drawing.Point(4, 22);
             this.tpOutput.Name = "tpOutput";
-            this.tpOutput.Size = new System.Drawing.Size(899, 640);
+            this.tpOutput.Size = new System.Drawing.Size(899, 497);
             this.tpOutput.TabIndex = 2;
             this.tpOutput.Text = "Полученные данные";
             this.tpOutput.UseVisualStyleBackColor = true;
@@ -1241,7 +1359,7 @@
             this.tpCharts.Controls.Add(this.groupBox8);
             this.tpCharts.Location = new System.Drawing.Point(4, 22);
             this.tpCharts.Name = "tpCharts";
-            this.tpCharts.Size = new System.Drawing.Size(899, 640);
+            this.tpCharts.Size = new System.Drawing.Size(899, 497);
             this.tpCharts.TabIndex = 3;
             this.tpCharts.Text = "Графики";
             this.tpCharts.UseVisualStyleBackColor = true;
@@ -1259,16 +1377,16 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1279,7 +1397,7 @@
             this.tabPage1.ImageKey = "(none)";
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(899, 640);
+            this.tabPage1.Size = new System.Drawing.Size(899, 497);
             this.tabPage1.TabIndex = 4;
             this.tabPage1.Text = "Легенда обозначений";
             this.tabPage1.ToolTipText = "Наименование всех используемых параметров";
@@ -1332,7 +1450,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(931, 701);
+            this.ClientSize = new System.Drawing.Size(931, 555);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -1344,6 +1462,8 @@
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tpInput.ResumeLayout(false);
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
             this.groupBox12.ResumeLayout(false);
@@ -1490,6 +1610,16 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox textBox16;
         private System.Windows.Forms.Button btnChart_I_pa_second_d_Yp_d_fi1;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.Label lbl20;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox textBox20;
+        private System.Windows.Forms.Label lbl19;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBox18;
+        private System.Windows.Forms.Label lbl18;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox textBox19;
     }
 }
 

@@ -91,10 +91,10 @@ namespace MachineKinematics
         double[] A_c_i = new double[dimension];
         double M_p_D = new double();
 
-        const double G2 = 0;     // in our case (machine)
+        double G2 = 0;     // in our case (machine)
         const double g = 9.8196; // Acceleration of free fall on the Earth's surface
-        double G3 = 300;           // not const, calculate in general block
-        const double G4 = 0;     // in our case (machine)
+        double G3 = 0;           // not const, calculate in general block
+        double G4 = 0;     // in our case (machine)
 
         double[] Ys2_dash = new double[dimension]; // == Ya_dash
         double[] Ys4_dash = new double[dimension]; // == Yc_dash
@@ -160,6 +160,12 @@ namespace MachineKinematics
             textBox15.Text = "0,5541";  // Is3
             textBox16.Text = "51,429";  // ψ
             textBox17.Text = "90";      // η₁
+
+            // added 17.05.2017
+            // measure in Newtons
+            textBox18.Text = "0,0"; // G2
+            textBox19.Text = "300,0"; // G2
+            textBox20.Text = "0,0"; // G2
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -182,7 +188,8 @@ namespace MachineKinematics
             cbDirection.SelectedIndex = 0;
 
             lbl1.Text = lbl2.Text = lbl3.Text = lbl4.Text = lbl5.Text = lbl6.Text = 
-                lbl7.Text = lbl8.Text = lbl9.Text = lbl10.Text = lbl11.Text = "\u2715";
+                lbl7.Text = lbl8.Text = lbl9.Text = lbl10.Text = lbl11.Text = 
+                lbl18.Text = lbl19.Text = lbl20.Text = "\u2715";
 
             fillDgvInput();
             forDebug();
@@ -237,6 +244,11 @@ namespace MachineKinematics
                 Double.TryParse(textBox16.Text, out psi);
                 Double.TryParse(textBox17.Text, out eta1);
 
+                //added 19.03.2017
+                Double.TryParse(textBox18.Text, out G2);
+                Double.TryParse(textBox19.Text, out G3);
+                Double.TryParse(textBox20.Text, out G4);
+
                 // calculeate sign(+ or -) for omega_1 
                 if (cbDirection.SelectedIndex == 1)
                 {
@@ -248,7 +260,7 @@ namespace MachineKinematics
                 }
 
                 // calculate G3
-                G3 = m3 * g;
+                // G3 = m3 * g;
 
                 int i = 0, j = 0;
                 double fi_1 = 0F;
@@ -364,7 +376,22 @@ namespace MachineKinematics
                             
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.1"); }
-
+                    /*
+                    if ((i % 15 == 0) || (i == 0))
+                    {
+                        dgvResults.Rows[j].HeaderCell.Value = String.Format("{0:0.#####}", j + 1);
+                        dgvResults.Rows[j].Cells[0].Value = String.Format("{0:0.#####}", fi_1);
+                        dgvResults.Rows[j].Cells[1].Value = String.Format("{0:0.#####}", Sd[i]);
+                        dgvResults.Rows[j].Cells[2].Value = String.Format("{0:0.#####}", i31[i]);
+                        dgvResults.Rows[j].Cells[3].Value = String.Format("{0:0.#####}", i31_dash[i]);
+                        dgvResults.Rows[j].Cells[4].Value = String.Format("{0:0.#####}", Xs3_dash[i]);
+                        dgvResults.Rows[j].Cells[5].Value = String.Format("{0:0.#####}", Ys3_dash[i]);
+                        dgvResults.Rows[j].Cells[6].Value = String.Format("{0:0.#####}", Xs3_doubledash[i]);
+                        dgvResults.Rows[j].Cells[7].Value = String.Format("{0:0.#####}", Ys3_doubledash[i]);
+                        dgvResults.Rows[j].Cells[8].Value = string.Format("{0:0.#####}", Xc_dash[i]);
+                        ++j;
+                    }
+                    */
                     if (cbDirection.SelectedIndex == 0)
                         fi_1 -= delta_fi;
                     else
@@ -377,6 +404,9 @@ namespace MachineKinematics
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в вычислении M_p_D."); }
 
+                i = 0; 
+                j = 0;
+                fi_1 = 0F;
                 for (fi_1 = fi_clone; i < dimension; ++i)
                 {
                     if (fi_1 < 0)
@@ -681,7 +711,9 @@ namespace MachineKinematics
                 && lbl10.Text == "\u2714" && lbl11.Text == "\u2714" 
                 // added at 19.03.2017
                 && lbl12.Text == "\u2714" && lbl13.Text == "\u2714" && lbl14.Text == "\u2714"
-                && lbl15.Text == "\u2714" && lbl16.Text == "\u2714" && lbl17.Text == "\u2714")
+                && lbl15.Text == "\u2714" && lbl16.Text == "\u2714" && lbl17.Text == "\u2714"
+                // added at 17.05.2017
+                && lbl18.Text == "\u2714" && lbl19.Text == "\u2714" && lbl20.Text == "\u2714")
             {
                 return true;
             }
@@ -846,6 +878,22 @@ namespace MachineKinematics
             validateInput(textBox17, lbl17);
         }
 
+        // added 17.05.2017
+        private void textBox18_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox18, lbl18);
+        }
+        
+        private void textBox19_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox19, lbl19);
+        }
+
+        private void textBox20_TextChanged(object sender, EventArgs e)
+        {
+            validateInput(textBox20, lbl20);
+        }
+
 /*=================================================================================================== 
  *=== filling some fields  
  *===================================================================================================*/
@@ -871,16 +919,18 @@ namespace MachineKinematics
         private void fillDgvInput()
         {
             for (int i = 0; i <= 12; ++i)
+            {
                 if (i > 4 && i < 11)
                 {
                     Fpc[i] = 5000F;
-                    dgvInput.Rows[i].Cells[0].Value = Fpc[i].ToString();                    
+                    dgvInput.Rows[i].Cells[0].Value = Fpc[i].ToString();
                 }
                 else
                 {
                     Fpc[i] = 100F;
-                    dgvInput.Rows[i].Cells[0].Value = Fpc[i].ToString();                    
+                    dgvInput.Rows[i].Cells[0].Value = Fpc[i].ToString();
                 }
+            }
         }
 
 /*=================================================================================================== 
