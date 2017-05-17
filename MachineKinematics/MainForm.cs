@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Drawing.Printing;
 
 namespace MachineKinematics
 {
     public partial class MainForm : Form
     {
         public MainForm() { InitializeComponent(); }
+
+        private PrintDocument printDocument = new PrintDocument();
 
         // flag for access to all TabPages
         Boolean accessFlag = false;
@@ -126,9 +129,11 @@ namespace MachineKinematics
         double[] fi_1_i = new double[dimension];
         double[] delta_T_i = new double[dimension];
         double[] delta_T_i_first = new double[dimension];
-        double[] delta_T_first_ab = new double[dimension];
-        double[] I_p_first = new double[dimension];
-        double[] I_M = new double[dimension];
+        double delta_T_first_ab = new double();
+        double I_p_first = new double();
+        double I_M = new double();
+        double delta_T_first_a = new double();
+        double delta_T_first_b = new double();
 
         // 2.4
         double[] T_first_i = new double[dimension];
@@ -262,6 +267,7 @@ namespace MachineKinematics
                 // calculate G3
                 // G3 = m3 * g;
 
+// first loop
                 int i = 0, j = 0;
                 double fi_1 = 0F;
                 for (fi_1 = fi_clone; i < dimension; ++i)
@@ -372,26 +378,10 @@ namespace MachineKinematics
                         else
                         {
                             A_c_i[i] = A_c_i[i - 1] + delta_fi1 * 0.5 * (M_c_pi[i - 1] + M_c_pi[i]);
-                        }
-                            
+                        }                            
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.1"); }
-                    /*
-                    if ((i % 15 == 0) || (i == 0))
-                    {
-                        dgvResults.Rows[j].HeaderCell.Value = String.Format("{0:0.#####}", j + 1);
-                        dgvResults.Rows[j].Cells[0].Value = String.Format("{0:0.#####}", fi_1);
-                        dgvResults.Rows[j].Cells[1].Value = String.Format("{0:0.#####}", Sd[i]);
-                        dgvResults.Rows[j].Cells[2].Value = String.Format("{0:0.#####}", i31[i]);
-                        dgvResults.Rows[j].Cells[3].Value = String.Format("{0:0.#####}", i31_dash[i]);
-                        dgvResults.Rows[j].Cells[4].Value = String.Format("{0:0.#####}", Xs3_dash[i]);
-                        dgvResults.Rows[j].Cells[5].Value = String.Format("{0:0.#####}", Ys3_dash[i]);
-                        dgvResults.Rows[j].Cells[6].Value = String.Format("{0:0.#####}", Xs3_doubledash[i]);
-                        dgvResults.Rows[j].Cells[7].Value = String.Format("{0:0.#####}", Ys3_doubledash[i]);
-                        dgvResults.Rows[j].Cells[8].Value = string.Format("{0:0.#####}", Xc_dash[i]);
-                        ++j;
-                    }
-                    */
+                    
                     if (cbDirection.SelectedIndex == 0)
                         fi_1 -= delta_fi;
                     else
@@ -404,6 +394,7 @@ namespace MachineKinematics
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в вычислении M_p_D."); }
 
+// second loop
                 i = 0; 
                 j = 0;
                 fi_1 = 0F;
@@ -419,9 +410,9 @@ namespace MachineKinematics
                         fi_1 = fi_1 - 360;
                     }
 
-// =============== 2.2 part of calculating =================
+                    // =============== 2.2 part of calculating =================
                     try
-                    { 
+                    {
                         Xs2_dash = Xa_dash[i];
                         Ys2_dash = Ya_dash;
                         // Is2 = 0 - const for our case (machine)
@@ -458,61 +449,83 @@ namespace MachineKinematics
                         double[] i41_dash = new double[dimension];
                         double[] Xs5_doubledash = new double[dimension];
 
-                        differential_d_Yp_d_fi1[i] = 2 * ( 
+                        differential_d_Yp_d_fi1[i] = 2 * (
                               m2 * (Xs2_dash * Xs2_doubledash[i] + Ys2_dash[i] * Ys2_doubledash[i])
-                            + Is2 * i21 * i21_dash[i] 
+                            + Is2 * i21 * i21_dash[i]
                             + m3 * (Xs3_dash[i] * Xs3_doubledash[i] + Ys3_dash[i] * Ys3_doubledash[i])
                             + Is3 * i31[i] * i31_dash[i]
                             + m4 * (Xs4_dash * Xs4_doubledash[i] + Ys4_dash[i] * Ys4_doubledash[i]
                             + Is4 * i41 * i41_dash[i]
                             + m5 * (Xs5_dash * Xs5_doubledash[i]))
                             );
-                        
+
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.2"); }
-
-// =============== 2.3 part of calculating =================
-
-                    // not initialized
-                    double
-                        delta_T_first_a = 0,
-                        delta_T_first_b = 0;
 
                     try
                     {
                         fi_1_i[i] = Math.Abs(delta_fi) * (i - 1);
-                        A_d_i[i] = M_p_D * degToRad(fi_1_i[i]); // inserted degToRad() 11.05.2017
-                        
+                        A_d_i[i] = M_p_D * fi_1_i[i];
+
                         delta_T_i[i] = A_d_i[i] + A_c_i[i];
-/*
-+-------------------------------------------+
-|   maybe I_p_second[i] = I_pa_second[i]    |
-+-------------------------------------------+*/
+                        /*
+                        +-------------------------------------------+
+                        |   maybe I_p_second[i] = I_pa_second[i]    |
+                        +-------------------------------------------+*/
                         double delta_T_i_second = (I_pa_second[i] * Math.Pow(omega_1cp, 2)) / 2;
                         delta_T_i_first[i] = delta_T_i[i] - delta_T_i_second;
-                                                
-                        delta_T_first_ab[i] = delta_T_first_a - delta_T_first_b;
-
-                        I_p_first[i] = delta_T_first_ab[i] / (delta * Math.Pow(omega_1cp, 2));
-
-                        I_M[i] = I_p_first[i] - I_0_p;
                     }
-                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.3"); }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\n\nОшибка в начале части 2.3"); }
+
+                    if (cbDirection.SelectedIndex == 0)
+                        fi_1 -= delta_fi;
+                    else
+                        fi_1 += delta_fi;
+                }
+// =============== 2.3 part of calculating =================  
+                try
+                {
+                    // search MAX and MIN in delta_T_i_first[]
+                    delta_T_first_a = delta_T_i_first.Max();
+                    delta_T_first_b = delta_T_i_first.Min();
+                    delta_T_first_ab = delta_T_first_a - delta_T_first_b;
+
+                    I_p_first = delta_T_first_ab / (delta * Math.Pow(omega_1cp, 2));
+
+                    I_M = I_p_first - I_0_p;
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.3"); }
+
+// third loop
+                i = 0; 
+                j = 0;
+                fi_1 = 0F;
+                for (fi_1 = fi_clone; i < dimension; ++i)
+                {
+                    if (fi_1 < 0)
+                    {
+                        fi_1 = fi_1 + 360;
+                    }
+
+                    if (fi_1 > 360)
+                    {
+                        fi_1 = fi_1 - 360;
+                    }
 
 // =============== 2.4 part of calculating =================
                     try
                     {
-                        double T_first_cp = (I_p_first[i] * Math.Pow(omega_1cp, 2)) / 2;
+                        double T_first_cp = (I_p_first * Math.Pow(omega_1cp, 2)) / 2;
                         double delta_T1_cp = (delta_T_first_a + delta_T_first_b) / 2;
                         T_first_i[i] = T_first_cp - delta_T1_cp + delta_T_i_first[i];
-                        omega_1_i[i] = sign_omega1 * Math.Sqrt((2 * T_first_i[i]) / I_p_first[i]);
+                        omega_1_i[i] = sign_omega1 * Math.Sqrt((2 * T_first_i[i]) / I_p_first);
                         Epsilon_1_i[i] = sign_omega1 
                             * (M_p_D + M_c_pi[i] - (Math.Pow(omega_1_i[i], 2) / 2) * differential_d_Yp_d_fi1[i])
 /*
 +-------------------------------------------+
 |   maybe I_p_second[i] = I_pa_second[i]    |
 +-------------------------------------------+*/
-                            / (I_p_first[i] + I_pa_second[i]);
+                            / (I_p_first + I_pa_second[i]);
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.4"); }
 
@@ -547,6 +560,11 @@ namespace MachineKinematics
 
                 // run animation
                 this.gbAnimation.Paint += new PaintEventHandler(TabPage_Paint);
+
+                // output three results into textBoxes
+                tbResValue1.Text = string.Format("{0:0.#####}", "");
+                tbResValue2.Text = string.Format("{0:0.#####}", I_p_first);
+                tbResValue3.Text = string.Format("{0:0.#####}", I_M);
             }
             else
             {
@@ -1163,6 +1181,22 @@ namespace MachineKinematics
 
             /*Thread.Sleep(500);*/
             arrow.Dispose();
+        }
+
+        // methods for printing
+        private void button5_Click(object sender, EventArgs e)
+        {
+            CaptureScreen();
+            printDocument.Print();
+        }
+
+        private void CaptureScreen()
+        {
+            Graphics myGraphics = this.CreateGraphics();
+            Size s = this.Size;
+            Bitmap memoryImage = new Bitmap(s.Width, s.Height, myGraphics);
+            Graphics memoryGraphics = Graphics.FromImage(memoryImage);
+            memoryGraphics.CopyFromScreen(this.Location.X, this.Location.Y, 0, 0, s);
         }
     }
 }

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1208,6 +1208,7 @@
             this.button5.TabIndex = 7;
             this.button5.Text = "Печать";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button8
             // 
@@ -1257,7 +1258,7 @@
             // btnChart_I_pa_second_d_Yp_d_fi1
             // 
             this.btnChart_I_pa_second_d_Yp_d_fi1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnChart_I_pa_second_d_Yp_d_fi1.Location = new System.Drawing.Point(84, 135);
+            this.btnChart_I_pa_second_d_Yp_d_fi1.Location = new System.Drawing.Point(90, 135);
             this.btnChart_I_pa_second_d_Yp_d_fi1.Name = "btnChart_I_pa_second_d_Yp_d_fi1";
             this.btnChart_I_pa_second_d_Yp_d_fi1.Size = new System.Drawing.Size(102, 23);
             this.btnChart_I_pa_second_d_Yp_d_fi1.TabIndex = 11;
@@ -1269,7 +1270,7 @@
             // 
             this.btnChart_xc_dash.Location = new System.Drawing.Point(6, 135);
             this.btnChart_xc_dash.Name = "btnChart_xc_dash";
-            this.btnChart_xc_dash.Size = new System.Drawing.Size(72, 23);
+            this.btnChart_xc_dash.Size = new System.Drawing.Size(78, 23);
             this.btnChart_xc_dash.TabIndex = 10;
             this.btnChart_xc_dash.Text = "Xc, Xc\', Xc\'\'";
             this.btnChart_xc_dash.UseVisualStyleBackColor = true;
@@ -1377,16 +1378,16 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
