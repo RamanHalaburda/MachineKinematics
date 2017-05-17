@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1133,7 +1133,7 @@
             this.groupBox11.Controls.Add(this.tbResValue1);
             this.groupBox11.Location = new System.Drawing.Point(3, 365);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(887, 80);
+            this.groupBox11.Size = new System.Drawing.Size(893, 80);
             this.groupBox11.TabIndex = 3;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Результаты";
@@ -1265,7 +1265,7 @@
             this.btnChart_I_pa_second_d_Yp_d_fi1.Name = "btnChart_I_pa_second_d_Yp_d_fi1";
             this.btnChart_I_pa_second_d_Yp_d_fi1.Size = new System.Drawing.Size(102, 23);
             this.btnChart_I_pa_second_d_Yp_d_fi1.TabIndex = 11;
-            this.btnChart_I_pa_second_d_Yp_d_fi1.Text = "Ipaᴵᴵ, dYp/dφ1";
+            this.btnChart_I_pa_second_d_Yp_d_fi1.Text = "Ipaᴵᴵ, dIp/dφ1";
             this.btnChart_I_pa_second_d_Yp_d_fi1.UseVisualStyleBackColor = true;
             this.btnChart_I_pa_second_d_Yp_d_fi1.Click += new System.EventHandler(this.btn_I_pa_second_d_Yp_d_fi1_Click);
             // 
@@ -1381,16 +1381,16 @@
             // 
             // chart1
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart1.Legends.Add(legend6);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart1.Series.Add(series6);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";

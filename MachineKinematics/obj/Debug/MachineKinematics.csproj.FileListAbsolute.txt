@@ -1,7 +1,6 @@
 E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\bin\Debug\MachineKinematics.exe.config
 E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\bin\Debug\MachineKinematics.exe
 E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\bin\Debug\MachineKinematics.pdb
-E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\obj\Debug\MachineKinematics.csprojResolveAssemblyReference.cache
 E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\obj\Debug\MachineKinematics.MainForm.resources
 E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\obj\Debug\MachineKinematics.Properties.Resources.resources
 E:\study\1_Study\BarsuEngineeringFaculty\mvs_3c_2s\MachineKinematics\MachineKinematics\obj\Debug\MachineKinematics.ReportForm.resources

@@ -105,7 +105,7 @@ namespace MachineKinematics
 
         // 2.2
         double[] I_pa_second = new double[dimension];
-        double[] differential_d_Yp_d_fi1 = new double[dimension];
+        double[] differential_d_Ip_d_fi1 = new double[dimension];
 
         double A, B, C, D, E, F, G;  // temp variables for calculating the I_pa_second
         double Xs2_dash = 0;         // == Xa_dash
@@ -201,10 +201,12 @@ namespace MachineKinematics
 
             // tabPage2
             gbAnimation.Text = cbDirection.Text;
-            
+            dgvResults.ReadOnly = true;
 
             // tabPage3
-            tbResTitle1.Enabled = tbResTitle2.Enabled = tbResTitle3.Enabled = false;
+            dgvResults.AllowUserToDeleteRows = dgvResults.AllowUserToResizeColumns =
+                dgvResults.AllowUserToResizeRows = false;
+            tbResTitle1.ReadOnly = tbResTitle2.ReadOnly = tbResTitle3.ReadOnly = true;
 
             // tabPage5
             fillDgvLegend();
@@ -450,7 +452,7 @@ namespace MachineKinematics
                         double[] i41_dash = new double[dimension];
                         double[] Xs5_doubledash = new double[dimension];
 
-                        differential_d_Yp_d_fi1[i] = 2 * (
+                        differential_d_Ip_d_fi1[i] = 2 * (
                               m2 * (Xs2_dash * Xs2_doubledash[i] + Ys2_dash[i] * Ys2_doubledash[i])
                             + Is2 * i21 * i21_dash[i]
                             + m3 * (Xs3_dash[i] * Xs3_doubledash[i] + Ys3_dash[i] * Ys3_doubledash[i])
@@ -459,9 +461,8 @@ namespace MachineKinematics
                             + Is4 * i41 * i41_dash[i]
                             + m5 * (Xs5_dash * Xs5_doubledash[i]))
                             );
-
                     }
-                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.2"); }
+                    catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\n\nОшибка в части 2.2"); }
 
                     try
                     {
@@ -521,7 +522,7 @@ namespace MachineKinematics
                         T_first_i[i] = T_first_cp - delta_T1_cp + delta_T_i_first[i];
                         omega_1_i[i] = sign_omega1 * Math.Sqrt((2 * T_first_i[i]) / I_p_first);
                         Epsilon_1_i[i] = sign_omega1 
-                            * (M_p_D + M_c_pi[i] - (Math.Pow(omega_1_i[i], 2) / 2) * differential_d_Yp_d_fi1[i])
+                            * (M_p_D + M_c_pi[i] - (Math.Pow(omega_1_i[i], 2) / 2) * differential_d_Ip_d_fi1[i])
 /*
 +-------------------------------------------+
 |   maybe I_p_second[i] = I_pa_second[i]    |
@@ -546,7 +547,12 @@ namespace MachineKinematics
                         dgvResults.Rows[j].Cells[5].Value = String.Format("{0:0.#####}", Ys3_dash[i]);
                         dgvResults.Rows[j].Cells[6].Value = String.Format("{0:0.#####}", Xs3_doubledash[i]);
                         dgvResults.Rows[j].Cells[7].Value = String.Format("{0:0.#####}", Ys3_doubledash[i]);
-                        dgvResults.Rows[j].Cells[8].Value = string.Format("{0:0.#####}", Xc_dash[i]);
+                        dgvResults.Rows[j].Cells[8].Value = String.Format("{0:0.#####}", Xc_dash[i]);
+                        dgvResults.Rows[j].Cells[9].Value = String.Format("{0:0.#####}", I_pa_second[i]);
+                        dgvResults.Rows[j].Cells[10].Value = String.Format("{0:0.#####}", differential_d_Ip_d_fi1[i]);
+                        dgvResults.Rows[j].Cells[11].Value = String.Format("{0:0.#####}", Xc[i]);
+                        dgvResults.Rows[j].Cells[12].Value = String.Format("{0:0.#####}", Xc_doubledash[i]);
+
                         ++j;
                     }
 
@@ -712,7 +718,7 @@ namespace MachineKinematics
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["I_pa_second"].Points.AddXY(i, I_pa_second[i]);
-                chart1.Series["Yp_d_fi1'"].Points.AddXY(i, differential_d_Yp_d_fi1[i]);
+                chart1.Series["Yp_d_fi1'"].Points.AddXY(i, differential_d_Ip_d_fi1[i]);
             }
             groupBox8.Text = btnChart_I_pa_second_d_Yp_d_fi1.Text;
             tabControl1.SelectedIndex = 3;
@@ -923,20 +929,27 @@ namespace MachineKinematics
 
         private void fillColumnHeaderResult()
         {
-            dgvResults.ColumnCount = 9;
+            dgvResults.ColumnCount = 13;
             dgvResults.RowCount = 13;
             dgvResults.RowHeadersWidth = 90;
             for (int i = 0; i < dgvResults.ColumnCount; ++i)
+            {
                 dgvResults.Columns[i].Width = 60;
+            }
 
             dgvResults.Columns[0].HeaderText = "φo";
             dgvResults.Columns[1].HeaderCell.Value = "Sd";
             dgvResults.Columns[2].HeaderCell.Value = "i31";
             dgvResults.Columns[3].HeaderCell.Value = "i31p";
-            dgvResults.Columns[4].HeaderCell.Value = "x3p";
-            dgvResults.Columns[5].HeaderCell.Value = "y3p";
-            dgvResults.Columns[6].HeaderCell.Value = "x3pp";
-            dgvResults.Columns[7].HeaderCell.Value = "y3pp";
+            dgvResults.Columns[4].HeaderCell.Value = "X3p";
+            dgvResults.Columns[5].HeaderCell.Value = "Y3p";
+            dgvResults.Columns[6].HeaderCell.Value = "X3pp";
+            dgvResults.Columns[7].HeaderCell.Value = "Y3pp";
+            dgvResults.Columns[8].HeaderCell.Value = "Xc'";
+            dgvResults.Columns[9].HeaderCell.Value = "Ipa_second";
+            dgvResults.Columns[10].HeaderCell.Value = "dI/dφ1";
+            dgvResults.Columns[11].HeaderCell.Value = "Xc";
+            dgvResults.Columns[12].HeaderCell.Value = "Xc''";
         }
 
         private void fillDgvInput()
@@ -1095,6 +1108,10 @@ namespace MachineKinematics
             return (param * 180F / Math.PI);
         }
 
+/*=================================================================================================== 
+ *=== for animations  
+ *===================================================================================================*/
+
         // start animate
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -1188,11 +1205,27 @@ namespace MachineKinematics
             arrow.Dispose();
         }
 
-        // methods for printing
+/*=================================================================================================== 
+ *=== methods for printing  
+ *===================================================================================================*/
+
         private void button5_Click(object sender, EventArgs e)
         {
-            CaptureScreen();
-            printDocument.Print();
+            try
+            {
+                CaptureScreen();
+                printDocument.Print();
+            }
+            catch (Exception) 
+            { 
+                MessageBox.Show(
+                    "У вас нет доступных принтеров.",
+                    "Ошибка подключения к принтеру",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Asterisk,
+                    MessageBoxDefaultButton.Button1,
+                    MessageBoxOptions.ServiceNotification); 
+            }
         }
 
         private void CaptureScreen()
@@ -1204,27 +1237,28 @@ namespace MachineKinematics
             memoryGraphics.CopyFromScreen(this.Location.X, this.Location.Y, 0, 0, s);
         }
 
-// output reports
+/*=================================================================================================== 
+ *=== output reports 
+ *===================================================================================================*/
 
         ReportForm f = new ReportForm();
 
         // Кинематические характеристики исполнительного механизма
         private void button8_Click(object sender, EventArgs e)
         {
-            f.ShowReportForm(button8.Text, dgvResults);
+            f.ShowReportForm(button8.Text, dgvResults, Xc, Xc_dash, Xc_doubledash);
         }
 
         // Переменная составляющая приведённого момента инерции
         private void button7_Click(object sender, EventArgs e)
         {
-            f.ShowReportForm(button7.Text, dgvResults);
+            f.ShowReportForm(button7.Text, dgvResults, I_pa_second, differential_d_Ip_d_fi1);
         }
 
-        // Определение закона инерции
-        
+        // Определение закона инерции        
         private void button6_Click(object sender, EventArgs e)
         {           
-            f.ShowReportForm(button6.Text, dgvResults);
+            //f.ShowReportForm(button6.Text, dgvResults);
         }
     }
 }
