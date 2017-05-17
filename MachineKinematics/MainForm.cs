@@ -201,6 +201,7 @@ namespace MachineKinematics
 
             // tabPage2
             gbAnimation.Text = cbDirection.Text;
+            
 
             // tabPage3
             tbResTitle1.Enabled = tbResTitle2.Enabled = tbResTitle3.Enabled = false;
@@ -777,7 +778,7 @@ namespace MachineKinematics
                 }
                 else
                 {
-                    textBox5.Text = String.Format("{0:0.##########}", fi); // ten character before point
+                    textBox5.Text = String.Format("{0:0.##########}", fi); // ten characters before point
                     lbl5.Text = "\u2714";
                 }
             }
@@ -791,6 +792,10 @@ namespace MachineKinematics
                 MessageBox.Show("Вычисления не выполнены. \n"
                     + "Для доступа к \n\t- анимации \n\t- результатам вычислений \n\t- графикам \nвведите все исходные данные и нажмите кнопку \"Выполнить вычисления\"");
             }
+
+            ////////
+            //tabControl1.SelectedTab = tpInput;
+            ////////
         }
 
         private void validateInput(TextBox tb, Label lbl)
@@ -1197,6 +1202,29 @@ namespace MachineKinematics
             Bitmap memoryImage = new Bitmap(s.Width, s.Height, myGraphics);
             Graphics memoryGraphics = Graphics.FromImage(memoryImage);
             memoryGraphics.CopyFromScreen(this.Location.X, this.Location.Y, 0, 0, s);
+        }
+
+// output reports
+
+        ReportForm f = new ReportForm();
+
+        // Кинематические характеристики исполнительного механизма
+        private void button8_Click(object sender, EventArgs e)
+        {
+            f.ShowReportForm(button8.Text, dgvResults);
+        }
+
+        // Переменная составляющая приведённого момента инерции
+        private void button7_Click(object sender, EventArgs e)
+        {
+            f.ShowReportForm(button7.Text, dgvResults);
+        }
+
+        // Определение закона инерции
+        
+        private void button6_Click(object sender, EventArgs e)
+        {           
+            f.ShowReportForm(button6.Text, dgvResults);
         }
     }
 }
