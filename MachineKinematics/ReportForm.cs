@@ -48,6 +48,7 @@ namespace MachineKinematics
             dgvResults.RowHeadersVisible = false;
 
             // for Chart
+            chart1.Series.Dispose();
             chart1.Series.Clear();
             chart1.Series.Add(title_first).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add(title_second).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -89,6 +90,7 @@ namespace MachineKinematics
             dgvResults.RowHeadersVisible = false;
 
             // for Chart
+            chart1.Series.Dispose();
             chart1.Series.Clear();
             chart1.Series.Add(title_first).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add(title_second).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -98,6 +100,45 @@ namespace MachineKinematics
                 chart1.Series[title_first].Points.AddXY(i, _first[i]);
                 chart1.Series[title_second].Points.AddXY(i, _second[i]);
                 chart1.Series[title_third].Points.AddXY(i, _third[i]);
+            }
+
+            // show ReportForm
+            this.Show();
+        }
+
+        public void ShowReportForm_OmegaEps(String _title, DataGridView _dgv, double[] _first, double[] _second)
+        {
+            // for DataGridView
+            this.Text = _title;
+            dgvResults.RowCount = _dgv.RowCount;
+            dgvResults.ColumnCount = 2;
+            dgvResults.DataSource = _dgv.DataSource;
+            for (int i = 0; i < 13; ++i)
+            {
+                dgvResults.Rows[i].Cells[0].Value = _dgv.Rows[i].Cells[13].Value;
+                dgvResults.Rows[i].Cells[1].Value = _dgv.Rows[i].Cells[14].Value;
+            }
+
+            // style of DataGridView
+            for (int i = 0; i < dgvResults.ColumnCount; ++i)
+            {
+                dgvResults.Columns[i].Width = 60;
+            }
+            string title_first = (string)_dgv.Columns[13].HeaderCell.Value;
+            string title_second = (string)_dgv.Columns[14].HeaderCell.Value;
+            dgvResults.Columns[0].HeaderCell.Value = title_first;
+            dgvResults.Columns[1].HeaderCell.Value = title_second;
+            dgvResults.RowHeadersVisible = false;
+
+            // for Chart
+            chart1.Series.Dispose();
+            chart1.Series.Clear();
+            chart1.Series.Add(title_first).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add(title_second).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            for (int i = 0; i < 181; ++i)
+            {
+                chart1.Series[title_first].Points.AddXY(i, _first[i]);
+                chart1.Series[title_second].Points.AddXY(i, _second[i]);
             }
 
             // show ReportForm

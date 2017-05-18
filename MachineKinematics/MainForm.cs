@@ -190,7 +190,7 @@ namespace MachineKinematics
                 dgvTitles.Rows[i].Cells[0].Value = "Fpc" + (i + 1) + " =";
             }
             dgvTitles.Enabled = false;
-            cbDirection.SelectedIndex = 0;
+            cbDirection.SelectedIndex = 1;
 
             lbl1.Text = lbl2.Text = lbl3.Text = lbl4.Text = lbl5.Text = lbl6.Text = 
                 lbl7.Text = lbl8.Text = lbl9.Text = lbl10.Text = lbl11.Text = 
@@ -376,11 +376,11 @@ namespace MachineKinematics
                         double delta_fi1 = sign_omega1 * 2 * Math.PI / 180F;
                         if (i == 0)
                         {
-                            A_c_i[i] = 0.5 * M_c_pi[i] * delta_fi1;
+                            A_c_i[i] = - 0.5 * M_c_pi[i] * delta_fi1;
                         }
                         else
                         {
-                            A_c_i[i] = A_c_i[i - 1] + delta_fi1 * 0.5 * (M_c_pi[i - 1] + M_c_pi[i]);
+                            A_c_i[i] = A_c_i[i - 1] - delta_fi1 * 0.5 * (M_c_pi[i - 1] + M_c_pi[i]);
                         }                            
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.1"); }
@@ -466,7 +466,7 @@ namespace MachineKinematics
 
                     try
                     {
-                        fi_1_i[i] = Math.Abs(delta_fi) * (i - 1);
+                        fi_1_i[i] = Math.Abs(degToRad(delta_fi)) * (i - 1);
                         A_d_i[i] = M_p_D * fi_1_i[i];
 
                         delta_T_i[i] = A_d_i[i] + A_c_i[i];
@@ -522,7 +522,7 @@ namespace MachineKinematics
                         T_first_i[i] = T_first_cp - delta_T1_cp + delta_T_i_first[i];
                         omega_1_i[i] = sign_omega1 * Math.Sqrt((2 * T_first_i[i]) / I_p_first);
                         Epsilon_1_i[i] = sign_omega1 
-                            * (M_p_D + M_c_pi[i] - (Math.Pow(omega_1_i[i], 2) / 2) * differential_d_Ip_d_fi1[i])
+                            * (M_p_D - M_c_pi[i] - (Math.Pow(omega_1_i[i], 2) / 2) * differential_d_Ip_d_fi1[i])
 /*
 +-------------------------------------------+
 |   maybe I_p_second[i] = I_pa_second[i]    |
@@ -552,6 +552,8 @@ namespace MachineKinematics
                         dgvResults.Rows[j].Cells[10].Value = String.Format("{0:0.#####}", differential_d_Ip_d_fi1[i]);
                         dgvResults.Rows[j].Cells[11].Value = String.Format("{0:0.#####}", Xc[i]);
                         dgvResults.Rows[j].Cells[12].Value = String.Format("{0:0.#####}", Xc_doubledash[i]);
+                        dgvResults.Rows[j].Cells[13].Value = String.Format("{0:0.#####}", omega_1_i[i]);
+                        dgvResults.Rows[j].Cells[14].Value = String.Format("{0:0.#####}", Epsilon_1_i[i]);
 
                         ++j;
                     }
@@ -569,7 +571,7 @@ namespace MachineKinematics
                 this.gbAnimation.Paint += new PaintEventHandler(TabPage_Paint);
 
                 // output three results into textBoxes
-                tbResValue1.Text = string.Format("{0:0.#####}", "");
+                tbResValue1.Text = string.Format("{0:0.#####}", M_p_D);
                 tbResValue2.Text = string.Format("{0:0.#####}", I_p_first);
                 tbResValue3.Text = string.Format("{0:0.#####}", I_M);
             }
@@ -591,7 +593,7 @@ namespace MachineKinematics
         private void btnChart_sd_i31_i31P_Click(object sender, EventArgs e)
         {
             chart1.Series.Clear();
-
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Add("Sd").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("i31").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("i31'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -609,6 +611,7 @@ namespace MachineKinematics
 
         private void btnChart_i21_i21P_Click(object sender, EventArgs e)
         {
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Clear();
             chart1.Series.Add("i21").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("i21'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -623,6 +626,7 @@ namespace MachineKinematics
 
         private void btnChart_xs2p_ys2p_xs2pp_ys2pp_Click(object sender, EventArgs e)
         {
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Clear();
             chart1.Series.Add("Xs2p").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Ys2p").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -641,6 +645,7 @@ namespace MachineKinematics
 
         private void btnChart_Mcp_Mdp_Click(object sender, EventArgs e)
         {
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Clear();
             chart1.Series.Add("Mpc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Ac").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -655,6 +660,7 @@ namespace MachineKinematics
 
         private void btnChart_dT_dTi_Click(object sender, EventArgs e)
         {
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Clear();
             chart1.Series.Add("delta Ti").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("delta Ti'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -669,11 +675,27 @@ namespace MachineKinematics
         
         private void btnChart_omega1_Click(object sender, EventArgs e)
         {
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Clear();
             chart1.Series.Add("ω1").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             for (int i = 0; i < dimension; ++i)
             {
-                //chart1.Series["ω1"].Points.AddXY(i, omega_1_i[i]);
+                chart1.Series["ω1"].Points.AddXY(i, omega_1_i[i]);                 
+            }
+            chart1.ChartAreas[0].AxisY.Minimum = 9;
+            chart1.ChartAreas[0].AxisY.Maximum = 10;
+            groupBox8.Text = btnChart_omega1.Text;
+            tabControl1.SelectedIndex = 3;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
+            chart1.Series.Clear();
+            chart1.Series.Add("EPSi").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            for (int i = 0; i < dimension; ++i)
+            {
+                chart1.Series["EPSi"].Points.AddXY(i, Epsilon_1_i[i]);
             }
             groupBox8.Text = btnChart_omega1.Text;
             tabControl1.SelectedIndex = 3;
@@ -681,6 +703,7 @@ namespace MachineKinematics
 
         private void btnChart_Ac_Ad_Click(object sender, EventArgs e) // must repair
         {
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Clear();
             chart1.Series.Add("Ac").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Ad").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -695,6 +718,7 @@ namespace MachineKinematics
 
         private void btnChart_xc_dash_Click(object sender, EventArgs e)
         {
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Clear();
             chart1.Series.Add("Xc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Xc'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -712,6 +736,7 @@ namespace MachineKinematics
 
         private void btn_I_pa_second_d_Yp_d_fi1_Click(object sender, EventArgs e)
         {
+            chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Clear();
             chart1.Series.Add("I_pa_second").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Yp_d_fi1'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -929,7 +954,7 @@ namespace MachineKinematics
 
         private void fillColumnHeaderResult()
         {
-            dgvResults.ColumnCount = 13;
+            dgvResults.ColumnCount = 15;
             dgvResults.RowCount = 13;
             dgvResults.RowHeadersWidth = 90;
             for (int i = 0; i < dgvResults.ColumnCount; ++i)
@@ -950,6 +975,8 @@ namespace MachineKinematics
             dgvResults.Columns[10].HeaderCell.Value = "dI/dφ1";
             dgvResults.Columns[11].HeaderCell.Value = "Xc";
             dgvResults.Columns[12].HeaderCell.Value = "Xc''";
+            dgvResults.Columns[13].HeaderCell.Value = "ω1";
+            dgvResults.Columns[14].HeaderCell.Value = "ε1";
         }
 
         private void fillDgvInput()
@@ -1257,8 +1284,16 @@ namespace MachineKinematics
 
         // Определение закона инерции        
         private void button6_Click(object sender, EventArgs e)
-        {           
-            //f.ShowReportForm(button6.Text, dgvResults);
+        {
+            f.ShowReportForm_OmegaEps(button6.Text, dgvResults, omega_1_i, Epsilon_1_i);
         }
+
+        private void чертёжToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DrawingForm df = new DrawingForm();
+            df.Show();
+        }
+
+        
     }
 }

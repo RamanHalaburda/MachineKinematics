@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,6 +150,7 @@
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNotation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdentificator = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.чертёжToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpInput.SuspendLayout();
@@ -185,7 +186,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.начатьToolStripMenuItem,
             this.выходToolStripMenuItem,
-            this.легендаОбозначенийToolStripMenuItem});
+            this.легендаОбозначенийToolStripMenuItem,
+            this.чертёжToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(931, 25);
@@ -1202,9 +1204,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(6, 148);
+            this.button5.Location = new System.Drawing.Point(6, 146);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(186, 37);
+            this.button5.Size = new System.Drawing.Size(186, 39);
             this.button5.TabIndex = 7;
             this.button5.Text = "Печать";
             this.button5.UseVisualStyleBackColor = true;
@@ -1224,9 +1226,9 @@
             // 
             this.button6.Location = new System.Drawing.Point(6, 105);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(186, 37);
+            this.button6.Size = new System.Drawing.Size(186, 35);
             this.button6.TabIndex = 6;
-            this.button6.Text = "Определение закона инерции";
+            this.button6.Text = "Определение закона движения звена приведения";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -1381,16 +1383,16 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1449,6 +1451,13 @@
             this.colIdentificator.Name = "colIdentificator";
             this.colIdentificator.ReadOnly = true;
             this.colIdentificator.Width = 112;
+            // 
+            // чертёжToolStripMenuItem
+            // 
+            this.чертёжToolStripMenuItem.Name = "чертёжToolStripMenuItem";
+            this.чертёжToolStripMenuItem.Size = new System.Drawing.Size(67, 21);
+            this.чертёжToolStripMenuItem.Text = "Чертёж";
+            this.чертёжToolStripMenuItem.Click += new System.EventHandler(this.чертёжToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1625,6 +1634,7 @@
         private System.Windows.Forms.Label lbl18;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.ToolStripMenuItem чертёжToolStripMenuItem;
     }
 }
 
