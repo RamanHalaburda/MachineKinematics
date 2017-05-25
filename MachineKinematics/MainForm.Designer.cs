@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.легендаОбозначенийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.чертёжToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpInput = new System.Windows.Forms.TabPage();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
@@ -96,7 +97,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnFi = new System.Windows.Forms.Button();
             this.lbl5 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -150,7 +150,6 @@
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNotation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdentificator = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.чертёжToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpInput.SuspendLayout();
@@ -214,6 +213,13 @@
             this.легендаОбозначенийToolStripMenuItem.Size = new System.Drawing.Size(159, 21);
             this.легендаОбозначенийToolStripMenuItem.Text = "Легенда обозначений";
             this.легендаОбозначенийToolStripMenuItem.Click += new System.EventHandler(this.легендаОбозначенийToolStripMenuItem_Click);
+            // 
+            // чертёжToolStripMenuItem
+            // 
+            this.чертёжToolStripMenuItem.Name = "чертёжToolStripMenuItem";
+            this.чертёжToolStripMenuItem.Size = new System.Drawing.Size(67, 21);
+            this.чертёжToolStripMenuItem.Text = "Чертёж";
+            this.чертёжToolStripMenuItem.Click += new System.EventHandler(this.чертёжToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -869,7 +875,6 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.groupBox2.Controls.Add(this.btnFi);
             this.groupBox2.Controls.Add(this.lbl5);
             this.groupBox2.Controls.Add(this.textBox5);
             this.groupBox2.Controls.Add(this.label5);
@@ -879,16 +884,6 @@
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Начальная обобщенная координата";
-            // 
-            // btnFi
-            // 
-            this.btnFi.Location = new System.Drawing.Point(38, 17);
-            this.btnFi.Name = "btnFi";
-            this.btnFi.Size = new System.Drawing.Size(79, 23);
-            this.btnFi.TabIndex = 13;
-            this.btnFi.Text = "Вычислить";
-            this.btnFi.UseVisualStyleBackColor = true;
-            this.btnFi.Click += new System.EventHandler(this.btnFi_Click);
             // 
             // lbl5
             // 
@@ -1383,16 +1378,16 @@
             // 
             // chart1
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart1.Series.Add(series4);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1451,13 +1446,6 @@
             this.colIdentificator.Name = "colIdentificator";
             this.colIdentificator.ReadOnly = true;
             this.colIdentificator.Width = 112;
-            // 
-            // чертёжToolStripMenuItem
-            // 
-            this.чертёжToolStripMenuItem.Name = "чертёжToolStripMenuItem";
-            this.чертёжToolStripMenuItem.Size = new System.Drawing.Size(67, 21);
-            this.чертёжToolStripMenuItem.Text = "Чертёж";
-            this.чертёжToolStripMenuItem.Click += new System.EventHandler(this.чертёжToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1593,7 +1581,6 @@
         private System.Windows.Forms.Label lbl3;
         private System.Windows.Forms.Label lbl2;
         private System.Windows.Forms.Label lbl1;
-        private System.Windows.Forms.Button btnFi;
         private System.Windows.Forms.GroupBox groupBox12;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button15;
