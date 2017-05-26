@@ -27,11 +27,7 @@ namespace MachineKinematics
             this.AdjustFormScrollbars(true);
             
         }
-
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
+        
         private bool Dragging;
         private int xPos;
         private int yPos;

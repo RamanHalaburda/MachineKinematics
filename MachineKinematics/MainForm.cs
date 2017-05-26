@@ -200,7 +200,7 @@ namespace MachineKinematics
             forDebug();
 
             // tabPage2
-            gbAnimation.Text = cbDirection.Text;
+            //gbAnimation.Text = cbDirection.Text;
             dgvResults.ReadOnly = true;
 
             // tabPage3
@@ -523,10 +523,6 @@ namespace MachineKinematics
                         omega_1_i[i] = sign_omega1 * Math.Sqrt((2 * T_first_i[i]) / I_p_first);
                         Epsilon_1_i[i] = sign_omega1 
                             * (M_p_D - M_c_pi[i] - (Math.Pow(omega_1_i[i], 2) / 2) * differential_d_Ip_d_fi1[i])
-/*
-+-------------------------------------------+
-|   maybe I_p_second[i] = I_pa_second[i]    |
-+-------------------------------------------+*/
                             / (I_p_first + I_pa_second[i]);
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Data + "\n" + ex.Message + "\nОшибка в части 2.4"); }
@@ -565,10 +561,10 @@ namespace MachineKinematics
                 }
 
                 accessFlag = true;
-                tabControl1.SelectedIndex = 2;
+                tabControl1.SelectedIndex = 1;
 
                 // run animation
-                this.gbAnimation.Paint += new PaintEventHandler(TabPage_Paint);
+                //this.gbAnimation.Paint += new PaintEventHandler(TabPage_Paint);
 
                 // output three results into textBoxes
                 tbResValue1.Text = string.Format("{0:0.#####}", M_p_D);
@@ -577,13 +573,13 @@ namespace MachineKinematics
             }
             else
             {
-                MessageBox.Show("Что-то пошло не так!");
+                MessageBox.Show("Заполните все поля с исходными данными!");
             }
         }
 
         private void легендаОбозначенийToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tabControl1.SelectedIndex = 4;
+            tabControl1.SelectedIndex = 3;
         }
 
 /*=================================================================================================== 
@@ -597,21 +593,21 @@ namespace MachineKinematics
             chart1.Series.Add("Sd").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("i31").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("i31'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-
-            groupBox8.Text = btnChart_sd_i51_i51P.Text;
-            tabControl1.SelectedIndex = 3;
-
+            
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Sd"].Points.AddXY(i, Sd[i]);
                 chart1.Series["i31"].Points.AddXY(i, i31[i]);
                 chart1.Series["i31'"].Points.AddXY(i, i31_dash[i]);
             }
+            chart1.ChartAreas[0].AxisY.Minimum = Math.Round(Math.Min(Math.Min(Sd.Min(), i31.Min()), i31_dash.Min()));
+            chart1.ChartAreas[0].AxisY.Maximum = Math.Round(Math.Max(Math.Max(Sd.Max(), i31.Max()), i31_dash.Max()));
+            groupBox8.Text = btnChart_sd_i51_i51P.Text;
+            tabControl1.SelectedIndex = 2;
         }
 
         private void btnChart_i21_i21P_Click(object sender, EventArgs e)
-        {
-            
+        {            
             chart1.Series.Clear();
             chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Add("i21").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -621,13 +617,14 @@ namespace MachineKinematics
                 chart1.Series["i21"].Points.AddXY(i, i31[i]); // i21 == i31 => i21p == i31p
                 chart1.Series["i21'"].Points.AddXY(i, i31_dash[i]);
             }
+            chart1.ChartAreas[0].AxisY.Minimum = Math.Round(Math.Min(i31.Min(), i31_dash.Min()));
+            chart1.ChartAreas[0].AxisY.Maximum = Math.Round(Math.Max(i31.Max(), i31_dash.Max()));            
             groupBox8.Text = btnChart_i21_i21P.Text;
-            tabControl1.SelectedIndex = 3;
+            tabControl1.SelectedIndex = 2;
         }
 
         private void btnChart_xs2p_ys2p_xs2pp_ys2pp_Click(object sender, EventArgs e)
-        {
-            
+        {            
             chart1.Series.Clear();
             chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Add("Xs3p").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -641,13 +638,14 @@ namespace MachineKinematics
                 chart1.Series["Xs3pp"].Points.AddXY(i, Xs3_doubledash[i]);
                 chart1.Series["Ys3pp"].Points.AddXY(i, Ys3_doubledash[i]);
             }
+            chart1.ChartAreas[0].AxisY.Minimum = Math.Round(Math.Min(Math.Min(Xs3_dash.Min(), Ys3_dash.Min()), Math.Min(Xs3_doubledash.Min(), Ys3_doubledash.Min())));
+            chart1.ChartAreas[0].AxisY.Maximum = Math.Round(Math.Max(Math.Max(Xs3_dash.Max(), Ys3_dash.Max()), Math.Max(Xs3_doubledash.Max(), Ys3_doubledash.Max())));
             groupBox8.Text = btnChart_xs2p_ys2p_xs2pp_ys2pp.Text;
-            tabControl1.SelectedIndex = 3;
+            tabControl1.SelectedIndex = 2;
         }
 
         private void btnChart_Mcp_Mdp_Click(object sender, EventArgs e)
-        {
-            
+        {            
             chart1.Series.Clear();
             chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Add("Mpc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -657,8 +655,10 @@ namespace MachineKinematics
                 chart1.Series["Mpc"].Points.AddXY(i, M_c_pi[i]);
                 chart1.Series["Ac"].Points.AddXY(i, A_c_i[i]);
             }
+            chart1.ChartAreas[0].AxisY.Minimum = Math.Round(Math.Min(M_c_pi.Min(), A_c_i.Min()));
+            chart1.ChartAreas[0].AxisY.Maximum = Math.Round(Math.Max(M_c_pi.Max(), A_c_i.Max()));
             groupBox8.Text = btnChart_Mcp_Mdp.Text;
-            tabControl1.SelectedIndex = 3;
+            tabControl1.SelectedIndex = 2;
         }
 
         private void btnChart_dT_dTi_Click(object sender, EventArgs e)
@@ -675,7 +675,7 @@ namespace MachineKinematics
             chart1.ChartAreas[0].AxisY.Minimum = Math.Round(Math.Min(delta_T_i.Min(), delta_T_i_first.Min()));
             chart1.ChartAreas[0].AxisY.Maximum = Math.Round(Math.Max(delta_T_i.Max(), delta_T_i_first.Max()));
             groupBox8.Text = btnChart_dT_dTi.Text;   
-            tabControl1.SelectedIndex = 3;
+            tabControl1.SelectedIndex = 2;
         }
         
         private void btnChart_omega1_Click(object sender, EventArgs e)
@@ -688,25 +688,9 @@ namespace MachineKinematics
                 chart1.Series["ω1"].Points.AddXY(i, omega_1_i[i]);                 
             }
             chart1.ChartAreas[0].AxisY.Minimum = Math.Round(omega_1_i.Min());
-            chart1.ChartAreas[0].AxisY.Maximum = Math.Round(omega_1_i.Max());
-            chart1.ChartAreas[0].AxisX.Minimum = 0;
-            chart1.ChartAreas[0].AxisX.Maximum = 180;
+            chart1.ChartAreas[0].AxisY.Maximum = Math.Round(omega_1_i.Max());            
             groupBox8.Text = btnChart_omega1.Text;
-            tabControl1.SelectedIndex = 3;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-            chart1.Series.Clear();
-            chart1.ChartAreas[0].AxisY.RoundAxisValues();
-            chart1.Series.Add("EPSi").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            for (int i = 0; i < dimension; ++i)
-            {
-                chart1.Series["EPSi"].Points.AddXY(i, Epsilon_1_i[i]);
-            }
-            groupBox8.Text = btnChart_omega1.Text;
-            tabControl1.SelectedIndex = 3;
+            tabControl1.SelectedIndex = 2;
         }
 
         private void btnChart_Ac_Ad_Click(object sender, EventArgs e) // must repair
@@ -720,8 +704,10 @@ namespace MachineKinematics
                 chart1.Series["Ac"].Points.AddXY(i, A_c_i[i]);
                 chart1.Series["Ad"].Points.AddXY(i, A_d_i[i]);
             }
+            chart1.ChartAreas[0].AxisY.Minimum = Math.Round(Math.Min(A_c_i.Min(), A_d_i.Min()));
+            chart1.ChartAreas[0].AxisY.Maximum = Math.Round(Math.Max(A_c_i.Max(), A_d_i.Max()));
             groupBox8.Text = btnChart_Ac_Ad.Text;
-            tabControl1.SelectedIndex = 3;
+            tabControl1.SelectedIndex = 2;
         }
 
         private void btnChart_xc_dash_Click(object sender, EventArgs e)
@@ -730,31 +716,34 @@ namespace MachineKinematics
             chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Add("Xc").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add("Xc'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            chart1.Series.Add("Xc''").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;            
+            chart1.Series.Add("Xc''").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["Xc"].Points.AddXY(i, Xc[i]);
                 chart1.Series["Xc'"].Points.AddXY(i, Xc_dash[i]);
                 chart1.Series["Xc''"].Points.AddXY(i, Xc_doubledash[i]);
             }
+            chart1.ChartAreas[0].AxisY.Minimum = Math.Round(Math.Min(Math.Min(Xc.Min(), Xc_dash.Min()), Xc_doubledash.Min()));
+            chart1.ChartAreas[0].AxisY.Maximum = Math.Round(Math.Max(Math.Max(Xc.Max(), Xc_dash.Max()), Xc_doubledash.Max()));
             groupBox8.Text = btnChart_xc_dash.Text;
-            tabControl1.SelectedIndex = 3;
+            tabControl1.SelectedIndex = 2;
         }
-
 
         private void btn_I_pa_second_d_Yp_d_fi1_Click(object sender, EventArgs e)
         {
             chart1.Series.Clear(); 
             chart1.ChartAreas[0].AxisY.RoundAxisValues();
             chart1.Series.Add("I_pa_second").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            chart1.Series.Add("Yp_d_fi1'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart1.Series.Add("Yп_d_fi1'").ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             for (int i = 0; i < dimension; ++i)
             {
                 chart1.Series["I_pa_second"].Points.AddXY(i, I_pa_second[i]);
-                chart1.Series["Yp_d_fi1'"].Points.AddXY(i, differential_d_Ip_d_fi1[i]);
+                chart1.Series["Yп_d_fi1'"].Points.AddXY(i, differential_d_Ip_d_fi1[i]);
             }
+            chart1.ChartAreas[0].AxisY.Minimum = Math.Round(Math.Min(I_pa_second.Min(), differential_d_Ip_d_fi1.Min()));
+            chart1.ChartAreas[0].AxisY.Maximum = Math.Round(Math.Max(I_pa_second.Max(), differential_d_Ip_d_fi1.Max()));
             groupBox8.Text = btnChart_I_pa_second_d_Yp_d_fi1.Text;
-            tabControl1.SelectedIndex = 3;
+            tabControl1.SelectedIndex = 2;
         }
 
 /*=================================================================================================== 
@@ -831,10 +820,11 @@ namespace MachineKinematics
                 MessageBox.Show("Вычисления не выполнены. \n"
                     + "Для доступа к \n\t- анимации \n\t- результатам вычислений \n\t- графикам \nвведите все исходные данные и нажмите кнопку \"Выполнить вычисления\"");
             }
-
-            ////////
-            //tabControl1.SelectedTab = tpInput;
-            ////////
+            else 
+            {
+                chart1.ChartAreas[0].AxisX.Minimum = 0;
+                chart1.ChartAreas[0].AxisX.Maximum = 180;
+            }
         }
 
         private void validateInput(TextBox tb, Label lbl)
@@ -1021,7 +1011,7 @@ namespace MachineKinematics
         {
             // ₁ ₂ ₃ ₄ ₅ φ ′ ᴵ Δ ε ω ᶜ
             dgvLegend.Font = new Font("Consolas", 12);
-            dgvLegend.RowCount = 30;
+            dgvLegend.RowCount = 33;
 
             dgvLegend.Rows[0].Cells[0].Value = "Кинематические характеристики исполнительного механизма";
 
@@ -1067,88 +1057,89 @@ namespace MachineKinematics
 
             /* must change indexes */
 
-            dgvLegend.Rows[10].Cells[0].Value = "Производная передаточной функции звена 4";
-            dgvLegend.Rows[10].Cells[1].Value = "i′₄₁";
-            dgvLegend.Rows[10].Cells[2].Value = "i41P";
+            dgvLegend.Rows[11].Cells[0].Value = "Производная передаточной функции звена 4";
+            dgvLegend.Rows[11].Cells[1].Value = "i′₄₁";
+            dgvLegend.Rows[11].Cells[2].Value = "i41P";
 
-            dgvLegend.Rows[11].Cells[0].Value = "Производная передаточной функции ползуна";
-            dgvLegend.Rows[11].Cells[1].Value = "i′₅₁";
-            dgvLegend.Rows[11].Cells[2].Value = "i51P";
+            dgvLegend.Rows[12].Cells[0].Value = "Производная передаточной функции ползуна";
+            dgvLegend.Rows[12].Cells[1].Value = "i′₅₁";
+            dgvLegend.Rows[12].Cells[2].Value = "i51P";
 
-            dgvLegend.Rows[12].Cells[0].Value = "Проекция аналога ускорения точки S₂ на ось x";
-            dgvLegend.Rows[12].Cells[1].Value = "X′′s₂";
-            dgvLegend.Rows[12].Cells[2].Value = "yS2PP";
-
-            dgvLegend.Rows[13].Cells[0].Value = "Проекция аналога ускорения точки S₂ на ось y";
-            dgvLegend.Rows[13].Cells[1].Value = "Y′′s₂";
+            dgvLegend.Rows[13].Cells[0].Value = "Проекция аналога ускорения точки S₂ на ось x";
+            dgvLegend.Rows[13].Cells[1].Value = "X′′s₂";
             dgvLegend.Rows[13].Cells[2].Value = "yS2PP";
 
-            dgvLegend.Rows[14].Cells[0].Value = "Переменная составляющая приведенного момента инерции";
+            dgvLegend.Rows[14].Cells[0].Value = "Проекция аналога ускорения точки S₂ на ось y";
+            dgvLegend.Rows[14].Cells[1].Value = "Y′′s₂";
+            dgvLegend.Rows[14].Cells[2].Value = "yS2PP";
 
-            dgvLegend.Rows[15].Cells[0].Value = "Часть от массы камня кулисы";
-            dgvLegend.Rows[15].Cells[1].Value = "A";
-            dgvLegend.Rows[15].Cells[2].Value = "A";
+            dgvLegend.Rows[15].Cells[0].Value = "Переменная составляющая приведенного момента инерции";
 
-            dgvLegend.Rows[16].Cells[0].Value = "Часть от Iпᴵᴵ камня кулисы";
-            dgvLegend.Rows[16].Cells[1].Value = "B";
-            dgvLegend.Rows[16].Cells[2].Value = "B";
+            dgvLegend.Rows[16].Cells[0].Value = "Часть от массы камня кулисы";
+            dgvLegend.Rows[16].Cells[1].Value = "A";
+            dgvLegend.Rows[16].Cells[2].Value = "A";
 
-            dgvLegend.Rows[17].Cells[0].Value = "Часть от массы кулисы";
-            dgvLegend.Rows[17].Cells[1].Value = "C";
-            dgvLegend.Rows[17].Cells[2].Value = "C";
+            dgvLegend.Rows[17].Cells[0].Value = "Часть от Iпᴵᴵ камня кулисы";
+            dgvLegend.Rows[17].Cells[1].Value = "B";
+            dgvLegend.Rows[17].Cells[2].Value = "B";
 
-            dgvLegend.Rows[18].Cells[0].Value = "Часть от Iпᴵᴵ кулисы";
-            dgvLegend.Rows[18].Cells[1].Value = "D";
-            dgvLegend.Rows[18].Cells[2].Value = "D";
+            dgvLegend.Rows[18].Cells[0].Value = "Часть от массы кулисы";
+            dgvLegend.Rows[18].Cells[1].Value = "C";
+            dgvLegend.Rows[18].Cells[2].Value = "C";
 
-            dgvLegend.Rows[19].Cells[0].Value = "Часть массы звена 4";
-            dgvLegend.Rows[19].Cells[1].Value = "E";
-            dgvLegend.Rows[19].Cells[2].Value = "E";
+            dgvLegend.Rows[19].Cells[0].Value = "Часть от Iпᴵᴵ кулисы";
+            dgvLegend.Rows[19].Cells[1].Value = "D";
+            dgvLegend.Rows[19].Cells[2].Value = "D";
 
-            dgvLegend.Rows[20].Cells[0].Value = "Часть от Iпᴵᴵ звена 4";
-            dgvLegend.Rows[20].Cells[1].Value = "F";
-            dgvLegend.Rows[20].Cells[2].Value = "F";
+            dgvLegend.Rows[20].Cells[0].Value = "Часть массы звена 4";
+            dgvLegend.Rows[20].Cells[1].Value = "E";
+            dgvLegend.Rows[20].Cells[2].Value = "E";
 
-            dgvLegend.Rows[21].Cells[0].Value = "Часть от массы ползуна";
-            dgvLegend.Rows[21].Cells[1].Value = "G";
-            dgvLegend.Rows[21].Cells[2].Value = "G";
-            dgvLegend.Rows[22].Cells[0].Value = "Переменная составляющая приведенного момента инерции";
-            dgvLegend.Rows[22].Cells[1].Value = "Iпᴵᴵ";
-            dgvLegend.Rows[22].Cells[2].Value = "I2p";
+            dgvLegend.Rows[21].Cells[0].Value = "Часть от Iпᴵᴵ звена 4";
+            dgvLegend.Rows[21].Cells[1].Value = "F";
+            dgvLegend.Rows[21].Cells[2].Value = "F";
 
-            dgvLegend.Rows[23].Cells[0].Value = "Производная произведённого момента инерции";
-            dgvLegend.Rows[23].Cells[1].Value = "dIп / dφ₁";
-            dgvLegend.Rows[23].Cells[2].Value = "dIpdFi";
+            dgvLegend.Rows[22].Cells[0].Value = "Часть от массы ползуна";
+            dgvLegend.Rows[22].Cells[1].Value = "G";
+            dgvLegend.Rows[22].Cells[2].Value = "G";
 
-            dgvLegend.Rows[24].Cells[0].Value = "Определение закона движения звена произведения";
+            dgvLegend.Rows[23].Cells[0].Value = "Переменная составляющая приведенного момента инерции";
+            dgvLegend.Rows[23].Cells[1].Value = "Iпᴵᴵ";
+            dgvLegend.Rows[23].Cells[2].Value = "I2p";
 
-            dgvLegend.Rows[25].Cells[0].Value = "Приведённый момент сил сопротивления";
-            dgvLegend.Rows[25].Cells[1].Value = "Mпᶜ";
-            dgvLegend.Rows[25].Cells[2].Value = "Mpс";
+            dgvLegend.Rows[24].Cells[0].Value = "Производная произведённого момента инерции";
+            dgvLegend.Rows[24].Cells[1].Value = "dIп / dφ₁";
+            dgvLegend.Rows[24].Cells[2].Value = "dIpdFi";
 
-            dgvLegend.Rows[26].Cells[0].Value = "Работа сил сопротивления";
-            dgvLegend.Rows[26].Cells[1].Value = "Ac";
-            dgvLegend.Rows[26].Cells[2].Value = "Ac";
+            dgvLegend.Rows[25].Cells[0].Value = "Определение закона движения звена произведения";
 
-            dgvLegend.Rows[27].Cells[0].Value = "Работа движущих сил";
-            dgvLegend.Rows[27].Cells[1].Value = "Aд";
-            dgvLegend.Rows[27].Cells[2].Value = "Ad";
+            dgvLegend.Rows[26].Cells[0].Value = "Приведённый момент сил сопротивления";
+            dgvLegend.Rows[26].Cells[1].Value = "Mпᶜ";
+            dgvLegend.Rows[26].Cells[2].Value = "Mpс";
 
-            dgvLegend.Rows[28].Cells[0].Value = "Изменение кинеической энергии машины";
-            dgvLegend.Rows[28].Cells[1].Value = "ΔT";
-            dgvLegend.Rows[28].Cells[2].Value = "dT";
-/* must change */
-            dgvLegend.Rows[27].Cells[0].Value = "Изменение кинеической энергии пост. сост-ей прив-го момента инерции";
-            dgvLegend.Rows[27].Cells[1].Value = "ΔTɪ";
-            dgvLegend.Rows[27].Cells[2].Value = "dTI";
+            dgvLegend.Rows[27].Cells[0].Value = "Работа сил сопротивления";
+            dgvLegend.Rows[27].Cells[1].Value = "Ac";
+            dgvLegend.Rows[27].Cells[2].Value = "Ac";
 
-            dgvLegend.Rows[28].Cells[0].Value = "Угловая скорость кривошипа";
-            dgvLegend.Rows[28].Cells[1].Value = "ω₁";
-            dgvLegend.Rows[28].Cells[2].Value = "w1";
+            dgvLegend.Rows[28].Cells[0].Value = "Работа движущих сил";
+            dgvLegend.Rows[28].Cells[1].Value = "Aд";
+            dgvLegend.Rows[28].Cells[2].Value = "Ad";
 
-            dgvLegend.Rows[29].Cells[0].Value = "Угловое ускорение кривошипа";
-            dgvLegend.Rows[29].Cells[1].Value = "ε₁";
-            dgvLegend.Rows[29].Cells[2].Value = "e1";
+            dgvLegend.Rows[29].Cells[0].Value = "Изменение кинеической энергии машины";
+            dgvLegend.Rows[29].Cells[1].Value = "ΔT";
+            dgvLegend.Rows[29].Cells[2].Value = "dT";
+
+            dgvLegend.Rows[30].Cells[0].Value = "Изменение кинеической энергии пост. сост-ей прив-го момента инерции";
+            dgvLegend.Rows[30].Cells[1].Value = "ΔTɪ";
+            dgvLegend.Rows[30].Cells[2].Value = "dTI";
+
+            dgvLegend.Rows[31].Cells[0].Value = "Угловая скорость кривошипа";
+            dgvLegend.Rows[31].Cells[1].Value = "ω₁";
+            dgvLegend.Rows[31].Cells[2].Value = "w1";
+
+            dgvLegend.Rows[32].Cells[0].Value = "Угловое ускорение кривошипа";
+            dgvLegend.Rows[32].Cells[1].Value = "ε₁";
+            dgvLegend.Rows[32].Cells[2].Value = "e1";
         }
 
 /*=================================================================================================== 
@@ -1180,7 +1171,7 @@ namespace MachineKinematics
         {
 
         }
-
+        /*
         protected void TabPage_Paint(object sender, PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -1258,9 +1249,10 @@ namespace MachineKinematics
             // draw mid 'поршень'
             e.Graphics.DrawRectangle(arrow, fix_x_mid + scale_L1_OA, fix_y_mid, 10, 20);
 
-            /*Thread.Sleep(500);*/
+            //Thread.Sleep(500);
             arrow.Dispose();
         }
+    */
 
 /*=================================================================================================== 
  *=== methods for printing  
@@ -1303,19 +1295,123 @@ namespace MachineKinematics
         // Кинематические характеристики исполнительного механизма
         private void button8_Click(object sender, EventArgs e)
         {
-            f.ShowReportForm(button8.Text, dgvResults, Xc, Xc_dash, Xc_doubledash);
+            tabControl1.SelectedIndex = 4;
+
+            // for DataGridView
+            this.Text = button8.Text;
+            dgv.RowCount = dgvResults.RowCount;
+            dgv.ColumnCount = 3;
+            dgv.DataSource = dgvResults.DataSource;
+            for (int i = 0; i < 13; ++i)
+            {
+                dgv.Rows[i].Cells[0].Value = dgvResults.Rows[i].Cells[11].Value;
+                dgv.Rows[i].Cells[1].Value = dgvResults.Rows[i].Cells[8].Value;
+                dgv.Rows[i].Cells[2].Value = dgvResults.Rows[i].Cells[12].Value;
+            }
+
+            // style of DataGridView
+            for (int i = 0; i < dgv.ColumnCount; ++i)
+            {
+                dgv.Columns[i].Width = 55;
+            }
+            string title_first = (string)dgvResults.Columns[11].HeaderCell.Value;
+            string title_second = (string)dgvResults.Columns[8].HeaderCell.Value;
+            string title_third = (string)dgvResults.Columns[12].HeaderCell.Value;
+            dgv.Columns[0].HeaderCell.Value = title_first;
+            dgv.Columns[1].HeaderCell.Value = title_second;
+            dgv.Columns[2].HeaderCell.Value = title_third;
+            dgv.RowHeadersVisible = false;
+
+            // for Chart
+            chart2.Series.Dispose();
+            chart2.Series.Clear();
+            chart2.Series.Add(title_first).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart2.Series.Add(title_second).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart2.Series.Add(title_third).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            for (int i = 0; i < 181; ++i)
+            {
+                chart2.Series[title_first].Points.AddXY(i, Xc[i]);
+                chart2.Series[title_second].Points.AddXY(i, Xc_dash[i]);
+                chart2.Series[title_third].Points.AddXY(i, Xc_doubledash[i]);
+            }
         }
 
         // Переменная составляющая приведённого момента инерции
         private void button7_Click(object sender, EventArgs e)
         {
-            f.ShowReportForm(button7.Text, dgvResults, I_pa_second, differential_d_Ip_d_fi1);
+            tabControl1.SelectedIndex = 4;
+
+            // for DataGridView
+            this.Text = button7.Text;
+            dgv.RowCount = dgvResults.RowCount;
+            dgv.ColumnCount = 2;
+            dgv.DataSource = dgvResults.DataSource;
+            for (int i = 0; i < 13; ++i)
+            {
+                dgv.Rows[i].Cells[0].Value = dgvResults.Rows[i].Cells[9].Value;
+                dgv.Rows[i].Cells[1].Value = dgvResults.Rows[i].Cells[10].Value;
+            }
+
+            // style of DataGridView
+            for (int i = 0; i < dgv.ColumnCount; ++i)
+            {
+                dgv.Columns[i].Width = 55;
+            }
+            string title_first = (string)dgvResults.Columns[9].HeaderCell.Value;
+            string title_second = (string)dgvResults.Columns[10].HeaderCell.Value;
+            dgv.Columns[0].HeaderCell.Value = title_first;
+            dgv.Columns[1].HeaderCell.Value = title_second;
+            dgv.RowHeadersVisible = false;
+
+            // for Chart
+            chart2.Series.Dispose();
+            chart2.Series.Clear();
+            chart2.Series.Add(title_first).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart2.Series.Add(title_second).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            for (int i = 0; i < 181; ++i)
+            {
+                chart2.Series[title_first].Points.AddXY(i, I_pa_second[i]);
+                chart2.Series[title_second].Points.AddXY(i, differential_d_Ip_d_fi1[i]);
+            }
         }
 
         // Определение закона инерции        
         private void button6_Click(object sender, EventArgs e)
         {
-            f.ShowReportForm_OmegaEps(button6.Text, dgvResults, omega_1_i, Epsilon_1_i);
+            tabControl1.SelectedIndex = 4;
+            
+            // for DataGridView
+            this.Text = button6.Text;
+            dgv.RowCount = dgvResults.RowCount;
+            dgv.ColumnCount = 2;
+            dgv.DataSource = dgvResults.DataSource;
+            for (int i = 0; i < 13; ++i)
+            {
+                dgv.Rows[i].Cells[0].Value = dgvResults.Rows[i].Cells[13].Value;
+                dgv.Rows[i].Cells[1].Value = dgvResults.Rows[i].Cells[14].Value;
+            }
+
+            // style of DataGridView
+            for (int i = 0; i < dgv.ColumnCount; ++i)
+            {
+                dgv.Columns[i].Width = 55;
+            }
+            string title_first = (string)dgvResults.Columns[13].HeaderCell.Value;
+            string title_second = (string)dgvResults.Columns[14].HeaderCell.Value;
+            dgv.Columns[0].HeaderCell.Value = title_first;
+            dgv.Columns[1].HeaderCell.Value = title_second;
+            dgv.RowHeadersVisible = false;
+
+            // for Chart
+            chart2.Series.Dispose();
+            chart2.Series.Clear();
+            chart2.Series.Add(title_first).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart2.Series.Add(title_second).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            for (int i = 0; i < 181; ++i)
+            {
+                chart2.Series[title_first].Points.AddXY(i, omega_1_i[i]);
+                chart2.Series[title_second].Points.AddXY(i, Epsilon_1_i[i]);
+            }
         }
 
         private void чертёжToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1323,7 +1419,5 @@ namespace MachineKinematics
             DrawingForm df = new DrawingForm();
             df.Show();
         }
-
-        
     }
 }

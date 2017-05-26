@@ -23,7 +23,7 @@ namespace MachineKinematics
             
         }
 
-        public void ShowReportForm(String _title, DataGridView _dgv, double[] _first, double[] _second)
+        public void ShowReportForm_Idif(String _title, DataGridView _dgv, double[] _first, double[] _second)
         {
             // for DataGridView
             this.Text = _title;
@@ -48,7 +48,7 @@ namespace MachineKinematics
             dgvResults.RowHeadersVisible = false;
 
             // for Chart
-            chart1.Series.Dispose();
+            //chart1.Series.Dispose();
             chart1.Series.Clear();
             chart1.Series.Add(title_first).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add(title_second).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -90,7 +90,7 @@ namespace MachineKinematics
             dgvResults.RowHeadersVisible = false;
 
             // for Chart
-            chart1.Series.Dispose();
+            //chart1.Series.Dispose();
             chart1.Series.Clear();
             chart1.Series.Add(title_first).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add(title_second).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -131,7 +131,7 @@ namespace MachineKinematics
             dgvResults.RowHeadersVisible = false;
 
             // for Chart
-            chart1.Series.Dispose();
+            //chart1.Series.Dispose();
             chart1.Series.Clear();
             chart1.Series.Add(title_first).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart1.Series.Add(title_second).ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;

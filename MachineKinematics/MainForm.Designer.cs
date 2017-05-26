@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.начатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,11 +116,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.tpAnimation = new System.Windows.Forms.TabPage();
-            this.gbAnimation = new System.Windows.Forms.GroupBox();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnStart = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tpOutput = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.tbResTitle3 = new System.Windows.Forms.TextBox();
@@ -150,6 +148,10 @@
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNotation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdentificator = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tpReport = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.dgv = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpInput.SuspendLayout();
@@ -165,7 +167,6 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tpAnimation.SuspendLayout();
             this.tpOutput.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -176,6 +177,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).BeginInit();
+            this.tpReport.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -224,10 +228,10 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tpInput);
-            this.tabControl1.Controls.Add(this.tpAnimation);
             this.tabControl1.Controls.Add(this.tpOutput);
             this.tabControl1.Controls.Add(this.tpCharts);
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tpReport);
             this.tabControl1.Location = new System.Drawing.Point(12, 28);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1053,59 +1057,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "l0 = l(OB)";
             // 
-            // tpAnimation
-            // 
-            this.tpAnimation.Controls.Add(this.gbAnimation);
-            this.tpAnimation.Controls.Add(this.btnStop);
-            this.tpAnimation.Controls.Add(this.btnStart);
-            this.tpAnimation.Controls.Add(this.comboBox1);
-            this.tpAnimation.Location = new System.Drawing.Point(4, 22);
-            this.tpAnimation.Name = "tpAnimation";
-            this.tpAnimation.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAnimation.Size = new System.Drawing.Size(899, 497);
-            this.tpAnimation.TabIndex = 1;
-            this.tpAnimation.Text = "Анимация";
-            this.tpAnimation.UseVisualStyleBackColor = true;
-            this.tpAnimation.Enter += new System.EventHandler(this.tpAnimation_Enter);
-            // 
-            // gbAnimation
-            // 
-            this.gbAnimation.Location = new System.Drawing.Point(6, 35);
-            this.gbAnimation.Name = "gbAnimation";
-            this.gbAnimation.Size = new System.Drawing.Size(887, 410);
-            this.gbAnimation.TabIndex = 7;
-            this.gbAnimation.TabStop = false;
-            this.gbAnimation.Text = "groupBox8";
-            this.gbAnimation.Paint += new System.Windows.Forms.PaintEventHandler(this.TabPage_Paint);
-            // 
-            // btnStop
-            // 
-            this.btnStop.Location = new System.Drawing.Point(87, 6);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 23);
-            this.btnStop.TabIndex = 6;
-            this.btnStop.Text = "Остановить";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(6, 6);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 5;
-            this.btnStart.Text = "Включить";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(168, 8);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 4;
-            // 
             // tpOutput
             // 
             this.tpOutput.Controls.Add(this.groupBox11);
@@ -1378,16 +1329,16 @@
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea8.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.chart1.Legends.Add(legend8);
             this.chart1.Location = new System.Drawing.Point(6, 19);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.chart1.Series.Add(series8);
             this.chart1.Size = new System.Drawing.Size(881, 417);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1447,6 +1398,54 @@
             this.colIdentificator.ReadOnly = true;
             this.colIdentificator.Width = 112;
             // 
+            // tpReport
+            // 
+            this.tpReport.Controls.Add(this.button1);
+            this.tpReport.Controls.Add(this.chart2);
+            this.tpReport.Controls.Add(this.dgv);
+            this.tpReport.Location = new System.Drawing.Point(4, 22);
+            this.tpReport.Name = "tpReport";
+            this.tpReport.Size = new System.Drawing.Size(899, 497);
+            this.tpReport.TabIndex = 5;
+            this.tpReport.Text = "Отчёты";
+            this.tpReport.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(3, 332);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(174, 161);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Печать";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // chart2
+            // 
+            chartArea7.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.chart2.Legends.Add(legend7);
+            this.chart2.Location = new System.Drawing.Point(213, 3);
+            this.chart2.Name = "chart2";
+            series7.ChartArea = "ChartArea1";
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chart2.Series.Add(series7);
+            this.chart2.Size = new System.Drawing.Size(683, 490);
+            this.chart2.TabIndex = 5;
+            this.chart2.Text = "chart2";
+            // 
+            // dgv
+            // 
+            this.dgv.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Location = new System.Drawing.Point(3, 3);
+            this.dgv.Name = "dgv";
+            this.dgv.Size = new System.Drawing.Size(169, 323);
+            this.dgv.TabIndex = 4;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1484,7 +1483,6 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.tpAnimation.ResumeLayout(false);
             this.tpOutput.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
@@ -1496,6 +1494,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLegend)).EndInit();
+            this.tpReport.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1539,17 +1540,12 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabPage tpAnimation;
         private System.Windows.Forms.TabPage tpOutput;
         private System.Windows.Forms.TabPage tpCharts;
         private System.Windows.Forms.ToolStripMenuItem легендаОбозначенийToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView dgvLegend;
         private System.Windows.Forms.DataGridView dgvResults;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.GroupBox gbAnimation;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button8;
@@ -1622,6 +1618,10 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBox19;
         private System.Windows.Forms.ToolStripMenuItem чертёжToolStripMenuItem;
+        private System.Windows.Forms.TabPage tpReport;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private System.Windows.Forms.DataGridView dgv;
     }
 }
 
